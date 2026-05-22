@@ -1,0 +1,816 @@
+<!DOCTYPE html>
+<html lang="pt-BR" data-lang="pt">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+<meta name="theme-color" content="#050505" />
+<title>Threat Intel · Brazil — SavoirIntel</title>
+<meta name="description" content="Verified Brazilian cybersecurity incidents — October 2025 through May 2026. 57 incidents, 25 federative units, 100% sourced.">
+<link rel="icon" href="SavoirIntel_tower_logo_cropped.png" type="image/png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Inter:wght@200;300;400;500;600&family=JetBrains+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #050505;
+  --bg-card: #0a0a0a;
+  --border: #1c1c1c;
+  --border-strong: #2a2a2a;
+  --text: #f3eee5;
+  --text-muted: #8a8580;
+  --text-faint: #4d4a45;
+  --accent: #c9a96e;
+  --accent-bright: #d9bb7e;
+  --accent-dim: #6b5a3a;
+  --danger: #b56b6b;
+  --serif: 'Cormorant Garamond', 'Georgia', serif;
+  --sans: 'Inter', system-ui, -apple-system, sans-serif;
+  --mono: 'JetBrains Mono', ui-monospace, monospace;
+  --maxw: 1280px;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--sans);
+  font-weight: 300;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+  min-height: 100vh;
+}
+a { color: inherit; text-decoration: none; }
+button { font: inherit; cursor: pointer; }
+img { display: block; max-width: 100%; }
+[data-lang="pt"] .en, [data-lang="en"] .pt { display: none; }
+
+/* ----- top bar ----- */
+.ti-nav {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  background: rgba(5, 5, 5, 0.85);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border-bottom: 1px solid var(--border);
+}
+.ti-nav-inner {
+  max-width: var(--maxw);
+  margin: 0 auto;
+  padding: 16px clamp(20px, 4vw, 32px);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+.ti-brand {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  text-decoration: none;
+  color: var(--text);
+  min-height: 44px;
+}
+.ti-brand-logo {
+  width: 30px;
+  height: 64px;
+  flex: 0 0 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+.ti-brand-logo img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: block;
+}
+/* CSS fallback tower if the silver PNG isn't dropped in yet */
+.ti-brand-logo svg.ti-fallback { display: none; }
+.ti-brand-logo.ti-no-image svg.ti-fallback { display: block; width: 30px; height: 64px; }
+.ti-brand-text {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  line-height: 1.05;
+}
+.ti-brand-text .ti-brand-name {
+  font-family: var(--serif);
+  font-size: clamp(1.05rem, 2.5vw, 1.25rem);
+  font-weight: 500;
+  letter-spacing: 0.01em;
+  color: var(--text);
+}
+.ti-brand-text .ti-brand-kicker {
+  font-family: var(--mono);
+  font-size: 0.62rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+.ti-brand-text .ti-brand-region {
+  font-family: var(--mono);
+  font-size: 0.58rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--text-faint);
+}
+
+.ti-nav-actions { display: flex; align-items: center; gap: 10px; }
+.ti-lang-toggle {
+  display: inline-flex;
+  border: 1px solid var(--border-strong);
+  border-radius: 2px;
+  overflow: hidden;
+}
+.ti-lang-toggle button {
+  background: transparent;
+  color: var(--text-muted);
+  border: none;
+  padding: 8px 12px;
+  font-family: var(--mono);
+  font-size: 0.66rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  cursor: pointer;
+  min-height: 36px;
+  min-width: 44px;
+  -webkit-tap-highlight-color: transparent;
+  transition: background 0.15s, color 0.15s;
+}
+.ti-lang-toggle button:hover { color: var(--text); }
+.ti-lang-toggle button.active {
+  background: var(--accent);
+  color: #050505;
+}
+.ti-back {
+  font-family: var(--mono);
+  font-size: 0.66rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  border: 1px solid var(--border-strong);
+  padding: 8px 14px;
+  border-radius: 2px;
+  min-height: 36px;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  transition: color 0.15s, border-color 0.15s;
+  -webkit-tap-highlight-color: transparent;
+}
+.ti-back:hover { color: var(--accent); border-color: var(--accent); }
+.ti-back-arrow { font-family: var(--serif); font-size: 1rem; line-height: 1; }
+
+@media (max-width: 640px) {
+  .ti-brand-text .ti-brand-region { display: none; }
+  .ti-back span.ti-back-text { display: none; }
+  .ti-back { padding: 8px 11px; }
+}
+
+/* ----- page header / map shell ----- */
+.ti-hero { padding: clamp(40px, 7vw, 80px) 0 clamp(28px, 5vw, 48px); }
+.ti-container { max-width: var(--maxw); margin: 0 auto; padding: 0 clamp(20px, 5vw, 32px); }
+.ti-eyebrow {
+  font-family: var(--mono);
+  font-size: 0.66rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 18px;
+}
+.ti-h1 {
+  font-family: var(--serif);
+  font-weight: 400;
+  font-size: clamp(2.2rem, 6vw, 4rem);
+  line-height: 1.05;
+  letter-spacing: -0.01em;
+  margin: 0 0 18px;
+  color: var(--text);
+}
+.ti-pull { font-family: var(--serif); font-style: italic; color: var(--accent); }
+.ti-intro {
+  font-size: clamp(1rem, 2.3vw, 1.15rem);
+  color: var(--text-muted);
+  max-width: 60ch;
+  margin: 0 0 36px;
+  line-height: 1.7;
+}
+.ti-stats {
+  display: flex;
+  flex-wrap: wrap;
+  gap: clamp(18px, 4vw, 40px);
+  border-top: 1px solid var(--border-strong);
+  border-bottom: 1px solid var(--border-strong);
+  padding: 22px 0;
+  margin: 32px 0 0;
+}
+.ti-stat { display: flex; flex-direction: column; gap: 4px; flex: 1 1 auto; min-width: 110px; }
+.ti-stat-num {
+  font-family: var(--serif);
+  font-size: clamp(1.9rem, 5vw, 2.6rem);
+  color: var(--accent);
+  line-height: 1;
+}
+.ti-stat-label {
+  font-family: var(--mono);
+  font-size: 0.65rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--text-faint);
+}
+
+/* ----- map area (scoped bcm- styles, shared logic) ----- */
+.ti-map-section { padding: clamp(20px, 4vw, 40px) 0 clamp(80px, 10vw, 120px); }
+.bcm-layout {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 28px;
+  align-items: start;
+}
+@media (min-width: 1024px) {
+  .bcm-layout { grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr); gap: 48px; }
+}
+.bcm-mapwrap {
+  position: relative;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 2px;
+  padding: clamp(16px, 3vw, 28px);
+  overflow: hidden;
+}
+.bcm-svg {
+  display: block;
+  width: 100%;
+  height: auto;
+  max-height: 80vh;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+}
+.bcm-state {
+  fill: #131313;
+  stroke: #232323;
+  stroke-width: 0.6;
+  transition: fill 0.25s ease, stroke 0.25s ease;
+}
+.bcm-state.bcm-active {
+  fill: #1c1810;
+  stroke: rgba(201, 169, 110, 0.25);
+  cursor: pointer;
+}
+.bcm-state.bcm-active:focus,
+.bcm-state.bcm-active.bcm-selected {
+  fill: rgba(201, 169, 110, 0.16);
+  stroke: var(--accent);
+  stroke-width: 1.2;
+  outline: none;
+}
+@media (hover: hover) {
+  .bcm-state.bcm-active:hover { fill: rgba(201, 169, 110, 0.10); stroke: rgba(201, 169, 110, 0.55); }
+}
+.bcm-state-label {
+  font-family: var(--mono);
+  font-size: 9px;
+  fill: var(--text-faint);
+  pointer-events: none;
+  user-select: none;
+}
+@media (max-width: 600px) { .bcm-state-label { font-size: 11px; } }
+.bcm-marker { cursor: pointer; -webkit-tap-highlight-color: transparent; }
+.bcm-marker-hit { fill: transparent; cursor: pointer; }
+.bcm-marker-pulse {
+  fill: var(--danger);
+  opacity: 0.35;
+  animation: bcm-pulse 2.4s ease-out infinite;
+  pointer-events: none;
+}
+.bcm-marker-dot {
+  fill: var(--danger);
+  stroke: #1a0a08;
+  stroke-width: 1.2;
+  pointer-events: none;
+}
+.bcm-marker-count {
+  font-family: var(--mono);
+  font-size: 8px;
+  fill: var(--accent);
+  font-weight: 500;
+  pointer-events: none;
+  user-select: none;
+}
+@media (max-width: 600px) {
+  .bcm-marker-count { font-size: 10px; }
+  .bcm-marker-dot { stroke-width: 1.5; }
+}
+@keyframes bcm-pulse {
+  0%   { r: 6;  opacity: 0.55; }
+  70%  { r: 18; opacity: 0; }
+  100% { r: 18; opacity: 0; }
+}
+.bcm-hint {
+  font-family: var(--mono);
+  font-size: 0.62rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--text-faint);
+  margin-top: 14px;
+  text-align: center;
+}
+.bcm-panel {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 2px;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+}
+.bcm-panel-empty {
+  padding: clamp(28px, 5vw, 48px);
+  color: var(--text-faint);
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: clamp(1.1rem, 3vw, 1.4rem);
+}
+.bcm-panel-content { display: none; }
+.bcm-panel.bcm-open .bcm-panel-empty { display: none; }
+.bcm-panel.bcm-open .bcm-panel-content { display: block; }
+.bcm-panel-header {
+  padding: clamp(20px, 4vw, 32px) clamp(20px, 4vw, 32px) 14px;
+  border-bottom: 1px solid var(--border);
+  position: sticky;
+  top: 0;
+  background: var(--bg-card);
+  z-index: 2;
+}
+.bcm-panel-eyebrow {
+  font-family: var(--mono);
+  font-size: 0.65rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+}
+.bcm-panel-statename {
+  font-family: var(--serif);
+  font-size: clamp(1.4rem, 4vw, 1.9rem);
+  font-weight: 400;
+  color: var(--text);
+  margin: 0;
+}
+.bcm-panel-close {
+  background: transparent;
+  border: 1px solid var(--border-strong);
+  color: var(--text-muted);
+  font-family: var(--mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  cursor: pointer;
+  padding: 8px 14px;
+  border-radius: 2px;
+  min-height: 36px;
+  transition: color 0.2s, border-color 0.2s;
+  -webkit-tap-highlight-color: transparent;
+}
+.bcm-panel-close:hover, .bcm-panel-close:focus {
+  color: var(--accent);
+  border-color: var(--accent);
+  outline: none;
+}
+.bcm-panel-body {
+  padding: clamp(16px, 4vw, 28px) clamp(20px, 4vw, 32px) clamp(24px, 5vw, 36px);
+  overflow-y: auto;
+  flex: 1;
+  -webkit-overflow-scrolling: touch;
+}
+.bcm-incident {
+  padding: 20px 0;
+  border-bottom: 1px solid var(--border);
+}
+.bcm-incident:last-child { border-bottom: none; padding-bottom: 4px; }
+.bcm-incident:first-child { padding-top: 4px; }
+.bcm-i-meta {
+  font-family: var(--mono);
+  font-size: 0.62rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--text-faint);
+  margin-bottom: 10px;
+  display: flex; gap: 14px; flex-wrap: wrap;
+}
+.bcm-i-meta b { color: var(--accent); font-weight: 400; }
+.bcm-i-victim {
+  font-family: var(--serif);
+  font-size: clamp(1.15rem, 3vw, 1.4rem);
+  font-weight: 400;
+  color: var(--text);
+  margin: 0 0 8px;
+  line-height: 1.25;
+}
+.bcm-i-industry {
+  font-family: var(--sans);
+  font-size: 0.78rem;
+  color: var(--text-muted);
+  letter-spacing: 0.03em;
+  margin-bottom: 12px;
+}
+.bcm-i-summary {
+  font-size: clamp(0.88rem, 2.2vw, 0.95rem);
+  color: var(--text);
+  line-height: 1.7;
+  margin: 0 0 14px;
+}
+.bcm-i-source-row {
+  font-family: var(--mono);
+  font-size: 0.66rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--text-faint);
+}
+.bcm-i-source-row a {
+  color: var(--accent);
+  text-decoration: none;
+  border-bottom: 1px solid rgba(201, 169, 110, 0.35);
+  padding-bottom: 1px;
+  word-break: break-all;
+}
+.bcm-i-source-row a:hover { border-bottom-color: var(--accent); }
+
+@media (max-width: 1023px) {
+  .bcm-panel {
+    position: fixed;
+    left: 0; right: 0; bottom: 0;
+    z-index: 1000;
+    max-height: 85vh;
+    border-radius: 12px 12px 0 0;
+    transform: translateY(102%);
+    transition: transform 0.32s cubic-bezier(0.22, 0.61, 0.36, 1);
+    box-shadow: 0 -20px 60px rgba(0,0,0,0.6);
+    padding-bottom: env(safe-area-inset-bottom);
+  }
+  .bcm-panel.bcm-open { transform: translateY(0); }
+  .bcm-panel-empty { display: none !important; }
+  .bcm-panel::before {
+    content: '';
+    position: absolute;
+    top: 8px; left: 50%; transform: translateX(-50%);
+    width: 40px; height: 4px;
+    background: var(--border-strong);
+    border-radius: 2px;
+    pointer-events: none;
+  }
+  .bcm-panel-header { padding-top: 26px; }
+  .bcm-backdrop {
+    position: fixed; inset: 0;
+    background: rgba(0,0,0,0.65);
+    z-index: 999;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.32s ease;
+  }
+  .bcm-backdrop.bcm-show { opacity: 1; pointer-events: auto; }
+}
+@media (min-width: 1024px) {
+  .bcm-panel { min-height: 460px; max-height: 80vh; position: sticky; top: 96px; }
+  .bcm-backdrop { display: none; }
+}
+
+/* ----- footer ----- */
+.ti-foot {
+  border-top: 1px solid var(--border);
+  padding: 32px 0;
+  margin-top: 0;
+}
+.ti-foot-inner {
+  max-width: var(--maxw);
+  margin: 0 auto;
+  padding: 0 clamp(20px, 5vw, 32px);
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  justify-content: space-between;
+  font-family: var(--mono);
+  font-size: 0.62rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--text-faint);
+}
+.ti-foot em {
+  font-family: var(--serif);
+  font-style: italic;
+  text-transform: none;
+  letter-spacing: 0;
+  color: var(--text-muted);
+  font-size: 0.92rem;
+  max-width: 60ch;
+}
+</style>
+</head>
+<body>
+
+<nav class="ti-nav">
+  <div class="ti-nav-inner">
+    <a href="index.html" class="ti-brand" aria-label="SavoirIntel Threat Intel — Brazil">
+      <div class="ti-brand-logo" id="ti-logo-wrap">
+        <img src="threat_intel_logo.png" alt="SavoirIntel tower" onerror="this.parentNode.classList.add('ti-no-image'); this.style.display='none';" />
+        <!-- CSS fallback if PNG isn't on disk yet -->
+        <svg class="ti-fallback" viewBox="0 0 30 64" aria-hidden="true">
+          <defs>
+            <linearGradient id="tg" x1="0" y1="0" x2="1" y2="0">
+              <stop offset="0" stop-color="#3a3a3a"/>
+              <stop offset="0.5" stop-color="#8a8580"/>
+              <stop offset="1" stop-color="#1a1a1a"/>
+            </linearGradient>
+          </defs>
+          <polygon points="2,4 18,1 26,8 14,11" fill="url(#tg)" stroke="#1a1a1a" stroke-width="0.3"/>
+          <polygon points="14,11 26,8 26,28 14,30" fill="url(#tg)" stroke="#1a1a1a" stroke-width="0.3" opacity="0.85"/>
+          <polygon points="2,4 14,11 14,30 2,24" fill="#2a2a2a" stroke="#1a1a1a" stroke-width="0.3"/>
+          <polygon points="2,28 14,30 26,30 26,46 14,49 2,46" fill="url(#tg)" stroke="#1a1a1a" stroke-width="0.3"/>
+          <polygon points="2,46 14,49 26,46 26,62 14,63 2,60" fill="url(#tg)" stroke="#1a1a1a" stroke-width="0.3" opacity="0.95"/>
+        </svg>
+      </div>
+      <div class="ti-brand-text">
+        <span class="ti-brand-name">SavoirIntel</span>
+        <span class="ti-brand-kicker">Threat Intel</span>
+        <span class="ti-brand-region"><span class="pt">Brasil</span><span class="en">Brazil</span></span>
+      </div>
+    </a>
+
+    <div class="ti-nav-actions">
+      <div class="ti-lang-toggle" role="group" aria-label="Language">
+        <button type="button" data-set-lang="pt" class="active">PT</button>
+        <button type="button" data-set-lang="en">EN</button>
+      </div>
+      <a href="index.html" class="ti-back" aria-label="Back to main site">
+        <span class="ti-back-arrow">←</span>
+        <span class="ti-back-text">
+          <span class="pt">Voltar</span><span class="en">Main site</span>
+        </span>
+      </a>
+    </div>
+  </div>
+</nav>
+
+<header class="ti-hero">
+  <div class="ti-container">
+    <div class="ti-eyebrow">
+      <span class="pt">Cibersegurança · panorama Brasil</span>
+      <span class="en">Cybersecurity · Brazil snapshot</span>
+    </div>
+    <h1 class="ti-h1">
+      <span class="pt">57 incidentes <span class="ti-pull">verificados e localizados.</span></span>
+      <span class="en">57 incidents <span class="ti-pull">verified and located.</span></span>
+    </h1>
+    <p class="ti-intro">
+      <span class="pt">Cada marcador representa um incidente cibernético público entre outubro de 2025 e maio de 2026, com fonte primária citada. Toque ou clique em um estado destacado para ver os detalhes.</span>
+      <span class="en">Each marker is a public cyber incident between October 2025 and May 2026, with a primary source on file. Tap or click any highlighted state to read the details.</span>
+    </p>
+    <div class="ti-stats">
+      <div class="ti-stat"><div class="ti-stat-num">57</div><div class="ti-stat-label"><span class="pt">Incidentes</span><span class="en">Incidents</span></div></div>
+      <div class="ti-stat"><div class="ti-stat-num">25/27</div><div class="ti-stat-label"><span class="pt">Unidades federativas</span><span class="en">Federative units</span></div></div>
+      <div class="ti-stat"><div class="ti-stat-num">8</div><div class="ti-stat-label"><span class="pt">Meses</span><span class="en">Months</span></div></div>
+      <div class="ti-stat"><div class="ti-stat-num">100%</div><div class="ti-stat-label"><span class="pt">Fontes citadas</span><span class="en">Sourced</span></div></div>
+    </div>
+  </div>
+</header>
+
+<section class="ti-map-section">
+  <div class="ti-container">
+    <div class="bcm-layout">
+      <div class="bcm-mapwrap">
+        <svg class="bcm-svg" viewBox="0 0 584 688" preserveAspectRatio="xMidYMid meet" role="img" aria-label="Brazil cyber incidents map">
+          <g class="bcm-states">
+        <path id="state-AC" class="bcm-state" data-code="AC" data-name="Acre" data-cx="69.8" data-cy="256.2" d="M16.5,223.5L74.9,223.5L89.2,250.8L120.5,269.6L120.5,291.9L86.3,283.3L33.6,262.8L16.5,244.0Z" />
+        <path id="state-AM" class="bcm-state" data-code="AM" data-name="Amazonas" data-cx="129.3" data-cy="157.7" d="M43.6,62.7L79.2,73.0L114.8,67.8L157.6,76.4L186.0,110.6L267.2,127.7L270.1,153.3L235.9,204.6L221.7,269.6L129.1,269.6L79.2,255.9L50.7,230.3L36.5,204.6L74.9,179.0L79.2,136.2L43.6,102.1Z" />
+        <path id="state-RR" class="bcm-state bcm-active" data-code="RR" data-name="Roraima" data-cx="187.1" data-cy="49.3" d="M146.2,11.4L214.5,11.4L230.2,28.5L221.7,76.4L193.2,90.1L157.6,76.4L146.2,50.8Z" />
+        <path id="state-AP" class="bcm-state bcm-active" data-code="AP" data-name="Amapá" data-cx="325.6" data-cy="74.2" d="M287.2,26.8L335.6,33.6L357.0,71.3L358.4,122.6L335.6,115.7L314.2,90.1L291.5,59.3Z" />
+        <path id="state-PA" class="bcm-state bcm-active" data-code="PA" data-name="Pará" data-cx="313.3" data-cy="160.9" d="M235.9,57.6L278.6,71.3L335.6,85.0L371.2,110.6L406.8,127.7L414.0,161.9L385.5,196.1L364.1,230.3L349.9,269.6L285.8,269.6L235.9,238.9L230.2,196.1L257.3,144.8L235.9,93.5Z" />
+        <path id="state-TO" class="bcm-state bcm-active" data-code="TO" data-name="Tocantins" data-cx="379.8" data-cy="262.0" d="M347.0,191.0L399.7,196.1L418.2,230.3L411.1,281.6L402.6,315.8L371.2,332.9L349.9,315.8L357.0,264.5L361.2,230.3Z" />
+        <path id="state-MA" class="bcm-state bcm-active" data-code="MA" data-name="Maranhão" data-cx="420.1" data-cy="194.2" d="M375.5,119.2L435.3,124.3L473.8,149.9L470.9,196.1L456.7,238.9L435.3,278.2L406.8,273.1L392.6,230.3L378.3,187.6L375.5,144.8Z" />
+        <path id="state-PI" class="bcm-state bcm-active" data-code="PI" data-name="Piauí" data-cx="454.0" data-cy="219.9" d="M415.4,148.2L470.9,151.6L485.2,187.6L485.2,230.3L493.7,264.5L463.8,288.4L435.3,273.1L421.1,238.9L415.4,196.1Z" />
+        <path id="state-CE" class="bcm-state bcm-active" data-code="CE" data-name="Ceará" data-cx="504.8" data-cy="188.8" d="M479.5,149.9L539.3,149.9L535.0,179.0L520.8,196.1L506.5,221.8L492.3,230.3L479.5,213.2L485.2,170.4Z" />
+        <path id="state-RN" class="bcm-state bcm-active" data-code="RN" data-name="Rio Grande do Norte" data-cx="543.1" data-cy="200.4" d="M519.4,184.1L572.1,184.1L570.6,204.6L549.3,220.0L527.9,213.2L519.4,196.1Z" />
+        <path id="state-PB" class="bcm-state bcm-active" data-code="PB" data-name="Paraíba" data-cx="541.7" data-cy="224.3" d="M517.9,204.6L573.5,213.2L570.6,230.3L549.3,244.0L520.8,235.4L517.9,218.3Z" />
+        <path id="state-PE" class="bcm-state bcm-active" data-code="PE" data-name="Pernambuco" data-cx="523.3" data-cy="246.1" d="M479.5,226.9L506.5,230.3L542.1,235.4L573.5,238.9L563.5,261.1L535.0,264.5L506.5,259.4L479.5,252.5Z" />
+        <path id="state-AL" class="bcm-state bcm-active" data-code="AL" data-name="Alagoas" data-cx="544.0" data-cy="267.6" d="M525.1,252.5L567.8,255.9L569.2,273.1L549.3,281.6L527.9,278.2L525.1,264.5Z" />
+        <path id="state-SE" class="bcm-state bcm-active" data-code="SE" data-name="Sergipe" data-cx="534.8" data-cy="282.5" d="M525.1,264.5L550.7,273.1L545.0,290.1L535.0,300.4L525.1,290.1L527.9,276.5Z" />
+        <path id="state-BA" class="bcm-state bcm-active" data-code="BA" data-name="Bahia" data-cx="475.3" data-cy="323.8" d="M405.4,247.4L456.7,250.8L506.5,247.4L537.9,264.5L535.0,298.7L520.8,332.9L513.7,367.1L506.5,392.8L499.4,416.7L456.7,409.9L428.2,375.6L406.8,324.4L405.4,281.6Z" />
+        <path id="state-MT" class="bcm-state bcm-active" data-code="MT" data-name="Mato Grosso" data-cx="264.2" data-cy="317.9" d="M191.7,228.6L243.0,230.3L278.6,255.9L321.4,290.1L349.9,324.4L349.9,375.6L328.5,411.6L278.6,409.9L235.9,375.6L207.4,350.0L191.7,307.2L193.2,255.9Z" />
+        <path id="state-RO" class="bcm-state bcm-active" data-code="RO" data-name="Rondônia" data-cx="167.5" data-cy="282.9" d="M117.7,237.1L164.7,247.4L193.2,273.1L214.5,307.2L217.4,336.3L178.9,324.4L136.2,281.6L117.7,255.9Z" />
+        <path id="state-GO" class="bcm-state bcm-active" data-code="GO" data-name="Goiás" data-cx="362.7" data-cy="373.9" d="M311.4,314.1L349.9,324.4L378.3,332.9L392.6,367.1L414.0,392.8L415.4,418.4L392.6,435.5L364.1,427.0L335.6,401.3L321.4,367.1L314.2,332.9Z" />
+        <path id="state-DF" class="bcm-state bcm-active" data-code="DF" data-name="Distrito Federal" data-cx="388.8" data-cy="371.6" d="M381.9,367.1L395.4,368.0L395.4,375.6L382.6,375.6Z" />
+        <path id="state-MS" class="bcm-state bcm-active" data-code="MS" data-name="Mato Grosso do Sul" data-cx="287.5" data-cy="453.1" d="M240.2,396.2L278.6,401.3L314.2,427.0L335.6,452.6L344.2,486.8L321.4,514.2L292.9,512.5L264.4,486.8L243.0,444.0L240.2,409.9Z" />
+        <path id="state-MG" class="bcm-state bcm-active" data-code="MG" data-name="Minas Gerais" data-cx="424.8" data-cy="423.4" d="M342.7,344.9L392.6,350.0L435.3,367.1L478.0,367.1L500.8,384.2L500.8,418.4L492.3,452.6L478.0,469.7L449.6,486.8L421.1,493.6L392.6,486.8L371.2,469.7L349.9,435.5L342.7,401.3Z" />
+        <path id="state-ES" class="bcm-state bcm-active" data-code="ES" data-name="Espírito Santo" data-cx="486.4" data-cy="440.3" d="M472.4,408.1L499.4,418.4L503.7,452.6L492.3,466.3L478.0,461.1L472.4,435.5Z" />
+        <path id="state-RJ" class="bcm-state bcm-active" data-code="RJ" data-name="Rio de Janeiro" data-cx="456.3" data-cy="484.6" d="M429.6,457.7L463.8,469.7L486.6,478.2L485.2,495.4L463.8,502.2L435.3,502.2L429.6,486.8Z" />
+        <path id="state-SP" class="bcm-state bcm-active" data-code="SP" data-name="São Paulo" data-cx="374.1" data-cy="488.7" d="M312.8,440.6L349.9,444.0L385.5,452.6L421.1,469.7L435.3,491.9L439.6,509.0L406.8,529.5L378.3,534.7L349.9,521.0L321.4,503.9L314.2,478.2Z" />
+        <path id="state-PR" class="bcm-state bcm-active" data-code="PR" data-name="Paraná" data-cx="332.1" data-cy="525.2" d="M291.5,486.8L321.4,495.4L357.0,503.9L385.5,521.0L378.3,555.2L349.9,558.6L321.4,555.2L292.9,538.1L291.5,512.5Z" />
+        <path id="state-SC" class="bcm-state bcm-active" data-code="SC" data-name="Santa Catarina" data-cx="337.0" data-cy="572.9" d="M301.4,544.9L335.6,555.2L371.2,555.2L379.8,572.3L364.1,598.0L335.6,604.8L307.1,589.4L301.4,563.8Z" />
+        <path id="state-RS" class="bcm-state bcm-active" data-code="RS" data-name="Rio Grande do Sul" data-cx="299.4" data-cy="613.0" d="M248.7,565.5L278.6,572.3L314.2,572.3L349.9,589.4L361.2,623.6L342.7,657.8L314.2,678.3L278.6,657.8L257.3,623.6L248.7,589.4Z" />
+          </g>
+          <g class="bcm-labels" aria-hidden="true">
+        <text class="bcm-state-label" x="69.8" y="259.2" text-anchor="middle">AC</text>
+        <text class="bcm-state-label" x="129.3" y="160.7" text-anchor="middle">AM</text>
+        <text class="bcm-state-label" x="187.1" y="52.3" text-anchor="middle">RR</text>
+        <text class="bcm-state-label" x="325.6" y="77.2" text-anchor="middle">AP</text>
+        <text class="bcm-state-label" x="313.3" y="163.9" text-anchor="middle">PA</text>
+        <text class="bcm-state-label" x="379.8" y="265.0" text-anchor="middle">TO</text>
+        <text class="bcm-state-label" x="420.1" y="197.2" text-anchor="middle">MA</text>
+        <text class="bcm-state-label" x="454.0" y="222.9" text-anchor="middle">PI</text>
+        <text class="bcm-state-label" x="504.8" y="191.8" text-anchor="middle">CE</text>
+        <text class="bcm-state-label" x="543.1" y="203.4" text-anchor="middle">RN</text>
+        <text class="bcm-state-label" x="541.7" y="227.3" text-anchor="middle">PB</text>
+        <text class="bcm-state-label" x="523.3" y="249.1" text-anchor="middle">PE</text>
+        <text class="bcm-state-label" x="544.0" y="270.6" text-anchor="middle">AL</text>
+        <text class="bcm-state-label" x="534.8" y="285.5" text-anchor="middle">SE</text>
+        <text class="bcm-state-label" x="475.3" y="326.8" text-anchor="middle">BA</text>
+        <text class="bcm-state-label" x="264.2" y="320.9" text-anchor="middle">MT</text>
+        <text class="bcm-state-label" x="167.5" y="285.9" text-anchor="middle">RO</text>
+        <text class="bcm-state-label" x="362.7" y="376.9" text-anchor="middle">GO</text>
+        <text class="bcm-state-label" x="388.8" y="374.6" text-anchor="middle">DF</text>
+        <text class="bcm-state-label" x="287.5" y="456.1" text-anchor="middle">MS</text>
+        <text class="bcm-state-label" x="424.8" y="426.4" text-anchor="middle">MG</text>
+        <text class="bcm-state-label" x="486.4" y="443.3" text-anchor="middle">ES</text>
+        <text class="bcm-state-label" x="456.3" y="487.6" text-anchor="middle">RJ</text>
+        <text class="bcm-state-label" x="374.1" y="491.7" text-anchor="middle">SP</text>
+        <text class="bcm-state-label" x="332.1" y="528.2" text-anchor="middle">PR</text>
+        <text class="bcm-state-label" x="337.0" y="575.9" text-anchor="middle">SC</text>
+        <text class="bcm-state-label" x="299.4" y="616.0" text-anchor="middle">RS</text>
+          </g>
+          <g class="bcm-markers">
+        <g class="bcm-marker" data-code="RR" transform="translate(187.1,49.3)"><circle class="bcm-marker-hit" r="22" fill="transparent"/><circle class="bcm-marker-pulse" r="11"/><circle class="bcm-marker-dot" r="6"/><text class="bcm-marker-count" y="-13" text-anchor="middle">×1</text></g>
+        <g class="bcm-marker" data-code="AP" transform="translate(325.6,74.2)"><circle class="bcm-marker-hit" r="22" fill="transparent"/><circle class="bcm-marker-pulse" r="11"/><circle class="bcm-marker-dot" r="6"/><text class="bcm-marker-count" y="-13" text-anchor="middle">×1</text></g>
+        <g class="bcm-marker" data-code="PA" transform="translate(313.3,160.9)"><circle class="bcm-marker-hit" r="22" fill="transparent"/><circle class="bcm-marker-pulse" r="11"/><circle class="bcm-marker-dot" r="6"/><text class="bcm-marker-count" y="-13" text-anchor="middle">×2</text></g>
+        <g class="bcm-marker" data-code="TO" transform="translate(379.8,262.0)"><circle class="bcm-marker-hit" r="22" fill="transparent"/><circle class="bcm-marker-pulse" r="11"/><circle class="bcm-marker-dot" r="6"/><text class="bcm-marker-count" y="-13" text-anchor="middle">×2</text></g>
+        <g class="bcm-marker" data-code="MA" transform="translate(420.1,194.2)"><circle class="bcm-marker-hit" r="22" fill="transparent"/><circle class="bcm-marker-pulse" r="11"/><circle class="bcm-marker-dot" r="6"/><text class="bcm-marker-count" y="-13" text-anchor="middle">×1</text></g>
+        <g class="bcm-marker" data-code="PI" transform="translate(454.0,219.9)"><circle class="bcm-marker-hit" r="22" fill="transparent"/><circle class="bcm-marker-pulse" r="11"/><circle class="bcm-marker-dot" r="6"/><text class="bcm-marker-count" y="-13" text-anchor="middle">×2</text></g>
+        <g class="bcm-marker" data-code="CE" transform="translate(504.8,188.8)"><circle class="bcm-marker-hit" r="22" fill="transparent"/><circle class="bcm-marker-pulse" r="11"/><circle class="bcm-marker-dot" r="6"/><text class="bcm-marker-count" y="-13" text-anchor="middle">×1</text></g>
+        <g class="bcm-marker" data-code="RN" transform="translate(543.1,200.4)"><circle class="bcm-marker-hit" r="22" fill="transparent"/><circle class="bcm-marker-pulse" r="11"/><circle class="bcm-marker-dot" r="6"/><text class="bcm-marker-count" y="-13" text-anchor="middle">×1</text></g>
+        <g class="bcm-marker" data-code="PB" transform="translate(541.7,224.3)"><circle class="bcm-marker-hit" r="22" fill="transparent"/><circle class="bcm-marker-pulse" r="11"/><circle class="bcm-marker-dot" r="6"/><text class="bcm-marker-count" y="-13" text-anchor="middle">×2</text></g>
+        <g class="bcm-marker" data-code="PE" transform="translate(523.3,246.1)"><circle class="bcm-marker-hit" r="22" fill="transparent"/><circle class="bcm-marker-pulse" r="11"/><circle class="bcm-marker-dot" r="6"/><text class="bcm-marker-count" y="-13" text-anchor="middle">×2</text></g>
+        <g class="bcm-marker" data-code="AL" transform="translate(544.0,267.6)"><circle class="bcm-marker-hit" r="22" fill="transparent"/><circle class="bcm-marker-pulse" r="11"/><circle class="bcm-marker-dot" r="6"/><text class="bcm-marker-count" y="-13" text-anchor="middle">×1</text></g>
+        <g class="bcm-marker" data-code="SE" transform="translate(534.8,282.5)"><circle class="bcm-marker-hit" r="22" fill="transparent"/><circle class="bcm-marker-pulse" r="11"/><circle class="bcm-marker-dot" r="6"/><text class="bcm-marker-count" y="-13" text-anchor="middle">×2</text></g>
+        <g class="bcm-marker" data-code="BA" transform="translate(475.3,323.8)"><circle class="bcm-marker-hit" r="22" fill="transparent"/><circle class="bcm-marker-pulse" r="11"/><circle class="bcm-marker-dot" r="6"/><text class="bcm-marker-count" y="-13" text-anchor="middle">×1</text></g>
+        <g class="bcm-marker" data-code="MT" transform="translate(264.2,317.9)"><circle class="bcm-marker-hit" r="22" fill="transparent"/><circle class="bcm-marker-pulse" r="11"/><circle class="bcm-marker-dot" r="6"/><text class="bcm-marker-count" y="-13" text-anchor="middle">×2</text></g>
+        <g class="bcm-marker" data-code="RO" transform="translate(167.5,282.9)"><circle class="bcm-marker-hit" r="22" fill="transparent"/><circle class="bcm-marker-pulse" r="11"/><circle class="bcm-marker-dot" r="6"/><text class="bcm-marker-count" y="-13" text-anchor="middle">×1</text></g>
+        <g class="bcm-marker" data-code="GO" transform="translate(362.7,373.9)"><circle class="bcm-marker-hit" r="22" fill="transparent"/><circle class="bcm-marker-pulse" r="11"/><circle class="bcm-marker-dot" r="6"/><text class="bcm-marker-count" y="-13" text-anchor="middle">×7</text></g>
+        <g class="bcm-marker" data-code="DF" transform="translate(388.8,371.6)"><circle class="bcm-marker-hit" r="22" fill="transparent"/><circle class="bcm-marker-pulse" r="11"/><circle class="bcm-marker-dot" r="6"/><text class="bcm-marker-count" y="-13" text-anchor="middle">×4</text></g>
+        <g class="bcm-marker" data-code="MS" transform="translate(287.5,453.1)"><circle class="bcm-marker-hit" r="22" fill="transparent"/><circle class="bcm-marker-pulse" r="11"/><circle class="bcm-marker-dot" r="6"/><text class="bcm-marker-count" y="-13" text-anchor="middle">×2</text></g>
+        <g class="bcm-marker" data-code="MG" transform="translate(424.8,423.4)"><circle class="bcm-marker-hit" r="22" fill="transparent"/><circle class="bcm-marker-pulse" r="11"/><circle class="bcm-marker-dot" r="6"/><text class="bcm-marker-count" y="-13" text-anchor="middle">×4</text></g>
+        <g class="bcm-marker" data-code="ES" transform="translate(486.4,440.3)"><circle class="bcm-marker-hit" r="22" fill="transparent"/><circle class="bcm-marker-pulse" r="11"/><circle class="bcm-marker-dot" r="6"/><text class="bcm-marker-count" y="-13" text-anchor="middle">×1</text></g>
+        <g class="bcm-marker" data-code="RJ" transform="translate(456.3,484.6)"><circle class="bcm-marker-hit" r="22" fill="transparent"/><circle class="bcm-marker-pulse" r="11"/><circle class="bcm-marker-dot" r="6"/><text class="bcm-marker-count" y="-13" text-anchor="middle">×5</text></g>
+        <g class="bcm-marker" data-code="SP" transform="translate(374.1,488.7)"><circle class="bcm-marker-hit" r="22" fill="transparent"/><circle class="bcm-marker-pulse" r="11"/><circle class="bcm-marker-dot" r="6"/><text class="bcm-marker-count" y="-13" text-anchor="middle">×5</text></g>
+        <g class="bcm-marker" data-code="PR" transform="translate(332.1,525.2)"><circle class="bcm-marker-hit" r="22" fill="transparent"/><circle class="bcm-marker-pulse" r="11"/><circle class="bcm-marker-dot" r="6"/><text class="bcm-marker-count" y="-13" text-anchor="middle">×2</text></g>
+        <g class="bcm-marker" data-code="SC" transform="translate(337.0,572.9)"><circle class="bcm-marker-hit" r="22" fill="transparent"/><circle class="bcm-marker-pulse" r="11"/><circle class="bcm-marker-dot" r="6"/><text class="bcm-marker-count" y="-13" text-anchor="middle">×3</text></g>
+        <g class="bcm-marker" data-code="RS" transform="translate(299.4,613.0)"><circle class="bcm-marker-hit" r="22" fill="transparent"/><circle class="bcm-marker-pulse" r="11"/><circle class="bcm-marker-dot" r="6"/><text class="bcm-marker-count" y="-13" text-anchor="middle">×2</text></g>
+          </g>
+        </svg>
+        <div class="bcm-hint">
+          <span class="pt">Toque em um estado destacado</span>
+          <span class="en">Tap a highlighted state</span>
+        </div>
+      </div>
+
+      <aside class="bcm-panel" id="bcm-panel" aria-live="polite">
+        <div class="bcm-panel-empty">
+          <span class="pt">Selecione um estado destacado no mapa para ler os incidentes verificados ali registrados.</span>
+          <span class="en">Select a highlighted state on the map to read the verified incidents on file.</span>
+        </div>
+        <div class="bcm-panel-content">
+          <header class="bcm-panel-header">
+            <div class="bcm-panel-eyebrow">
+              <span id="bcm-panel-code">SP</span>
+              <button type="button" class="bcm-panel-close" id="bcm-panel-close" aria-label="Close">
+                <span class="pt">Fechar</span><span class="en">Close</span>
+              </button>
+            </div>
+            <h3 class="bcm-panel-statename" id="bcm-panel-name">São Paulo</h3>
+          </header>
+          <div class="bcm-panel-body" id="bcm-panel-body"></div>
+        </div>
+      </aside>
+    </div>
+  </div>
+</section>
+
+<footer class="ti-foot">
+  <div class="ti-foot-inner">
+    <em>
+      <span class="pt">Polígonos simplificados; fronteiras ilustrativas, não cartograficamente precisas. Janela: out/2025 – mai/2026.</span>
+      <span class="en">Simplified polygons; borders illustrative, not cartographically precise. Window: Oct 2025 – May 2026.</span>
+    </em>
+    <span>SavoirIntel · Threat Intel · 22.05.2026</span>
+  </div>
+</footer>
+
+<div class="bcm-backdrop" id="bcm-backdrop"></div>
+
+<script>
+const INCIDENTS = [{"state": "Rio de Janeiro", "state_code": "RJ", "company": "Petrobras (via SAExploration)", "industry": "Energy / Oil & Gas", "attack_type": "Ransomware / Data Breach", "date": "November 2025", "summary": "The Everest ransomware group claimed responsibility for a breach affecting Petrobras and its partner SAExploration, exfiltrating over 176 GB of seismic and exploration data including roughly 90 GB attributed to Petrobras. Listings were posted on 14 Nov 2025 with a six-day deadline; Petrobras stated the incident traced to a third-party supplier and its core systems were unaffected.", "source": "Hackread — https://hackread.com/everest-ransomware-brazil-petrobras-breach/", "id": 1, "source_outlet": "Hackread", "source_url": "https://hackread.com/everest-ransomware-brazil-petrobras-breach/"}, {"state": "Distrito Federal", "state_code": "DF", "company": "Federal deputies (Bia Kicis, Alexandre Ramagem, Paulo Bilynskyj)", "industry": "Government / Legislative", "attack_type": "DDoS", "date": "December 2025", "summary": "The Brazilian Federal Police launched Operação Intolerans on 2 Dec 2025 to investigate coordinated DDoS attacks against websites of federal deputies who supported the anti-abortion bill PL 1904/2024. Targeted parliamentarians included Bia Kicis (PL-DF), Alexandre Ramagem (PL-RJ), Paulo Bilynskyj (PL-SP) and Eduardo Bolsonaro (PL-SP); search-and-seizure warrants were executed in São Paulo and Curitiba.", "source": "Polícia Federal — https://www.gov.br/pf/pt-br/assuntos/noticias/2025/12/pf-deflagra-operacao-contra-ataques-ciberneticos-direcionados-a-parlamentares-federais", "id": 2, "source_outlet": "Polícia Federal", "source_url": "https://www.gov.br/pf/pt-br/assuntos/noticias/2025/12/pf-deflagra-operacao-contra-ataques-ciberneticos-direcionados-a-parlamentares-federais"}, {"state": "Ceará", "state_code": "CE", "company": "Banco do Nordeste (BNB)", "industry": "Finance / Banking", "attack_type": "Cyberattack / PIX Fraud", "date": "January 2026", "summary": "Banco do Nordeste, headquartered in Fortaleza, suspended PIX transactions on 26 Jan 2026 after detecting a cyberattack that exploited a vulnerability in a third-party technology provider's settlement (bolsão) account. The institution later reported a loss of approximately R$ 146.6 million from the incident, with no evidence of customer data leakage.", "source": "Agência Brasil — https://agenciabrasil.ebc.com.br/economia/noticia/2026-01/banco-do-nordeste-suspende-pix-apos-sofrer-ataque-hacker", "id": 3, "source_outlet": "Agência Brasil", "source_url": "https://agenciabrasil.ebc.com.br/economia/noticia/2026-01/banco-do-nordeste-suspende-pix-apos-sofrer-ataque-hacker"}, {"state": "Sergipe", "state_code": "SE", "company": "Universidade Federal de Sergipe (UFS)", "industry": "Education / Public University", "attack_type": "Ransomware", "date": "January 2026", "summary": "On 8 Jan 2026, the Vect ransomware group claimed an attack on the Federal University of Sergipe, threatening to release approximately 150 GB of sensitive data including financial records and student information. The university confirmed the intrusion and initiated emergency containment of affected systems.", "source": "DeXpose — https://www.dexpose.io/vect-ransomware-strikes-federal-university-of-sergipe/", "id": 4, "source_outlet": "DeXpose", "source_url": "https://www.dexpose.io/vect-ransomware-strikes-federal-university-of-sergipe/"}, {"state": "Rio de Janeiro", "state_code": "RJ", "company": "Fundação Getulio Vargas (FGV)", "industry": "Education / Research", "attack_type": "Ransomware", "date": "March 2026", "summary": "On 2 Mar 2026, the DragonForce ransomware group publicly listed Fundação Getulio Vargas as a victim, claiming to have stolen approximately 1.52 TB of organizational data including student, faculty, financial and corporate documents. The group used double-extortion tactics; FGV did not officially confirm the breach.", "source": "Revista Fórum — https://revistaforum.com.br/revista-forum/fgv-e-alvo-de-ransomware-grupo-alega-roubo-de-152-tb-de-dados/", "id": 5, "source_outlet": "Revista Fórum", "source_url": "https://revistaforum.com.br/revista-forum/fgv-e-alvo-de-ransomware-grupo-alega-roubo-de-152-tb-de-dados/"}, {"state": "Pernambuco", "state_code": "PE", "company": "Sistema FIEPE (SESI, SENAI, Fiepe)", "industry": "Education / Industry Federation", "attack_type": "Ransomware", "date": "March 2026", "summary": "The LockBit 5.0 ransomware group attacked SESI, SENAI and Fiepe — entities of Pernambuco's industrial federation system — with the intrusion estimated to have occurred on 17 Mar 2026 and publicly disclosed by the group on 30 Mar 2026. These entities provide industry-aligned professional education and business support across Pernambuco.", "source": "DeXpose — https://www.dexpose.io/lockbit-5-0-targets-brazilian-educational-leader-senai/", "id": 6, "source_outlet": "DeXpose", "source_url": "https://www.dexpose.io/lockbit-5-0-targets-brazilian-educational-leader-senai/"}, {"state": "São Paulo", "state_code": "SP", "company": "Alloha Fibra", "industry": "Telecom / ISP", "attack_type": "Ransomware", "date": "April 2026", "summary": "On 4 Apr 2026, the ransomware group 'The Gentlemen' announced a cyberattack on Alloha Fibra, Brazil's leading independent FTTH operator headquartered in São Paulo, which operates 140,000 km of fiber serving 1.5 million customers across 280 cities. The group threatened to publish sensitive data unless ransom demands were met.", "source": "DeXpose — https://www.dexpose.io/the-gentlemen-target-alloha-fibra-in-brazil-ransomware-attack/", "id": 7, "source_outlet": "DeXpose", "source_url": "https://www.dexpose.io/the-gentlemen-target-alloha-fibra-in-brazil-ransomware-attack/"}, {"state": "São Paulo", "state_code": "SP", "company": "Banco Rendimento", "industry": "Finance / Banking", "attack_type": "Cyberattack / Account Compromise", "date": "April 2026", "summary": "Banco Rendimento, a São Paulo-based bank specializing in foreign exchange, credit and payments, confirmed an intrusion on 21 Apr 2026 that affected some customer access channels and accounts. The bank said the attack focused on customer-side credentials rather than a third-party PSTI, and authorities were notified for criminal investigation.", "source": "Convergência Digital — https://convergenciadigital.com.br/mercado/ataque-hacker-atinge-mais-um-banco-no-brasil-e-agora-nas-contas-dos-clientes/", "id": 8, "source_outlet": "Convergência Digital", "source_url": "https://convergenciadigital.com.br/mercado/ataque-hacker-atinge-mais-um-banco-no-brasil-e-agora-nas-contas-dos-clientes/"}, {"state": "Santa Catarina", "state_code": "SC", "company": "Prefeitura de Jaraguá do Sul", "industry": "Government / Municipal", "attack_type": "Banking Cyberattack / Fraud", "date": "April 2026", "summary": "Between 22-23 Apr 2026, hackers diverted at least R$ 12 million from accounts of the Municipality of Jaraguá do Sul (northern Santa Catarina) via the Caixa Econômica Federal banking integration system. Approximately R$ 400 million in additional fraud transfers were attempted, with the majority blocked; the case is being investigated by Civil Police and Federal Police.", "source": "Olhar Digital — https://olhardigital.com.br/2026/04/25/seguranca/hackers-desviam-r-12-milhoes-de-prefeitura-em-sc/", "id": 9, "source_outlet": "Olhar Digital", "source_url": "https://olhardigital.com.br/2026/04/25/seguranca/hackers-desviam-r-12-milhoes-de-prefeitura-em-sc/"}, {"state": "Rio de Janeiro", "state_code": "RJ", "company": "Prefeitura de Itatiaia", "industry": "Government / Municipal", "attack_type": "DDoS", "date": "April 2026", "summary": "On 9 Apr 2026, the Municipality of Itatiaia (RJ) suffered a DDoS attack that overloaded its servers and rendered the official website unstable. Municipal IT applied filters and additional protection measures; the city stated no sensitive data was compromised.", "source": "Resende News — https://www.resende.com.br/2026/04/09/ataque-hacker-prefeitura-itatiaia-instabilidade-site/", "id": 10, "source_outlet": "Resende News", "source_url": "https://www.resende.com.br/2026/04/09/ataque-hacker-prefeitura-itatiaia-instabilidade-site/"}, {"state": "Distrito Federal", "state_code": "DF", "company": "Gov.br portal (alleged 'MORGUE' dataset)", "industry": "Government / Public Services", "attack_type": "Data Breach (alleged)", "date": "April 2026", "summary": "On 18 Apr 2026, a dark-web actor calling itself 'Buddha' offered for sale a database called 'MORGUE' containing 251,720,444 CPF records allegedly attributed to the Gov.br portal, priced at US$ 500 in Bitcoin. The Ministry of Management and Innovation in Public Services denied any breach of Gov.br systems and said infrastructure was operating normally.", "source": "CISO Advisor — https://www.cisoadvisor.com.br/cibercrime-anuncia-251-milhoes-de-cpfs-na-dark-web/", "id": 11, "source_outlet": "CISO Advisor", "source_url": "https://www.cisoadvisor.com.br/cibercrime-anuncia-251-milhoes-de-cpfs-na-dark-web/"}, {"state": "Minas Gerais", "state_code": "MG", "company": "Cemig (Companhia Energética de Minas Gerais)", "industry": "Energy / Utilities", "attack_type": "Data Breach", "date": "May 2026", "summary": "Cemig disclosed via material fact on 14 May 2026 that data of approximately 135,000 customers was exposed after unauthorized access to a database operated by a customer-service partner. Exposed data included name, CPF, address, email, phone and energy bill amounts; the company notified ANPD, Aneel, and the Civil Police.", "source": "Canal Energia — https://www.canalenergia.com.br/noticias/53347138/cemig-confirma-vazamento-de-dados-de-135-mil-clientes-apos-ataque-cibernetico", "id": 12, "source_outlet": "Canal Energia", "source_url": "https://www.canalenergia.com.br/noticias/53347138/cemig-confirma-vazamento-de-dados-de-135-mil-clientes-apos-ataque-cibernetico"}, {"state": "Santa Catarina", "state_code": "SC", "company": "Dígitro Tecnologia", "industry": "Defense / Intelligence Tech", "attack_type": "Data Breach / Supply-chain Leak", "date": "May 2026", "summary": "CTIR Gov issued Recommendation 05/2026 after a massive 3.39 TB leak of databases, source-code repositories and internal files of Dígitro Tecnologia (headquartered in Florianópolis, SC). The company supplies interception and monitoring systems including the 'Guardião' platform to more than 150 government and law-enforcement institutions, raising serious supply-chain concerns.", "source": "ICL Notícias — https://iclnoticias.com.br/dados-sistema-policias-brasil-vazamento/", "id": 13, "source_outlet": "ICL Notícias", "source_url": "https://iclnoticias.com.br/dados-sistema-policias-brasil-vazamento/"}, {"state": "Sergipe", "state_code": "SE", "company": "Universidade Federal de Sergipe (UFS) — second incident", "industry": "Education / Public University", "attack_type": "Ransomware", "date": "February 2026", "summary": "On 20 Feb 2026, UFS identified a second cyberattack targeting Windows machines in its IT infrastructure, prompting preventive shutdown of affected equipment. The TheGentlemen ransomware group later claimed responsibility on 26 Feb 2026, threatening to release personal and scientific data.", "source": "TI Inside — https://tiinside.com.br/25/02/2026/ataque-ciberneticos-abalam-infraestrutura-de-ti-da-ufs/", "id": 14, "source_outlet": "TI Inside", "source_url": "https://tiinside.com.br/25/02/2026/ataque-ciberneticos-abalam-infraestrutura-de-ti-da-ufs/"}, {"state": "Distrito Federal", "state_code": "DF", "company": "Receita Federal (data of STF justices and AGU)", "industry": "Government / Federal Tax Authority", "attack_type": "Insider Data Breach", "date": "February 2026", "summary": "In February 2026, the Federal Police executed search-and-seizure warrants in SP, RJ and BA investigating illicit access to Receita Federal systems involving confidential data of STF justices, the Attorney General and their relatives over the prior three years. Approximately 8,000 lookup procedures on 100 individuals were identified as lacking functional justification.", "source": "Agência Brasil — https://agenciabrasil.ebc.com.br/justica/noticia/2026-02/pf-apura-vazamento-de-dados-da-receita-de-ministros-do-stf", "id": 15, "source_outlet": "Agência Brasil", "source_url": "https://agenciabrasil.ebc.com.br/justica/noticia/2026-02/pf-apura-vazamento-de-dados-da-receita-de-ministros-do-stf"}, {"state": "Minas Gerais", "state_code": "MG", "company": "Prefeitura de Monte Sião", "industry": "Government / Municipal", "attack_type": "Social Engineering / Banking Fraud", "date": "September 2025", "summary": "The Prefeitura de Monte Sião (Sul de Minas) confirmed a cyberattack on 29 September 2025 that diverted R$ 5,502,298.54 from 12 municipal bank accounts through 54 TED transfers and 6 internal movements. The scheme began with a social-engineering call impersonating a bank employee requesting security keys; the city filed reports with Military and Federal Police.", "source": "Security Leaders — https://securityleaders.com.br/ataque-cibernetico-subtrai-recursos-publicos-de-monte-siao-mg/", "id": 16, "source_outlet": "Security Leaders", "source_url": "https://securityleaders.com.br/ataque-cibernetico-subtrai-recursos-publicos-de-monte-siao-mg/"}, {"state": "Espírito Santo", "state_code": "ES", "company": "Lisa Logística", "industry": "Logistics / Transportation", "attack_type": "Ransomware", "date": "February 2026", "summary": "Lisa Logística, an integrated logistics provider headquartered on Rodovia BR-101 Norte in Serra (ES) with operations across SC, SP, ES, PB and MG, was listed by the Knight ransomware operation as a victim. A large volume of critical operational and customer information was reportedly stolen.", "source": "In_Cyber — https://www.incyber.net.br/one-liner/ransomware-atinge-empresa-de-logistica-no-brasil/", "id": 17, "source_outlet": "In_Cyber", "source_url": "https://www.incyber.net.br/one-liner/ransomware-atinge-empresa-de-logistica-no-brasil/"}, {"state": "Rio Grande do Sul", "state_code": "RS", "company": "Banco Agibank", "industry": "Finance / Banking", "attack_type": "Data Breach (PIX keys exposure)", "date": "February 2026", "summary": "On 13 Feb 2026, the Brazilian Central Bank disclosed that data tied to 5,290 PIX keys of Banco Agibank (headquartered in Porto Alegre, RS) customers had been exposed. Exposed fields included user name, masked CPF, relationship institution, branch, account number and account type — the first PIX incident registered in 2026 (underlying exposure window: Dec 2024–Jan 2025; 13 Feb 2026 is the BC disclosure date).", "source": "Agência Brasil — https://agenciabrasil.ebc.com.br/economia/noticia/2026-02/bc-registra-primeiro-incidente-com-chaves-pix-em-2026", "id": 18, "source_outlet": "Agência Brasil", "source_url": "https://agenciabrasil.ebc.com.br/economia/noticia/2026-02/bc-registra-primeiro-incidente-com-chaves-pix-em-2026"}, {"state": "Rondônia", "state_code": "RO", "company": "Defesa Civil de Rondônia (IDAP system)", "industry": "Government / Emergency Services", "attack_type": "Credential Compromise / System Intrusion", "date": "January 2026", "summary": "Rondônia's Civil Defense confirmed an attack on its IDAP emergency-alert platform on 5 Jan 2026. Compromised user credentials let the attacker push two false flood alerts ('Chuvas Intensas – Alagamento – Risco Muito Alto') to residents, directing them to a social-media account. The agency said no citizen personal data was leaked.", "source": "Athena Security — https://athenasecurity.com.br/defesa-civil-confirma-ataque-hacker-em-sistema-de-alertas-em-rondonia/", "id": 19, "source_outlet": "Athena Security", "source_url": "https://athenasecurity.com.br/defesa-civil-confirma-ataque-hacker-em-sistema-de-alertas-em-rondonia/"}, {"state": "Roraima", "state_code": "RR", "company": "FEMARH (Fundação Estadual do Meio Ambiente e Recursos Hídricos)", "industry": "Government / Environmental Agency", "attack_type": "System Intrusion / Website Defacement", "date": "January 2026", "summary": "The Government of Roraima confirmed a cyberattack against systems of the State Environmental and Water Resources Foundation (FEMARH) detected on 9 January 2026. The institutional website and internal systems were compromised. Operação Deface, run jointly by Roraima DERCC and São Paulo Civil Police, later arrested an IT-skilled suspect in Bauru (SP) on 2 Mar 2026.", "source": "TI Inside — https://tiinside.com.br/en/13/01/2026/governo-de-roraima-confirma-ataque-cibernetico-a-sistemas-da-area-ambiental/", "id": 20, "source_outlet": "TI Inside", "source_url": "https://tiinside.com.br/en/13/01/2026/governo-de-roraima-confirma-ataque-cibernetico-a-sistemas-da-area-ambiental/"}, {"state": "Amapá", "state_code": "AP", "company": "MacapáPrev (Macapá Previdência)", "industry": "Government / Municipal Pension Fund", "attack_type": "Physical Intrusion / Data Theft", "date": "March 2026", "summary": "On 14 Mar 2026 the headquarters of MacapáPrev was invaded overnight. Computers belonging to former directors, legal/administrative documents and security-camera footage were stolen without external signs of forced entry, while internal communications were cut. Amapá Civil Police opened an investigation under suspicion of 'queima de arquivo' tied to a R$ 221 million pension-fund shortfall probe.", "source": "Diário do Amapá — https://www.diariodoamapa.com.br/cadernos/policia/sede-da-macapaprev-sofre-invasao-com-roubo-de-pcs-e-processos-em-suspeita-de-queima-de-arquivo/", "id": 21, "source_outlet": "Diário do Amapá", "source_url": "https://www.diariodoamapa.com.br/cadernos/policia/sede-da-macapaprev-sofre-invasao-com-roubo-de-pcs-e-processos-em-suspeita-de-queima-de-arquivo/"}, {"state": "Pará", "state_code": "PA", "company": "COP30 visitors / Belém tourism (Operação Check Out)", "industry": "Tourism / Financial Fraud", "attack_type": "Fake Rental Listings / Digital Fraud", "date": "March 2026", "summary": "The Civil Police of Pará launched the third phase of Operação Check Out on 13 March 2026, arresting six suspects (including Italian national Giampetro Mor) tied to an electronic-fraud ring that targeted COP30 attendees during the UN climate conference in Belém (November 2025). The fraud scheme used fake rental listings for properties in Belém; arrests were executed in the Recife/PE metropolitan area. Estimated losses exceeded €500k (~R$ 3 million); approximately R$ 1 million in assets were blocked.", "source": "Blog do Antagonico — https://www.blogoantagonico.com.br/2026/03/a-cop-30-o-golpe-dos-alugueis-pc-do.html", "id": 22, "source_outlet": "Blog do Antagonico", "source_url": "https://www.blogoantagonico.com.br/2026/03/a-cop-30-o-golpe-dos-alugueis-pc-do.html"}, {"state": "Pará", "state_code": "PA", "company": "Banking customers (undisclosed) — Operação Invasão Digital", "industry": "Financial Fraud / Banking", "attack_type": "Account Takeover / Phishing-enabled Bank Fraud", "date": "February 2026", "summary": "The Civil Police of Pará's DCCEP dismantled a criminal network that stole cellphones across Brazil to access victims' bank apps and make fraudulent transfers, causing more than R$ 600,000 in losses. Five suspects were arrested in Belém and one in Rio Grande do Sul; the gang operated across PA, PE, MG, MT, GO, SP, RJ and SC.", "source": "CNN Brasil — https://www.cnnbrasil.com.br/nacional/norte/pa/quadrilha-e-presa-por-golpes-virtuais-que-geraram-prejuizo-de-r-600-mil/", "id": 23, "source_outlet": "CNN Brasil", "source_url": "https://www.cnnbrasil.com.br/nacional/norte/pa/quadrilha-e-presa-por-golpes-virtuais-que-geraram-prejuizo-de-r-600-mil/"}, {"state": "Tocantins", "state_code": "TO", "company": "Institutional systems (Operação Padlock)", "industry": "Government / Public-sector systems", "attack_type": "System Intrusion / Data Theft / Money Laundering", "date": "March 2026", "summary": "On 4 Mar 2026 Tocantins' DRCC arrested a 23-year-old in Santa Helena de Goiás for coordinating intrusions into institutional and corporate systems in Tocantins. The scheme involved extracting confidential data, selling it on clandestine markets and using it for fraudulent bank accounts and credit applications.", "source": "Conexão Tocantins — https://conexaoto.com.br/2026/03/04/suspeito-por-liderar-esquema-cibernetico-e-preso-em-goias-apos-invadir-sistemas-institucionais-do-tocantins", "id": 24, "source_outlet": "Conexão Tocantins", "source_url": "https://conexaoto.com.br/2026/03/04/suspeito-por-liderar-esquema-cibernetico-e-preso-em-goias-apos-invadir-sistemas-institucionais-do-tocantins"}, {"state": "Tocantins", "state_code": "TO", "company": "Digital-bank customers (undisclosed) — interstate operation", "industry": "Financial Fraud / Digital Banking", "attack_type": "Phishing / Account Takeover / Money Laundering", "date": "May 2026", "summary": "On 19 May 2026 Tocantins Civil Police executed an interstate operation against fraud schemes targeting customers of a digital bank. Four suspects were arrested in Tocantins, with nearly R$ 2 million in assets blocked. Investigation began after multiple Tocantins-based customers reported account takeovers tied to phishing and credential-theft chains operating across Brazilian states.", "source": "Sou de Palmas — https://soudepalmas.com.br/plantao-policial/operacao-contra-golpes-bancarios-pela-internet-prende-quatro-suspeitos-no-tocantins-e-bloqueia-quase-r-2-milhoes-em-bens", "id": 25, "source_outlet": "Sou de Palmas", "source_url": "https://soudepalmas.com.br/plantao-policial/operacao-contra-golpes-bancarios-pela-internet-prende-quatro-suspeitos-no-tocantins-e-bloqueia-quase-r-2-milhoes-em-bens"}, {"state": "Mato Grosso", "state_code": "MT", "company": "Secretaria Municipal de Saúde de Cuiabá", "industry": "Government / Public Health", "attack_type": "Cyberattack / Intrusion", "date": "November 2025", "summary": "On 5 Nov 2025 the Cuiabá Municipal Health Secretariat (SMS) detected a cyberattack targeting its data storage and management system. The case was registered at the Specialised Cybercrime Repression Delegation of Mato Grosso's Civil Police; the IT team activated security protocols to limit damage. Medical services continued without interruption.", "source": "CISO Advisor — https://www.cisoadvisor.com.br/prefeitura-de-cuiaba-informa-ataque-a-secretaria-da-saude/", "id": 26, "source_outlet": "CISO Advisor", "source_url": "https://www.cisoadvisor.com.br/prefeitura-de-cuiaba-informa-ataque-a-secretaria-da-saude/"}, {"state": "Mato Grosso", "state_code": "MT", "company": "Portal VGNOTICIAS (Várzea Grande)", "industry": "Media / Online News", "attack_type": "DDoS / Coordinated Attack", "date": "March 2026", "summary": "Beginning 20 Mar 2026 the Várzea Grande-based VGNOTICIAS portal was hit by a coordinated wave of automated attacks exceeding 1,000 accesses per minute from IPs in China, Argentina and Brazil. The technical team activated containment and notified authorities; the attacks coincided with the publication of a viral political video.", "source": "VGNoticias — https://www.vgnoticias.com.br/cidades/portal-vgnoticias-enfrenta-serie-de-ataques-e-instabilidade/144055", "id": 27, "source_outlet": "VGNoticias", "source_url": "https://www.vgnoticias.com.br/cidades/portal-vgnoticias-enfrenta-serie-de-ataques-e-instabilidade/144055"}, {"state": "Goiás", "state_code": "GO", "company": "Prefeitura de Morrinhos", "industry": "Government / Municipality", "attack_type": "Email Compromise / Intrusion", "date": "December 2025", "summary": "Attackers took over the institutional email of the Morrinhos procurement department, sending malicious messages aimed at improperly terminating municipal supplier contracts and attacking the reputations of public servants. Mayor Maycllyn Carreiro reported the incident to Goiás's Cybercrime Repression Delegation (DERCC), and the account was recovered with enhanced security.", "source": "G5News — https://www.g5news.com.br/policia/prefeitura-goiana-e-alvo-de-ataque-hacker-e-prefeito-aciona-policia/206673", "id": 28, "source_outlet": "G5News", "source_url": "https://www.g5news.com.br/policia/prefeitura-goiana-e-alvo-de-ataque-hacker-e-prefeito-aciona-policia/206673"}, {"state": "Goiás", "state_code": "GO", "company": "Prefeitura de Goiandira", "industry": "Government / Municipality", "attack_type": "Banking Fraud / Account Compromise", "date": "January 2026", "summary": "On 13 Jan 2026 Goiandira municipal government's executive bank accounts were violated by a hacker attack that resulted in unauthorised transfers. The prefeitura notified Banco do Brasil and the local Civil Police, which opened an investigation to identify those responsible and recover the stolen funds.", "source": "Portal Serra Dourada News — https://sdnews.com.br/noticia/4730/goiandira-prefeitura-comunica-ataque-hacker.html", "id": 29, "source_outlet": "Portal Serra Dourada News", "source_url": "https://sdnews.com.br/noticia/4730/goiandira-prefeitura-comunica-ataque-hacker.html"}, {"state": "Goiás", "state_code": "GO", "company": "Unimed Anápolis", "industry": "Healthcare / Medical Cooperative", "attack_type": "Ransomware", "date": "January 2026", "summary": "Unimed Anápolis, a major medical cooperative and health-insurance provider in central Goiás, was claimed as a victim by the TheGentlemen ransomware group (RaaS) on 21 Jan 2026. Infostealer activity indicated 37 compromised user accounts and 18 third-party employee credentials linked to the breach.", "source": "Ransomware.live — https://www.ransomware.live/id/VW5pbWVkIEFuw6Fwb2xpc0B0aGVnZW50bGVtZW4=", "id": 30, "source_outlet": "Ransomware.live", "source_url": "https://www.ransomware.live/id/VW5pbWVkIEFuw6Fwb2xpc0B0aGVnZW50bGVtZW4="}, {"state": "Goiás", "state_code": "GO", "company": "tvgoiania (Goiânia broadcaster)", "industry": "Media / Broadcasting", "attack_type": "Ransomware", "date": "January 2026", "summary": "The Goiânia-based media and news company tvgoiania was listed as a ransomware victim on 20 Jan 2026. The incident disrupted broadcasting operations and was tracked by international ransomware monitoring platforms as part of a broader wave of attacks against Brazilian media organisations.", "source": "Ransomware.live — https://www.ransomware.live/map/BR", "id": 31, "source_outlet": "Ransomware.live", "source_url": "https://www.ransomware.live/map/BR"}, {"state": "Goiás", "state_code": "GO", "company": "BNMP/CNJ judicial systems (hacker arrested in Caldas Novas)", "industry": "Justice / Government Systems", "attack_type": "System Intrusion / Data Manipulation", "date": "February 2026", "summary": "A 19-year-old was arrested in Caldas Novas, Goiás, in February 2026 accused of using stolen credentials of a penal officer to invade the BNMP (Banco Nacional de Mandados de Prisão) and related systems (RENAJUD, SISBAJUD), inserting more than 90 false arrest warrants and ordering improper asset blocks. He allegedly sold dark-web access to these systems.", "source": "Mais Goiás — https://www.maisgoias.com.br/cidades/hacker-que-criou-alvara-de-prisao-falso-para-lula-e-alexandre-de-moraes-e-preso-em-caldas-novas/", "id": 32, "source_outlet": "Mais Goiás", "source_url": "https://www.maisgoias.com.br/cidades/hacker-que-criou-alvara-de-prisao-falso-para-lula-e-alexandre-de-moraes-e-preso-em-caldas-novas/"}, {"state": "Mato Grosso do Sul", "state_code": "MS", "company": "Governo do Estado de Mato Grosso do Sul (Portal MS / PMMS)", "industry": "Government / Public Administration", "attack_type": "Website Intrusion / Defacement", "date": "May 2026", "summary": "Starting the evening of 18 May 2026 hackers exploited a weak user password to access publication systems of the MS Military Police and the Portal MS state-government website, posting unauthorised content. The Information Management Superintendence (SGI) removed the posts and blocked the compromised credentials.", "source": "Campo Grande News — https://www.campograndenews.com.br/brasil/cidades/sites-do-governo-do-estado-sofrem-ataques-de-hackers", "id": 33, "source_outlet": "Campo Grande News", "source_url": "https://www.campograndenews.com.br/brasil/cidades/sites-do-governo-do-estado-sofrem-ataques-de-hackers"}, {"state": "Mato Grosso do Sul", "state_code": "MS", "company": "Detran-MS (impersonation campaign)", "industry": "Government / Public Services", "attack_type": "Phishing Infrastructure / Brand Spoofing", "date": "March 2026", "summary": "Between Jan and Mar 2026 the IT team at Detran-MS (Mato Grosso do Sul Transit Department) identified and took down more than 10 fraudulent websites impersonating the institution and used to defraud drivers and vehicle owners. The agency intensified monitoring of malicious domains and warned the public about scams.", "source": "Agência de Notícias Governo MS — https://agenciadenoticias.ms.gov.br/detran-de-mato-grosso-do-sul-ja-derrubou-mais-de-10-sites-falsos-em-2026-e-intensifica-monitoramento/", "id": 34, "source_outlet": "Agência de Notícias Governo MS", "source_url": "https://agenciadenoticias.ms.gov.br/detran-de-mato-grosso-do-sul-ja-derrubou-mais-de-10-sites-falsos-em-2026-e-intensifica-monitoramento/"}, {"state": "Distrito Federal", "state_code": "DF", "company": "British School of Brasília", "industry": "Education / Private School", "attack_type": "Ransomware", "date": "January 2026", "summary": "The British School of Brasília was listed as a victim on the TheGentlemen ransomware group's leak site on 20 January 2026 (the leak-site posting date; underlying attack date is unconfirmed). The TheGentlemen group, active since mid-2025, deploys a Go-based locker against Windows, Linux, NAS and BSD environments and the disclosure included partial samples of internal documents.", "source": "Ransomware.live — https://www.ransomware.live/group/thegentlemen", "id": 35, "source_outlet": "Ransomware.live", "source_url": "https://www.ransomware.live/group/thegentlemen"}, {"state": "São Paulo", "state_code": "SP", "company": "Multiplan / Multi app (MorumbiShopping — SP)", "industry": "Retail / Shopping Centers", "attack_type": "Data Breach / App Intrusion", "date": "January 2026", "summary": "Multiplan confirmed that the 10 Jan 2026 unauthorised access to its Multi app exposed personal data of customers of MorumbiShopping in São Paulo (BarraShopping in RJ is tracked separately under the RJ corporate disclosure). The breach hit registration data plus partial card details (expiration date and last four digits); full card data stored at certified third-party PSPs was reportedly not compromised.", "source": "Olhar Digital — https://olhardigital.com.br/2026/01/20/seguranca/multi-ataque-hacker-atinge-aplicativo-de-shoppings-famosos/", "id": 36, "source_outlet": "Olhar Digital", "source_url": "https://olhardigital.com.br/2026/01/20/seguranca/multi-ataque-hacker-atinge-aplicativo-de-shoppings-famosos/"}, {"state": "São Paulo", "state_code": "SP", "company": "Government of São Paulo state systems (Operação Intruder)", "industry": "Government / State Administration", "attack_type": "System Intrusion / Data Exfiltration", "date": "May 2026", "summary": "On 7 May 2026 the São Paulo Civil Police Corregedoria and the state Controladoria-Geral executed Operação Intruder targeting an IT professional accused of extracting and selling institutional data from SP state government systems on clandestine forums. Search-and-seizure warrants were executed at a data centre in Belo Horizonte and the suspect's residence in Belmiro Braga (MG); the suspect was placed under electronic monitoring.", "source": "Hardware.com.br — https://www.hardware.com.br/noticias/operacao-intruder-policia-civil-sp-invasao-hacker-sistemas-publicos/", "id": 37, "source_outlet": "Hardware.com.br", "source_url": "https://www.hardware.com.br/noticias/operacao-intruder-policia-civil-sp-invasao-hacker-sistemas-publicos/"}, {"state": "Goiás", "state_code": "GO", "company": "Credifit Sociedade de Crédito Direto", "industry": "Fintech / Credit", "attack_type": "Credential Abuse / Data Exposure", "date": "May 2026", "summary": "On 12 May 2026 Banco Central registered the fourth PIX data exposure of 2026 involving Credifit — a Goiânia-based credit fintech. Registration information of 46 customers was exposed between 26-28 April 2026 following improper use of legitimate credentials obtained outside Credifit's environment.", "source": "Times Brasil — https://timesbrasil.com.br/empresas-e-negocios/bancos-fintechs/banco-central-vazamento-dados-pix-credifit-2026/", "id": 38, "source_outlet": "Times Brasil", "source_url": "https://timesbrasil.com.br/empresas-e-negocios/bancos-fintechs/banco-central-vazamento-dados-pix-credifit-2026/"}, {"state": "Rio de Janeiro", "state_code": "RJ", "company": "BTG Pactual", "industry": "Finance / Investment Banking", "attack_type": "Cyberattack / Pix Diversion", "date": "March 2026", "summary": "On 22 Mar 2026 BTG Pactual — Brazil's largest investment bank, headquartered in Rio de Janeiro — confirmed a cyberattack that exploited vulnerabilities in its Pix platform and diverted approximately R$ 100 million on a Sunday morning. The bank preventively suspended Pix, restored services on 23 March, and stated no client accounts or personal data were directly accessed.", "source": "TI Inside — https://tiinside.com.br/22/03/2026/btg-pactual-sofre-ataque-hacker-na-sua-plataforma-pix/", "id": 39, "source_outlet": "TI Inside", "source_url": "https://tiinside.com.br/22/03/2026/btg-pactual-sofre-ataque-hacker-na-sua-plataforma-pix/"}, {"state": "Rio de Janeiro", "state_code": "RJ", "company": "Multiplan Empreendimentos Imobiliários (corporate disclosure)", "industry": "Retail / Shopping Mall Operator", "attack_type": "Data Breach / App Intrusion", "date": "January 2026", "summary": "Multiplan — headquartered in Rio de Janeiro — officially confirmed on 19 Jan 2026 the unauthorised access to the database behind its Multi loyalty/parking app, affecting customers across its national shopping portfolio. The company notified ANPD and hired specialised external consulting to investigate the incident.", "source": "CISO Advisor — https://www.cisoadvisor.com.br/multiplan-confirma-invasao-em-app-de-shoppings/", "id": 40, "source_outlet": "CISO Advisor", "source_url": "https://www.cisoadvisor.com.br/multiplan-confirma-invasao-em-app-de-shoppings/"}, {"state": "Minas Gerais", "state_code": "MG", "company": "Prefeitura de Poços de Caldas", "industry": "Government / Municipal", "attack_type": "Website Intrusion / Defacement attempt", "date": "December 2025", "summary": "On the night of 15 Dec 2025 the Prefeitura de Poços de Caldas (Sul de Minas) detected a cyberattack attempt against its official website. Security protocols including preventive site suspension were activated; the city later confirmed no data leakage and that only an image on a single page of the Portal do Cidadão was altered.", "source": "Security Leaders — https://securityleaders.com.br/apos-incidente-cibernetico-prefeitura-de-pocos-de-caldas-anuncia-restabelecimento-dos-servicos/", "id": 41, "source_outlet": "Security Leaders", "source_url": "https://securityleaders.com.br/apos-incidente-cibernetico-prefeitura-de-pocos-de-caldas-anuncia-restabelecimento-dos-servicos/"}, {"state": "Minas Gerais", "state_code": "MG", "company": "5 Sul-de-Minas municipalities (Carmópolis de Minas, Serro, Ribeirão Vermelho, Presidente Juscelino, Luz)", "industry": "Government / Municipal", "attack_type": "Banking System Intrusion / Fund Diversion", "date": "September 2025", "summary": "Five Minas Gerais municipalities — Carmópolis de Minas, Serro, Ribeirão Vermelho, Presidente Juscelino and Luz — had their Caixa Econômica Federal municipal accounts compromised across 2024-2025, with R$ 5.8 million in aggregated diverted public funds. Carmópolis de Minas suffered the largest single loss at approximately R$ 2.09 million; the Association of Municipalities of MG opened negotiations with Caixa for reimbursement (disclosure September 2025).", "source": "Diário do Comércio — https://diariodocomercio.com.br/economia/municipios-mg-tentam-ressarcir-prejuizo-ataque-hackers/", "id": 42, "source_outlet": "Diário do Comércio", "source_url": "https://diariodocomercio.com.br/economia/municipios-mg-tentam-ressarcir-prejuizo-ataque-hackers/"}, {"state": "Paraná", "state_code": "PR", "company": "Multiplan / Multi app (Park Shopping Barigui, Curitiba)", "industry": "Retail / Shopping Centers", "attack_type": "Data Breach / App Intrusion", "date": "January 2026", "summary": "On 10 Jan 2026 Multiplan's Multi app — used by visitors of Park Shopping Barigui in Curitiba alongside SP and RJ malls — was breached. Exposed data included name, CPF, email, phone, and the last four digits and expiration dates of registered credit cards. Multiplan notified users via SMS on 19 January and engaged an external audit.", "source": "Tribuna do Paraná — https://www.tribunapr.com.br/noticias/curitiba-regiao/app-de-shopping-em-curitiba-sofre-ataque-hacker-e-dados-de-clientes-sao-vazados/", "id": 43, "source_outlet": "Tribuna do Paraná", "source_url": "https://www.tribunapr.com.br/noticias/curitiba-regiao/app-de-shopping-em-curitiba-sofre-ataque-hacker-e-dados-de-clientes-sao-vazados/"}, {"state": "Paraná", "state_code": "PR", "company": "DDoS suspects (Operação Intolerans — Curitiba arm)", "industry": "Cybercrime / Politically Motivated DDoS", "attack_type": "DDoS (coordinated botnet)", "date": "December 2025", "summary": "On 2 Dec 2025 the Polícia Federal executed search-and-seizure warrants in Curitiba (PR) and São Paulo against operators of a coordinated DDoS campaign that targeted websites of federal deputies. The Curitiba arm of Operação Intolerans placed PR-based infrastructure of the politically motivated botnet at the centre of the investigation.", "source": "Olhar Digital — https://olhardigital.com.br/2025/12/02/seguranca/policia-federal-investiga-ataques-ciberneticos-contra-deputados-pro-pl-antiaborto/", "id": 44, "source_outlet": "Olhar Digital", "source_url": "https://olhardigital.com.br/2025/12/02/seguranca/policia-federal-investiga-ataques-ciberneticos-contra-deputados-pro-pl-antiaborto/"}, {"state": "Santa Catarina", "state_code": "SC", "company": "Brandili", "industry": "Manufacturing / Textile", "attack_type": "Ransomware / System Outage", "date": "April 2026", "summary": "On 22 Apr 2026 a hacker attack brought down the systems of Brandili — a major Santa Catarina textile company with administrative HQ in Blumenau and factory in Apiúna — paralysing internal network and internet for several days. Brandili produces more than 15 million children's apparel pieces annually and employs ~1,100 people; criminals reportedly demanded approximately US$ 5 million ransom.", "source": "NSC Total — https://www.nsctotal.com.br/noticias/ataque-hacker-derruba-sistema-e-compromete-atividades-de-gigante-textil-de-sc", "id": 45, "source_outlet": "NSC Total", "source_url": "https://www.nsctotal.com.br/noticias/ataque-hacker-derruba-sistema-e-compromete-atividades-de-gigante-textil-de-sc"}, {"state": "Alagoas", "state_code": "AL", "company": "Government of Alagoas (multiple state agencies)", "industry": "State Government / Public Administration", "attack_type": "System Intrusion / Data Theft and Sale", "date": "December 2025", "summary": "Alagoas Civil Police and the State Controladoria opened a criminal investigation reported in December 2025 into a cyberattack on multiple state-government systems that resulted in the leak and online sale of confidential data, including personal data of public servants, access passwords and internal records being commercialised on clandestine deep- and dark-web forums.", "source": "Alagoas 24 Horas — https://www.alagoas24horas.com.br/1737320/policia-civil-e-controladoria-investigam-ataque-hacker-a-sistemas-publicos-vazamento-e-venda-de-dados-do-governo/", "id": 46, "source_outlet": "Alagoas 24 Horas", "source_url": "https://www.alagoas24horas.com.br/1737320/policia-civil-e-controladoria-investigam-ataque-hacker-a-sistemas-publicos-vazamento-e-venda-de-dados-do-governo/"}, {"state": "Paraíba", "state_code": "PB", "company": "Prefeitura Municipal de João Pessoa (ISS system)", "industry": "Municipal Government", "attack_type": "Malware / System Intrusion", "date": "December 2025", "summary": "The João Pessoa city hall attributed prolonged outages of its electronic ISS tax-invoice system to a hacker attack, stating that a 'rare virus' had been planted in the platform. The city's communications secretary said technicians were sweeping the network, with an estimated R$ 2.5 million in unrecoverable ISS revenue and significant impact on local businesses unable to issue tax receipts.", "source": "PB Agora — https://www.pbagora.com.br/noticia/politica/invasao-de-hackers-poe-em-xeque-o-sigilo-dos-dados-do-pessoense/", "id": 47, "source_outlet": "PB Agora", "source_url": "https://www.pbagora.com.br/noticia/politica/invasao-de-hackers-poe-em-xeque-o-sigilo-dos-dados-do-pessoense/"}, {"state": "Paraíba", "state_code": "PB", "company": "Pix-fraud cell (arrest in Campina Grande)", "industry": "Banking Infrastructure / Cybercrime Ring", "attack_type": "Banking System Intrusion / Pix Laundering", "date": "October 2025", "summary": "On 31 Oct 2025 the Federal Police and Paraíba Military Police arrested a 29-year-old man in Campina Grande's José Pinheiro neighbourhood who allegedly participated in Brazil's largest cyber heist — the C&M Software-related Pix attack that siphoned roughly R$ 800 million from banks. The suspect was tied to a transnational crypto-laundering ring tracked by PF intelligence.", "source": "Paraíba Online — https://paraibaonline.com.br/policial/2025/10/31/suspeito-de-ataque-hacker-que-desviou-r-800-milhoes-e-preso-em-campina-grande/", "id": 48, "source_outlet": "Paraíba Online", "source_url": "https://paraibaonline.com.br/policial/2025/10/31/suspeito-de-ataque-hacker-que-desviou-r-800-milhoes-e-preso-em-campina-grande/"}, {"state": "Maranhão", "state_code": "MA", "company": "Imperatriz cryptocurrency-fraud cell (Operação Decrypted II)", "industry": "Financial Fraud / Cryptocurrency", "attack_type": "Electronic Fraud / Cryptocurrency Theft and Laundering", "date": "March 2026", "summary": "Brazilian Federal Police launched Operação Decrypted II on 3 Mar 2026, arresting a suspect in Imperatriz, Maranhão, accused of participating in an international electronic-fraud scheme that stole approximately US$ 2.6 million (R$ 13 million) in cryptocurrency from digital wallets held at a US exchange. The investigation was triggered by a US Homeland Security El Dorado Task Force alert.", "source": "Jovem Pan São Luís — https://www.jovempansaoluis.com.br/2026/03/03/operacao-decrypted-ii-mira-fraude-internacional-de-us-26-milhoes-em-criptoativos-no-maranhao/", "id": 49, "source_outlet": "Jovem Pan São Luís", "source_url": "https://www.jovempansaoluis.com.br/2026/03/03/operacao-decrypted-ii-mira-fraude-internacional-de-us-26-milhoes-em-criptoativos-no-maranhao/"}, {"state": "Rio Grande do Norte", "state_code": "RN", "company": "Federação Norte-rio-grandense de Futebol (FNF)", "industry": "Sports / Football federation", "attack_type": "Website Defacement", "date": "November 2025", "summary": "The FNF, headquartered in Natal (RN), confirmed its official website fnf.org.br was the target of a hacker attack on the night of 28 November 2025. The internal IT team took the domain offline as a security measure and later restored it; authorship was claimed by the CyberTeam hacktivist group, known for defacement operations in Brazil. The federation did not detail data impact.", "source": "Ponta Negra News — https://pontanegranews.com.br/2025/11/28/site-fnf-fora-do-ar-apos-ataque-hacker/", "id": 50, "source_outlet": "Ponta Negra News", "source_url": "https://pontanegranews.com.br/2025/11/28/site-fnf-fora-do-ar-apos-ataque-hacker/"}, {"state": "Piauí", "state_code": "PI", "company": "Estação I / IEL TV", "industry": "Media / Broadcasting", "attack_type": "Attempted Intrusion", "date": "October 2025", "summary": "The production company Estação I and IEL TV channel issued a clarification note on 7 October 2025 stating their operating systems were targeted by an attempted cyber invasion on the night of 6 October 2025. The attack was controlled by the company's technical team with support from the DRCI (Cybercrime Repression Division) of the Piauí Civil Police; the system was fully recovered without permanent damage.", "source": "180graus — https://180graus.com/bastidores-da-midia/estacao-i-e-iel-tv-sofrem-tentativa-de-ataque-cibernetico-policia-civil-do-piaui-investiga-o-caso/", "id": 51, "source_outlet": "180graus", "source_url": "https://180graus.com/bastidores-da-midia/estacao-i-e-iel-tv-sofrem-tentativa-de-ataque-cibernetico-policia-civil-do-piaui-investiga-o-caso/"}, {"state": "Piauí", "state_code": "PI", "company": "Detran-PI (Departamento Estadual de Trânsito do Piauí)", "industry": "Government / State Transit Authority", "attack_type": "Website Defacement", "date": "February 2026", "summary": "The Detran-PI website was the target of a hacker attack that defaced platform access tabs with offensive language and political phrases including 'imposto é roubo'. The Detran-PI IT team resolved the situation and the site was restored on 28 February 2026; the agency stated that no user, vehicle, or fee data were affected.", "source": "Lupa1 — https://lupa1.com.br/noticias/geral/site-do-detran-pi-volta-a-funcionar-apos-ataque-hacker-12300.html", "id": 52, "source_outlet": "Lupa1", "source_url": "https://lupa1.com.br/noticias/geral/site-do-detran-pi-volta-a-funcionar-apos-ataque-hacker-12300.html"}, {"state": "Bahia", "state_code": "BA", "company": "bahia.ba (news portal)", "industry": "Media / Digital news portal", "attack_type": "Account Takeover / Extortion", "date": "April 2026", "summary": "A hacker took control of the Salvador-based bahia.ba portal's Instagram account on 23 April 2026, taking the page (~129,000 followers) offline and demanding a ransom payment to return control. CEO Gabriel Fernando refused; the portal filed a police report with the BA Civil Police and coordinated with Meta. The main Instagram profile was recovered on the morning of 21 May 2026.", "source": "bahia.ba — https://bahia.ba/bahia/conta-do-bahia-ba-no-instagram-e-recuperada-apos-ataque-hacker-e-retorna-nesta-quinta-21/", "id": 53, "source_outlet": "bahia.ba", "source_url": "https://bahia.ba/bahia/conta-do-bahia-ba-no-instagram-e-recuperada-apos-ataque-hacker-e-retorna-nesta-quinta-21/"}, {"state": "Pernambuco", "state_code": "PE", "company": "Prefeitura de Jaboatão dos Guararapes", "industry": "Government / Municipal", "attack_type": "Website Defacement", "date": "November 2025", "summary": "The Prefeitura de Jaboatão dos Guararapes (PE) website and linked portals including Procon were invaded by hackers on the early morning of 14 November 2025. Visitors saw a defacement message written in English criticizing political corruption. The municipality's Superintendência de Tecnologia da Informação opened an investigation with police authorities.", "source": "Folha PE — https://www.folhape.com.br/noticias/prefeitura-jaboatao-ataque-hacker/347822/", "id": 54, "source_outlet": "Folha PE", "source_url": "https://www.folhape.com.br/noticias/prefeitura-jaboatao-ataque-hacker/347822/"}, {"state": "Rio Grande do Sul", "state_code": "RS", "company": "Unimed Federação/RS", "industry": "Healthcare / Health insurance cooperative", "attack_type": "Ransomware (double extortion)", "date": "October 2025", "summary": "Unimed Rio Grande do Sul suffered a cyberattack on 5 October 2025 that left several internal systems temporarily unavailable. On 15 October the Sarcoma ransomware group claimed responsibility and announced exfiltration of approximately 2.8 TB of data, which was effectively published on the dark web on 28 October 2025 in 27 compressed parts of approximately 100 GB each. Exposed material included SQL databases, identity-document images and medical consultation data; ANPD was notified on 21 October 2025.", "source": "Axur — https://blog.axur.com/pt-br/novos-dados-revelam-como-ataque-do-grupo-sarcoma-comprometeu-a-unimed-rs", "id": 55, "source_outlet": "Axur", "source_url": "https://blog.axur.com/pt-br/novos-dados-revelam-como-ataque-do-grupo-sarcoma-comprometeu-a-unimed-rs"}, {"state": "São Paulo", "state_code": "SP", "company": "Pefisa S.A. (Grupo Pernambucanas)", "industry": "Financial services / Fintech", "attack_type": "Data Breach (Pix keys exposure)", "date": "March 2026", "summary": "On 21 March 2026 Banco Central confirmed exposure of cadastral data linked to 28,203 Pix keys under the custody of Pefisa S.A., the financial-services arm of Grupo Pernambucanas (~5 million active customers). BC attributed the leak to 'punctual failures' in the institution's systems between 30 August 2025 and 27 February 2026. Exposed data included name, CPF, institution, branch and account number/type; the third Pix incident disclosed by BC in 2026.", "source": "Olhar Digital — https://olhardigital.com.br/2026/03/21/seguranca/banco-central-comunica-vazamento-de-mais-de-28-mil-chaves-pix-da-pefisa/", "id": 56, "source_outlet": "Olhar Digital", "source_url": "https://olhardigital.com.br/2026/03/21/seguranca/banco-central-comunica-vazamento-de-mais-de-28-mil-chaves-pix-da-pefisa/"}, {"state": "Goiás", "state_code": "GO", "company": "Ministério Público do Estado de Goiás (MPGO)", "industry": "Public sector / State prosecutor's office", "attack_type": "Credential Abuse / Pix data exposure", "date": "March 2026", "summary": "Banco Central disclosed in March 2026 the exposure of cadastral data linked to 93 Pix keys (tied to 51 CPFs) following unauthorized access to a system operated by the Ministério Público do Estado de Goiás. The MPGO stated the incident resulted from the compromise of an agency member's credentials through password reuse on an external service; BC, the CyberGaeco unit of MPGO and ANPD were formally notified.", "source": "Agência Brasil — https://agenciabrasil.ebc.com.br/economia/noticia/2026-03/bc-comunica-exposicao-de-chaves-pix-em-sistema-do-mp-de-goias", "id": 57, "source_outlet": "Agência Brasil", "source_url": "https://agenciabrasil.ebc.com.br/economia/noticia/2026-03/bc-comunica-exposicao-de-chaves-pix-em-sistema-do-mp-de-goias"}];
+const STATE_NAMES = {"AC": "Acre", "AL": "Alagoas", "AM": "Amazonas", "AP": "Amapá", "BA": "Bahia", "CE": "Ceará", "DF": "Distrito Federal", "ES": "Espírito Santo", "GO": "Goiás", "MA": "Maranhão", "MG": "Minas Gerais", "MS": "Mato Grosso do Sul", "MT": "Mato Grosso", "PA": "Pará", "PB": "Paraíba", "PE": "Pernambuco", "PI": "Piauí", "PR": "Paraná", "RJ": "Rio de Janeiro", "RN": "Rio Grande do Norte", "RO": "Rondônia", "RR": "Roraima", "RS": "Rio Grande do Sul", "SC": "Santa Catarina", "SE": "Sergipe", "SP": "São Paulo", "TO": "Tocantins"};
+const COUNTS = {"RJ": 5, "DF": 4, "CE": 1, "SE": 2, "PE": 2, "SP": 5, "SC": 3, "MG": 4, "ES": 1, "RS": 2, "RO": 1, "RR": 1, "AP": 1, "PA": 2, "TO": 2, "MT": 2, "GO": 7, "MS": 2, "PR": 2, "AL": 1, "PB": 2, "MA": 1, "RN": 1, "PI": 2, "BA": 1};
+
+(function() {
+  // ===== Language toggle (uses same localStorage key as the main site: 'savoir-lang') =====
+  const STORE_KEY = 'savoir-lang';
+  const html = document.documentElement;
+  function setLang(l) {
+    html.setAttribute('data-lang', l);
+    html.setAttribute('lang', l === 'pt' ? 'pt-BR' : 'en');
+    document.querySelectorAll('.ti-lang-toggle button').forEach(b => b.classList.toggle('active', b.dataset.setLang === l));
+    try { localStorage.setItem(STORE_KEY, l); } catch (e) {}
+  }
+  document.querySelectorAll('.ti-lang-toggle button').forEach(btn => {
+    btn.addEventListener('click', () => setLang(btn.dataset.setLang));
+  });
+  // restore saved language if any
+  try {
+    const saved = localStorage.getItem(STORE_KEY);
+    if (saved === 'pt' || saved === 'en') setLang(saved);
+  } catch (e) {}
+
+  // ===== Map interactions =====
+  const panel = document.getElementById('bcm-panel');
+  const backdrop = document.getElementById('bcm-backdrop');
+  const closeBtn = document.getElementById('bcm-panel-close');
+  const panelBody = document.getElementById('bcm-panel-body');
+  const panelCode = document.getElementById('bcm-panel-code');
+  const panelName = document.getElementById('bcm-panel-name');
+
+  function escapeHTML(s) {
+    return String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+  }
+
+  function openPanel(code) {
+    const items = INCIDENTS.filter(i => i.state_code === code);
+    if (!items.length) return;
+    panelCode.textContent = code;
+    panelName.textContent = STATE_NAMES[code] || code;
+    panelBody.innerHTML = items.map(it => {
+      const outlet = it.source_outlet || '';
+      const url = it.source_url || '';
+      const linkHTML = url ? `<a href="${escapeHTML(url)}" target="_blank" rel="noopener">${escapeHTML(outlet || url)}</a>` : escapeHTML(outlet);
+      return `
+        <article class="bcm-incident">
+          <div class="bcm-i-meta">
+            <span><b>${escapeHTML(it.date || '')}</b></span>
+            <span>${escapeHTML(it.attack_type || '')}</span>
+          </div>
+          <h4 class="bcm-i-victim">${escapeHTML(it.company || '')}</h4>
+          <div class="bcm-i-industry">${escapeHTML(it.industry || '')}</div>
+          <p class="bcm-i-summary">${escapeHTML(it.summary || '')}</p>
+          <div class="bcm-i-source-row">Source · ${linkHTML}</div>
+        </article>`;
+    }).join('');
+
+    document.querySelectorAll('.bcm-state.bcm-selected').forEach(el => el.classList.remove('bcm-selected'));
+    const sel = document.getElementById('state-' + code);
+    if (sel) sel.classList.add('bcm-selected');
+
+    panel.classList.add('bcm-open');
+    backdrop.classList.add('bcm-show');
+    if (window.matchMedia('(max-width: 1023px)').matches) {
+      panelBody.scrollTop = 0;
+      document.body.style.overflow = 'hidden';
+    }
+  }
+
+  function closePanel() {
+    panel.classList.remove('bcm-open');
+    backdrop.classList.remove('bcm-show');
+    document.querySelectorAll('.bcm-state.bcm-selected').forEach(el => el.classList.remove('bcm-selected'));
+    document.body.style.overflow = '';
+  }
+
+  function handleSelect(e) {
+    const t = e.target.closest('[data-code]');
+    if (!t) return;
+    const code = t.dataset.code;
+    if (!code || !COUNTS[code]) return;
+    e.preventDefault && e.preventDefault();
+    openPanel(code);
+  }
+  document.querySelector('.bcm-svg').addEventListener('click', handleSelect);
+
+  document.querySelectorAll('.bcm-state.bcm-active, .bcm-marker').forEach(el => {
+    el.setAttribute('tabindex', '0');
+    el.setAttribute('role', 'button');
+    el.addEventListener('keydown', e => {
+      if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); handleSelect({target: el, preventDefault: () => {}}); }
+    });
+  });
+
+  closeBtn.addEventListener('click', closePanel);
+  backdrop.addEventListener('click', closePanel);
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') closePanel(); });
+})();
+</script>
+</body>
+</html>
