@@ -1,9 +1,22 @@
 <!DOCTYPE html>
-<html lang="pt-BR" data-lang="pt">
+<html lang="pt-BR" data-lang="pt" data-theme="dark">
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<meta name="description" content="SavoirIntel — Auditoria de segurança ofensiva para empresas brasileiras. Penetration testing, conformidade LGPD, e relatórios em português que o seu CFO entende." />
+<script>
+  // Pre-paint theme init to avoid FOUC
+  (function(){
+    try {
+      var saved = localStorage.getItem('savoir-theme');
+      var prefersLight = window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches;
+      var theme = (saved === 'light' || saved === 'dark') ? saved : (prefersLight ? 'light' : 'dark');
+      document.documentElement.setAttribute('data-theme', theme);
+    } catch(e) {
+      document.documentElement.setAttribute('data-theme', 'dark');
+    }
+  })();
+</script>
+<meta name="description" content="SavoirIntel — Os clientes mais bem-sucedidos contam conosco para reduzir os riscos desnecessários que ameaçam tudo o que construíram. Protegemos o Brasil. Protegemos o seu futuro. Segurança ofensiva alinhada à LGPD, executada por operadores certificados com presença local." />
 <meta name="theme-color" content="#050505" />
 <meta property="og:title" content="SavoirIntel — Cybersecurity for Brazilian SMBs" />
 <meta property="og:description" content="Auditoria de segurança ofensiva. Identificamos vulnerabilidades reais antes que se tornem multas LGPD." />
@@ -14,7 +27,8 @@
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
 <link rel="icon" type="image/png" href="threat_intel_logo.png">
 <style>
-  :root {
+  :root,
+  [data-theme="dark"] {
     --bg: #050505;
     --bg-elevated: #0c0c0c;
     --bg-card: #101010;
@@ -27,11 +41,37 @@
     --accent-bright: #d9bb7e;
     --accent-dim: #6b5a3a;
     --danger: #b56b6b;
+    --nav-bg: rgba(5,5,5,0.72);
+    --nav-bg-mobile: rgba(5,5,5,0.97);
+    --footer-bg: #020202;
+    --field-focus-bg: #080808;
+    --grid-line: rgba(201,169,110,0.04);
+    --hero-glow-color: rgba(201,169,110,0.16);
     --serif: 'Cormorant Garamond', 'Georgia', serif;
     --sans: 'Inter', system-ui, -apple-system, sans-serif;
     --mono: 'JetBrains Mono', ui-monospace, monospace;
     --maxw: 1240px;
     --section-py: 120px;
+  }
+  [data-theme="light"] {
+    --bg: #f5f1ea;
+    --bg-elevated: #ebe5d8;
+    --bg-card: #ffffff;
+    --border: #d8d0c0;
+    --border-strong: #bcb09a;
+    --text: #1a1714;
+    --text-muted: #5a554c;
+    --text-faint: #9a9388;
+    --accent: #b08e4f;
+    --accent-bright: #c9a96e;
+    --accent-dim: #8a6f3a;
+    --danger: #9c4a4a;
+    --nav-bg: rgba(245,241,234,0.82);
+    --nav-bg-mobile: rgba(245,241,234,0.97);
+    --footer-bg: #ebe5d8;
+    --field-focus-bg: #fdfbf6;
+    --grid-line: rgba(176,142,79,0.07);
+    --hero-glow-color: rgba(176,142,79,0.10);
   }
   * { box-sizing: border-box; margin: 0; padding: 0; }
   html { scroll-behavior: smooth; }
@@ -44,6 +84,14 @@
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     overflow-x: hidden;
+    transition: background-color 0.3s ease, color 0.3s ease;
+  }
+  .nav, .problem, .process, .standards, .founder, .team,
+  .service-card, .problem-card, .report-card, .channel,
+  .contact-form, .field input, .field select, .field textarea,
+  .standard, .team-card, footer, .remediation-callout,
+  .credentials-strip, .footer-bottom {
+    transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
   }
   a { color: inherit; text-decoration: none; }
   img { display: block; max-width: 100%; }
@@ -72,11 +120,11 @@
     position: fixed; top: 0; left: 0; right: 0;
     z-index: 100;
     padding: 18px 32px;
-    background: rgba(5,5,5,0.72);
+    background: var(--nav-bg);
     backdrop-filter: blur(14px);
     -webkit-backdrop-filter: blur(14px);
     border-bottom: 1px solid transparent;
-    transition: border-color 0.3s, padding 0.3s;
+    transition: border-color 0.3s, padding 0.3s, background-color 0.3s ease;
   }
   .nav.scrolled { border-bottom-color: var(--border); padding: 12px 32px; }
   .nav-inner {
@@ -119,7 +167,28 @@
     background: transparent; color: var(--text-muted); border: none;
     padding: 6px 12px; letter-spacing: 0.1em; transition: all 0.2s;
   }
-  .lang-toggle button.active { background: var(--accent); color: #000; }
+  .lang-toggle button.active { background: var(--accent); color: var(--bg); }
+  .theme-toggle {
+    display: inline-flex; align-items: center; justify-content: center;
+    width: 38px; height: 32px;
+    background: var(--bg-elevated);
+    border: 1px solid var(--border-strong);
+    color: var(--text-muted);
+    border-radius: 2px;
+    padding: 0; cursor: pointer;
+    transition: color 0.2s, border-color 0.2s, background-color 0.2s, box-shadow 0.2s;
+    -webkit-tap-highlight-color: transparent;
+    min-height: 32px;
+  }
+  .theme-toggle:hover { color: var(--accent); border-color: var(--accent-dim); }
+  .theme-toggle:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+  .theme-toggle svg { width: 16px; height: 16px; display: block; }
+  .theme-toggle .icon-sun { display: none; }
+  .theme-toggle .icon-moon { display: block; }
+  [data-theme="dark"] .theme-toggle .icon-sun { display: block; }
+  [data-theme="dark"] .theme-toggle .icon-moon { display: none; }
+  [data-theme="light"] .theme-toggle .icon-sun { display: none; }
+  [data-theme="light"] .theme-toggle .icon-moon { display: block; }
   .nav-cta {
     padding: 10px 20px; border: 1px solid var(--accent);
     color: var(--accent); font-size: 13px; letter-spacing: 0.04em;
@@ -138,8 +207,8 @@
   .hero-grid-bg {
     position: absolute; inset: 0; pointer-events: none;
     background-image:
-      linear-gradient(rgba(201,169,110,0.04) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(201,169,110,0.04) 1px, transparent 1px);
+      linear-gradient(var(--grid-line) 1px, transparent 1px),
+      linear-gradient(90deg, var(--grid-line) 1px, transparent 1px);
     background-size: 80px 80px;
     mask-image: radial-gradient(ellipse at 70% 40%, black 0%, transparent 70%);
     -webkit-mask-image: radial-gradient(ellipse at 70% 40%, black 0%, transparent 70%);
@@ -219,6 +288,43 @@
     vertical-align: middle;
   }
 
+  /* ---------- Micro-agreement strip ---------- */
+  .agreement-strip {
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+    background: var(--bg);
+    padding: 36px 0;
+    transition: background-color 0.3s ease, border-color 0.3s ease;
+  }
+  .agreement-grid {
+    display: grid; grid-template-columns: 1fr 1px 1fr; gap: 48px;
+    align-items: center;
+    max-width: 980px; margin: 0 auto;
+  }
+  .agreement-divider { background: var(--border-strong); height: 56px; align-self: center; }
+  .agreement-item { text-align: center; }
+  .agreement-item .authority {
+    font-family: var(--serif);
+    font-style: italic;
+    font-size: 17px;
+    line-height: 1.45;
+    color: var(--text);
+    margin-bottom: 8px;
+    letter-spacing: -0.005em;
+  }
+  .agreement-item .authority em { color: var(--accent); font-style: italic; }
+  .agreement-item .assertion {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+  }
+  @media (max-width: 760px) {
+    .agreement-grid { grid-template-columns: 1fr; gap: 28px; }
+    .agreement-divider { width: 56px; height: 1px; justify-self: center; }
+  }
+
   /* ---------- Problem section ---------- */
   .problem { background: var(--bg-elevated); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
   .problem-grid {
@@ -240,6 +346,14 @@
   .problem-card h3 { font-family: var(--sans); font-size: 15px; font-weight: 500;
     text-transform: uppercase; letter-spacing: 0.12em; color: var(--text); margin-bottom: 8px; }
   .problem-card p { font-size: 15px; line-height: 1.6; }
+  .problem-cta {
+    margin-top: 4px; font-family: var(--sans); font-size: 13px; font-weight: 600;
+    text-transform: uppercase; letter-spacing: 0.1em; color: var(--accent);
+    text-decoration: none; display: inline-flex; align-items: center; gap: 6px;
+    transition: gap 0.25s, opacity 0.25s;
+  }
+  .problem-cta:hover { gap: 12px; opacity: 0.8; }
+  .problem-card-wide { grid-column: 1 / -1; border-top: 1px solid var(--accent-dim); }
 
   /* ---------- Services ---------- */
   .services-grid {
@@ -296,6 +410,33 @@
     color: var(--text); font-weight: 500;
   }
   .remediation-callout p { font-size: 14px; }
+
+  .more-services { margin-top: 24px; }
+  .more-services > summary {
+    list-style: none; cursor: pointer;
+    display: flex; align-items: center; justify-content: center; gap: 12px;
+    padding: 22px 24px; border: 1px dashed var(--border); background: var(--bg-elevated);
+    font-family: var(--mono); font-size: 12px; letter-spacing: 0.18em;
+    text-transform: uppercase; color: var(--accent); transition: all 0.3s;
+  }
+  .more-services > summary::-webkit-details-marker { display: none; }
+  .more-services > summary:hover { border-color: var(--accent-dim); background: var(--bg-card); }
+  .more-services > summary .chev {
+    font-family: var(--serif); font-size: 20px; line-height: 1;
+    transition: transform 0.3s;
+  }
+  .more-services[open] > summary .chev { transform: rotate(45deg); }
+  .more-services[open] > summary { border-style: solid; border-color: var(--accent-dim); margin-bottom: 24px; }
+  .more-services .services-grid { margin-top: 0; }
+
+  .referral-card {
+    margin-top: 32px; padding: 28px;
+    border: 1px solid var(--accent-dim); background: var(--bg-elevated);
+  }
+  .referral-card h3 { font-family: var(--serif); font-size: 21px; font-weight: 500;
+    color: var(--text); margin-bottom: 10px; }
+  .referral-card p { font-size: 14px; color: var(--text-muted); line-height: 1.65; margin-bottom: 20px; }
+  .referral-card .btn { width: 100%; justify-content: center; }
 
   /* ---------- Process ---------- */
   .process { background: var(--bg-elevated); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
@@ -433,7 +574,7 @@
 
   /* ---------- Footer ---------- */
   footer {
-    background: #020202; border-top: 1px solid var(--border);
+    background: var(--footer-bg); border-top: 1px solid var(--border);
     padding: 64px 0 32px;
   }
   .footer-inner { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 48px; margin-bottom: 48px; }
@@ -478,6 +619,14 @@
     background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0.78  0 0 0 0 0.66  0 0 0 0 0.43  0 0 0 0.10 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
     opacity: 0.5; mix-blend-mode: overlay;
   }
+  [data-theme="light"] body::before {
+    opacity: 0.25; mix-blend-mode: multiply;
+  }
+  [data-theme="light"] .brand-mark { filter: brightness(0.55) contrast(1.1); }
+  [data-theme="light"] .hero-monolith { filter: brightness(0.6) contrast(1.1) drop-shadow(0 14px 32px rgba(0,0,0,0.18)); }
+  [data-theme="light"] footer::before { opacity: 0.06; filter: brightness(0.5); }
+  [data-theme="light"] .service-card.featured { background: linear-gradient(180deg, rgba(176,142,79,0.05) 0%, var(--bg-elevated) 60%); }
+  [data-theme="light"] .lang-toggle button.active { color: #fff; }
   /* Keep content above grain — but DON'T touch .nav (it must stay position:fixed from line 71) */
   section, footer { position: relative; z-index: 2; }
 
@@ -490,7 +639,7 @@
 
   .hero-glow {
     width: 800px; height: 800px;
-    background: radial-gradient(circle, rgba(201,169,110,0.16) 0%, transparent 62%);
+    background: radial-gradient(circle, var(--hero-glow-color) 0%, transparent 62%);
     animation: heroGlow 9s ease-in-out infinite;
   }
   @keyframes heroGlow {
@@ -650,7 +799,7 @@
   }
   .field input:focus, .field select:focus, .field textarea:focus {
     box-shadow: 0 0 0 3px rgba(201,169,110,0.10);
-    background: #080808;
+    background: var(--field-focus-bg);
   }
   .channel { transition: all 0.25s cubic-bezier(.2,.7,.2,1); }
   .channel:hover { transform: translateX(4px); border-color: var(--accent); }
@@ -828,7 +977,7 @@
       top: calc(100% + 1px);
       left: 0;
       right: 0;
-      background: rgba(5,5,5,0.97);
+      background: var(--nav-bg-mobile);
       backdrop-filter: blur(14px);
       -webkit-backdrop-filter: blur(14px);
       border-bottom: 1px solid var(--border);
@@ -937,6 +1086,7 @@
       <a href="#metodologia"><span class="pt">Metodologia</span><span class="en">Methodology</span></a>
       <a href="#porque"><span class="pt">Por que SavoirIntel</span><span class="en">Why us</span></a>
       <a href="#equipe"><span class="pt">Equipe</span><span class="en">Team</span></a>
+      <a href="careers.html"><span class="pt">Carreiras</span><span class="en">Careers</span></a>
       <a href="threat-intel.html"><span class="pt">Inteligência</span><span class="en">Threat Intel</span></a>
       <a href="#contato" class="nav-cta"><span class="pt">Snapshot Gratuito</span><span class="en">Free Snapshot</span></a>
     </div>
@@ -945,6 +1095,15 @@
         <button type="button" data-set-lang="pt" class="active">PT</button>
         <button type="button" data-set-lang="en">EN</button>
       </div>
+      <button type="button" class="theme-toggle" id="themeToggle" aria-label="Toggle theme" title="Toggle theme">
+        <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <circle cx="12" cy="12" r="4"/>
+          <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/>
+        </svg>
+        <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+        </svg>
+      </button>
       <button class="nav-burger" id="navBurger" aria-label="Menu">≡</button>
     </div>
   </div>
@@ -957,21 +1116,21 @@
   <div class="container hero-inner">
     <div class="hero-text reveal visible">
       <div class="eyebrow">
-        <span class="pt">Segurança Ofensiva · Brasil</span>
-        <span class="en">Offensive Security · Brazil</span>
+        <span class="pt">Segurança Ofensiva · Mercosul</span>
+        <span class="en">Offensive Security · Mercosur</span>
       </div>
       <h1>
-        <span class="pt">Encontramos as <span class="accent">vulnerabilidades</span> antes que elas encontrem você.</span>
-        <span class="en">We find the <span class="accent">vulnerabilities</span> before they find you.</span>
+        <span class="pt">Os melhores líderes protegem o seu <span class="accent">futuro</span>.</span>
+        <span class="en">The greatest leaders protect their <span class="accent">future</span>.</span>
       </h1>
       <p class="sub">
-        <span class="pt">Auditoria de segurança ofensiva e penetration testing para empresas brasileiras. Relatórios em português que o seu CFO entende — alinhados à LGPD, executados por especialistas certificados, entregues em 10 dias.</span>
-        <span class="en">Offensive security audits and penetration testing for Brazilian businesses. Portuguese-language reports your CFO can actually read — LGPD-aligned, executed by certified specialists, delivered in 10 days.</span>
+        <span class="pt">Nossos clientes mais bem-sucedidos sabem que o sucesso não vem fácil. Eles contam conosco para reduzir os riscos desnecessários que ameaçam tudo o que construíram. Protegemos o Brasil. Protegemos o seu futuro.</span>
+        <span class="en">Our most successful clients know success is never easy. They partner with us to reduce the unnecessary risks that threaten everything they've built. We secure Brazil. We secure your future.</span>
       </p>
       <div class="hero-ctas">
         <a href="#contato" class="btn btn-primary">
-          <span class="pt">Solicitar Snapshot Gratuito</span>
-          <span class="en">Request Free Snapshot</span>
+          <span class="pt">Pedir meu Snapshot Gratuito</span>
+          <span class="en">Get my Free Snapshot</span>
           <span class="arrow">→</span>
         </a>
         <a href="#processo" class="btn btn-ghost">
@@ -980,7 +1139,7 @@
         </a>
         <div class="cta-meta">
           <span class="dot" aria-hidden="true"></span>
-          <span><span class="pt">Entrega em 5 dias úteis · Sem custo</span><span class="en">Delivered in 5 business days · No cost</span></span>
+          <span><span class="pt">Entrega em 30–45 minutos · Sem custo</span><span class="en">Delivered in 30–45 minutes · No cost</span></span>
         </div>
       </div>
       <div class="credentials-strip">
@@ -1000,6 +1159,35 @@
     <span><span class="pt">Continue</span><span class="en">Continue</span></span>
     <span class="line" aria-hidden="true"></span>
   </a>
+</section>
+
+<!-- ========== MICRO-AGREEMENT STRIP ========== -->
+<section class="agreement-strip reveal" aria-label="Standards and principles">
+  <div class="container">
+    <div class="agreement-grid">
+      <div class="agreement-item">
+        <div class="authority">
+          <span class="pt">Os mesmos frameworks aplicados por empresas <em>Fortune 500</em> — PTES, NIST, OWASP, CIS.</span>
+          <span class="en">The same frameworks applied by <em>Fortune 500</em> companies — PTES, NIST, OWASP, CIS.</span>
+        </div>
+        <div class="assertion">
+          <span class="pt">O seu negócio merece os mesmos padrões</span>
+          <span class="en">Your business deserves the same standards</span>
+        </div>
+      </div>
+      <div class="agreement-divider" aria-hidden="true"></div>
+      <div class="agreement-item">
+        <div class="authority">
+          <span class="pt">Operadores formados em <em>programas governamentais</em> de cibersegurança.</span>
+          <span class="en">Operators trained in <em>government cyber</em> programs.</span>
+        </div>
+        <div class="assertion">
+          <span class="pt">A sua defesa opera em clareza, não em ambiguidade</span>
+          <span class="en">Your defense runs on clarity, not ambiguity</span>
+        </div>
+      </div>
+    </div>
+  </div>
 </section>
 
 <!-- ========== PROBLEM ========== -->
@@ -1022,12 +1210,12 @@
         <div class="problem-stat">2<span class="unit">%</span></div>
         <h3><span class="pt">Multa LGPD</span><span class="en">LGPD fine ceiling</span></h3>
         <p>
-          <span class="pt">A ANPD pode aplicar multas de até 2% da receita anual, com teto de R$50 milhões por incidente. Uma empresa com R$10M de receita está exposta a R$200K — mais caro que qualquer auditoria séria.</span>
-          <span class="en">ANPD can issue fines up to 2% of annual revenue, capped at R$50M per incident. A company with R$10M in revenue faces R$200K in exposure — more than the cost of any serious audit.</span>
+          <span class="pt">A ANPD pode aplicar multas de até 2% da receita anual, com teto de R$50 milhões por incidente. Uma empresa com R$10M de receita está exposta a R$200K — mais caro que qualquer auditoria.</span>
+          <span class="en">ANPD can issue fines up to 2% of annual revenue, capped at R$50M per incident. A company with R$10M in revenue faces R$200K in exposure — more than the cost of any audit.</span>
         </p>
       </div>
       <div class="problem-card">
-        <div class="problem-stat">5°</div>
+        <div class="problem-stat">5</div>
         <h3><span class="pt">Top 5 global de ransomware</span><span class="en">Top 5 globally for ransomware</span></h3>
         <p>
           <span class="pt">O Brasil esteve entre os cinco países mais visados por ransomware em 2024–2025. As SMBs são o alvo preferido — precisamente porque não têm defesa.</span>
@@ -1042,6 +1230,19 @@
           <span class="en">Most Brazilian SMBs operate with zero dedicated security staff. Qualified talent clusters in São Paulo and Rio — and prices itself out of reach of the rest of the market.</span>
         </p>
       </div>
+      <div class="problem-card problem-card-wide">
+        <div class="problem-stat"><span class="pt">R$2,2 mi</span><span class="en">US$400.000</span></div>
+        <h3><span class="pt">Pagamento médio de resgate</span><span class="en">Average ransom payment</span></h3>
+        <p>
+          <span class="pt">Em 2025, organizações brasileiras pagaram em média R$2,2 milhões de resgate — e a recuperação custou cerca de R$6,6 milhões. Quem se recusa a pagar tem seus dados vazados, vendidos a outros criminosos ou usados para extorsão. Um único incidente de ransomware ou vazamento pode encerrar o negócio.</span>
+          <span class="en">In 2025, Brazilian organizations paid a median ransom of US$400.000 — with recovery averaging US$1,2 million. Refuse to pay and your data gets leaked, sold to other criminals, or weaponized for extortion. A single ransomware incident or data breach can wipe out a business entirely.</span>
+        </p>
+        <a href="#contato" class="problem-cta">
+          <span class="pt">Não seja o próximo. Peça seu Snapshot gratuito</span>
+          <span class="en">Don't be next. Get your free Snapshot</span>
+          <span class="arrow">→</span>
+        </a>
+      </div>
     </div>
   </div>
 </section>
@@ -1052,8 +1253,8 @@
     <div class="reveal">
       <div class="eyebrow"><span class="pt">Serviços</span><span class="en">Services</span></div>
       <h2>
-        <span class="pt">Quatro tiers. Um padrão.</span>
-        <span class="en">Four tiers. One standard.</span>
+        <span class="pt">Nossos serviços mais procurados. Você escolhe onde começar.</span>
+        <span class="en">Our most popular services. You choose where to start.</span>
       </h2>
       <p class="lead">
         <span class="pt">Cada engajamento é executado com a mesma metodologia rigorosa — calibrada ao escopo e ao orçamento da sua empresa. Pricing é apresentado após a discovery call.</span>
@@ -1065,26 +1266,24 @@
       <div class="service-card featured">
         <div class="service-tag">★ <span class="pt">Ponto de partida</span><span class="en">Starting point</span></div>
         <h3>Surface Risk Snapshot</h3>
-        <div class="who"><span class="pt">Para qualquer empresa elegível</span><span class="en">For any qualified company</span></div>
+        <div class="who"><span class="pt">Para quem quer saber o que está exposto agora.</span><span class="en">For anyone who wants to know what's exposed right now.</span></div>
         <p class="desc">
-          <span class="pt">Análise de inteligência passiva sobre sua exposição pública. Identifica serviços expostos, credenciais vazadas em breaches conhecidos, e infraestrutura esquecida — usando exclusivamente dados publicamente indexados.</span>
-          <span class="en">Passive intelligence analysis of your public exposure. Identifies exposed services, credentials leaked in known breaches, and forgotten infrastructure — using exclusively publicly indexed data.</span>
+          <span class="pt">Mostramos o que um atacante já consegue ver da sua empresa — serviços expostos, dispositivos mal configurados e infraestrutura esquecida, à vista de todos. É o primeiro passo para deixar a SavoirIntel tirar esse risco das suas costas.</span>
+          <span class="en">We show you what an attacker can already see about your business — exposed services, misconfigured devices, and forgotten infrastructure sitting in plain sight. It's the first step to letting SavoirIntel take that risk off your shoulders.</span>
         </p>
         <ul>
-          <li><span class="pt">Varredura Shodan, Censys, crt.sh, LeakIX</span><span class="en">Shodan, Censys, crt.sh, LeakIX sweep</span></li>
-          <li><span class="pt">Análise de credenciais em bases de breach</span><span class="en">Credential analysis against breach databases</span></li>
           <li><span class="pt">Quantificação de exposição LGPD em BRL</span><span class="en">LGPD exposure quantified in BRL</span></li>
-          <li><span class="pt">Documento de 2 páginas em português</span><span class="en">Two-page Portuguese document</span></li>
+          <li><span class="pt">Documento executivo de 2 páginas, pronto para o conselho</span><span class="en">Two-page executive document, board-ready</span></li>
         </ul>
         <div class="meta">
-          <span><span class="pt">Entrega</span><span class="en">Delivery</span>: 5 <span class="pt">dias úteis</span><span class="en">business days</span></span>
+          <span><span class="pt">Entrega</span><span class="en">Delivery</span>: 30–45 <span class="pt">minutos</span><span class="en">minutes</span></span>
           <strong><span class="pt">Gratuito</span><span class="en">Free</span></strong>
         </div>
       </div>
 
       <div class="service-card">
         <div class="service-tag"><span class="pt">Pentest focado</span><span class="en">Focused pentest</span></div>
-        <h3>Basic Web / App Test</h3>
+        <h3><span class="pt">Teste Web / App Básico</span><span class="en">Basic Web / App Test</span></h3>
         <div class="who"><span class="pt">Para apps web ou APIs específicas</span><span class="en">For specific web apps or APIs</span></div>
         <p class="desc">
           <span class="pt">Teste de penetração focado em uma aplicação web, API, ou portal de cliente. Cobertura completa OWASP Top 10 com exploração manual — não apenas varredura automatizada.</span>
@@ -1097,15 +1296,15 @@
           <li><span class="pt">Briefing de remediação</span><span class="en">Remediation briefing</span></li>
         </ul>
         <div class="meta">
-          <span><span class="pt">Entrega</span><span class="en">Delivery</span>: 10 <span class="pt">dias</span><span class="en">days</span></span>
+          <span><span class="pt">Entrega</span><span class="en">Delivery</span>: 3–5 <span class="pt">dias</span><span class="en">days</span></span>
           <strong><span class="pt">Sob consulta</span><span class="en">On request</span></strong>
         </div>
       </div>
 
       <div class="service-card">
         <div class="service-tag"><span class="pt">Avaliação completa</span><span class="en">Full assessment</span></div>
-        <h3>Full SMB Pentest</h3>
-        <div class="who"><span class="pt">Para empresas 20–200 funcionários</span><span class="en">For companies of 20–200 employees</span></div>
+        <h3><span class="pt">Pentest Completo para PMEs</span><span class="en">Full SMB Pentest</span></h3>
+        <div class="who"><span class="pt">Para empresas que querem assumir o controle.</span><span class="en">For companies that want to take control.</span></div>
         <p class="desc">
           <span class="pt">Avaliação completa de perímetro externo, infraestrutura interna, e aplicações críticas. Inclui QA Retest gratuito em até 90 dias para verificar correções.</span>
           <span class="en">Complete assessment of external perimeter, internal infrastructure, and critical applications. Includes free QA Retest within 90 days to verify remediations.</span>
@@ -1117,18 +1316,18 @@
           <li><span class="pt">QA Retest incluído (até 90 dias)</span><span class="en">QA Retest included (within 90 days)</span></li>
         </ul>
         <div class="meta">
-          <span><span class="pt">Entrega</span><span class="en">Delivery</span>: 10 <span class="pt">dias</span><span class="en">days</span></span>
+          <span><span class="pt">Entrega</span><span class="en">Delivery</span>: 7–10 <span class="pt">dias</span><span class="en">days</span></span>
           <strong><span class="pt">Sob consulta</span><span class="en">On request</span></strong>
         </div>
       </div>
 
       <div class="service-card">
         <div class="service-tag"><span class="pt">Conformidade</span><span class="en">Compliance</span></div>
-        <h3>LGPD Compliance Audit</h3>
-        <div class="who"><span class="pt">Para empresas que precisam comprovar diligência</span><span class="en">For companies that must demonstrate diligence</span></div>
+        <h3><span class="pt">Auditoria de Conformidade LGPD</span><span class="en">LGPD Compliance Audit</span></h3>
+        <div class="who"><span class="pt">Para empresas que lidam com dados de clientes — e não podem se dar ao luxo de uma multa.</span><span class="en">For companies that handle customer data — and can't afford a fine.</span></div>
         <p class="desc">
-          <span class="pt">Auditoria técnica e documental alinhada à LGPD. Roadmap de conformidade quantificado, mapeado a CIS Controls e referenciado a NIST CSF. Pronto para apresentação ao Encarregado de Dados ou conselho.</span>
-          <span class="en">Technical and documentation audit aligned to LGPD. Quantified compliance roadmap, mapped to CIS Controls and referenced to NIST CSF. Ready for presentation to your DPO or board.</span>
+          <span class="pt">Uma auditoria profunda de como a sua empresa trata dados pessoais, comparada às exigências reais da LGPD. Você recebe um roadmap claro e priorizado rumo à conformidade — e a documentação para comprovar a sua diligência caso a ANPD bata à porta.</span>
+          <span class="en">A deep audit of how your business handles personal data, measured against what the LGPD actually requires. You get a clear, prioritized roadmap to compliance — and the documentation to prove your diligence if the ANPD ever comes knocking.</span>
         </p>
         <ul>
           <li><span class="pt">Avaliação de exposição LGPD por categoria</span><span class="en">LGPD exposure assessment by category</span></li>
@@ -1137,7 +1336,7 @@
           <li><span class="pt">QA Retest incluído (até 90 dias)</span><span class="en">QA Retest included (within 90 days)</span></li>
         </ul>
         <div class="meta">
-          <span><span class="pt">Entrega</span><span class="en">Delivery</span>: 10–14 <span class="pt">dias</span><span class="en">days</span></span>
+          <span><span class="pt">Entrega</span><span class="en">Delivery</span>: 8–10 <span class="pt">dias</span><span class="en">days</span></span>
           <strong><span class="pt">Sob consulta</span><span class="en">On request</span></strong>
         </div>
       </div>
@@ -1148,11 +1347,99 @@
       <div>
         <h4><span class="pt">Não apenas encontramos. Corrigimos.</span><span class="en">We don't just find. We fix.</span></h4>
         <p>
-          <span class="pt">Serviço de remediação opcional executado por uma equipe dedicada, separada do pentester — para que quem corrige nunca certifique o próprio trabalho. Faturado por hora, com QA Retest independente.</span>
-          <span class="en">Optional remediation service executed by a dedicated team, separate from the pentester — so whoever fixes never self-certifies. Hourly billing with independent QA Retest.</span>
+          <span class="pt">Concluída a avaliação, uma equipe de remediação dedicada — separada do pentester, para que quem corrige nunca certifique o próprio trabalho — entra para fechar as falhas, com QA Retest independente. É o próximo passo, e está incluído em todos os engajamentos, exceto o Snapshot gratuito.</span>
+          <span class="en">Once the assessment is done, a dedicated remediation team — separate from the pentester, so whoever fixes never self-certifies — steps in to close the gaps, with independent QA Retest. It's the next step, and it's included in every engagement except the free Snapshot.</span>
         </p>
       </div>
     </div>
+
+    <details class="more-services reveal">
+      <summary>
+        <span class="pt">Mais serviços</span><span class="en">More service offerings</span>
+        <span class="chev">+</span>
+      </summary>
+      <div class="services-grid">
+        <div class="service-card">
+          <div class="service-tag"><span class="pt">Emergência</span><span class="en">Emergency</span></div>
+          <h3><span class="pt">Resposta a Incidentes</span><span class="en">Incident Response</span></h3>
+          <div class="who"><span class="pt">Quando o ataque já está acontecendo.</span><span class="en">When the attack is already happening.</span></div>
+          <p class="desc">
+            <span class="pt">Você está sob ataque ativo e cada minuto conta. Engajamos rápido para conter a invasão, investigar como entraram, eliminar o acesso do atacante e recolocar a sua operação de pé — entregando uma linha do tempo clara do que aconteceu e o que reforçar para não repetir.</span>
+            <span class="en">You're under active attack and every minute counts. We engage fast to contain the breach, investigate how they got in, remove the attacker's access, and get your operation back on its feet — delivering a clear timeline of what happened and what to harden so it doesn't recur.</span>
+          </p>
+          <ul>
+            <li><span class="pt">Engajamento rápido e contenção</span><span class="en">Rapid engagement & containment</span></li>
+            <li><span class="pt">Investigação forense da origem</span><span class="en">Forensic root-cause investigation</span></li>
+            <li><span class="pt">Erradicação + recuperação</span><span class="en">Eradication + recovery</span></li>
+            <li><span class="pt">Relatório pós-incidente</span><span class="en">Post-incident report</span></li>
+          </ul>
+          <div class="meta">
+            <span><span class="pt">Início</span><span class="en">Start</span>: <span class="pt">imediato</span><span class="en">immediate</span></span>
+            <strong><span class="pt">Sob consulta</span><span class="en">On request</span></strong>
+          </div>
+        </div>
+
+        <div class="service-card">
+          <div class="service-tag"><span class="pt">Crise</span><span class="en">Crisis</span></div>
+          <h3><span class="pt">Negociação de Ransomware</span><span class="en">Ransomware Negotiation</span></h3>
+          <div class="who"><span class="pt">Quando os seus dados já estão reféns.</span><span class="en">When your data is already being held hostage.</span></div>
+          <p class="desc">
+            <span class="pt">Ficamos entre você e o grupo criminoso. Avaliamos a exigência, verificamos se o decryptor realmente funciona, conduzimos toda a comunicação e os prazos, e orientamos a decisão de pagar ou não — sempre coordenando a recuperação em paralelo, para reduzir o dano e o tempo parado.</span>
+            <span class="en">We stand between you and the threat actor. We assess the demand, verify whether the decryptor actually works, manage all communications and deadlines, and advise the pay-or-don't-pay decision — always coordinating recovery in parallel to limit damage and downtime.</span>
+          </p>
+          <ul>
+            <li><span class="pt">Comunicação com o atacante por você</span><span class="en">Threat-actor communications handled for you</span></li>
+            <li><span class="pt">Validação da exigência e do decryptor</span><span class="en">Demand & decryptor validation</span></li>
+            <li><span class="pt">Assessoria de risco: pagar ou não</span><span class="en">Pay/no-pay risk advisory</span></li>
+            <li><span class="pt">Recuperação coordenada</span><span class="en">Coordinated recovery</span></li>
+          </ul>
+          <div class="meta">
+            <span><span class="pt">Início</span><span class="en">Start</span>: <span class="pt">imediato</span><span class="en">immediate</span></span>
+            <strong><span class="pt">Sob consulta</span><span class="en">On request</span></strong>
+          </div>
+        </div>
+
+        <div class="service-card">
+          <div class="service-tag"><span class="pt">Consultoria contínua</span><span class="en">Ongoing advisory</span></div>
+          <h3><span class="pt">CISO Virtual (vCISO)</span><span class="en">Virtual CISO (vCISO)</span></h3>
+          <div class="who"><span class="pt">Liderança de segurança sem o custo de um cargo integral.</span><span class="en">Security leadership without the full-time price tag.</span></div>
+          <p class="desc">
+            <span class="pt">Um líder sênior de segurança sob retainer, responsável pela sua estratégia e roadmap, pela gestão de risco e conformidade com a LGPD, e pela representação da segurança diante do conselho e dos seus clientes — toda a senioridade de um CISO, sem o salário de um.</span>
+            <span class="en">A senior security leader on retainer who owns your strategy and roadmap, manages risk and LGPD compliance, and represents security to your board and your clients — all the seniority of a CISO, without the salary of one.</span>
+          </p>
+          <ul>
+            <li><span class="pt">Estratégia e roadmap de segurança</span><span class="en">Security strategy & roadmap ownership</span></li>
+            <li><span class="pt">Gestão de risco e conformidade LGPD</span><span class="en">Risk & LGPD compliance oversight</span></li>
+            <li><span class="pt">Apoio em auditorias e fornecedores</span><span class="en">Vendor & audit support</span></li>
+            <li><span class="pt">Reporte para conselho e clientes</span><span class="en">Board & client-facing reporting</span></li>
+          </ul>
+          <div class="meta">
+            <span><span class="pt">Formato</span><span class="en">Format</span>: <span class="pt">retainer mensal</span><span class="en">monthly retainer</span></span>
+            <strong><span class="pt">Sob consulta</span><span class="en">On request</span></strong>
+          </div>
+        </div>
+
+        <div class="service-card">
+          <div class="service-tag"><span class="pt">Pessoas</span><span class="en">People</span></div>
+          <h3><span class="pt">Treinamento de Conscientização</span><span class="en">Security Awareness Training</span></h3>
+          <div class="who"><span class="pt">A sua maior superfície de ataque são as pessoas.</span><span class="en">Your largest attack surface is your people.</span></div>
+          <p class="desc">
+            <span class="pt">Os seus colaboradores são o alvo mais visado. Rodamos simulações realistas de phishing e treinamentos por função, medimos quem clica, e transformamos os resultados em coaching direcionado — reduzindo de forma mensurável o risco humano ao longo do tempo.</span>
+            <span class="en">Your employees are the most-targeted way in. We run realistic phishing simulations and role-based training, measure who clicks, and turn the results into targeted coaching — measurably lowering human risk over time.</span>
+          </p>
+          <ul>
+            <li><span class="pt">Simulações realistas de phishing</span><span class="en">Realistic phishing simulations</span></li>
+            <li><span class="pt">Módulos de treinamento por função</span><span class="en">Role-based training modules</span></li>
+            <li><span class="pt">Métricas de cliques e de risco</span><span class="en">Click-rate & risk metrics</span></li>
+            <li><span class="pt">Reforço recorrente</span><span class="en">Recurring reinforcement</span></li>
+          </ul>
+          <div class="meta">
+            <span><span class="pt">Formato</span><span class="en">Format</span>: <span class="pt">programa contínuo</span><span class="en">ongoing program</span></span>
+            <strong><span class="pt">Sob consulta</span><span class="en">On request</span></strong>
+          </div>
+        </div>
+      </div>
+    </details>
   </div>
 </section>
 
@@ -1163,13 +1450,13 @@
       <div>
         <div class="eyebrow"><span class="pt">Nosso processo</span><span class="en">Our process</span></div>
         <h2>
-          <span class="pt">10 dias. Sem improviso.</span>
-          <span class="en">10 days. No improvisation.</span>
+          <span class="pt">Um cronograma que se sustenta.</span>
+          <span class="en">A timeline that holds.</span>
         </h2>
       </div>
       <p>
-        <span class="pt">Cada engajamento segue o mesmo ciclo de dez dias úteis, alinhado ao PTES (Penetration Testing Execution Standard). Você sabe exatamente o que está acontecendo, em que momento, e qual é a sua próxima ação como cliente.</span>
-        <span class="en">Every engagement follows the same ten-business-day cycle, aligned to PTES (Penetration Testing Execution Standard). You know exactly what's happening, when, and what your next action is as the client.</span>
+        <span class="pt">Cada engajamento segue o mesmo ciclo estruturado em cinco fases, alinhado ao PTES (Penetration Testing Execution Standard). O prazo é dimensionado ao escopo — você sabe na proposta exatamente quanto tempo leva, e por quê.</span>
+        <span class="en">Every engagement follows the same five-phase cycle, aligned to PTES (Penetration Testing Execution Standard). Timeline is scoped to the engagement — you know in the proposal exactly how long it takes, and why.</span>
       </p>
     </div>
 
@@ -1177,7 +1464,7 @@
       <div class="process-step">
         <div class="num">1</div>
         <h4><span class="pt">Escopo + RoE</span><span class="en">Scope + RoE</span></h4>
-        <p><span class="pt">Reunião de escopo, IPs e domínios definidos, Rules of Engagement bilíngue assinado.</span><span class="en">Scoping call, IPs and domains defined, bilingual Rules of Engagement signed.</span></p>
+        <p><span class="pt">Reunião de escopo, IPs e domínios definidos, Rules of Engagement assinado.</span><span class="en">Scoping call, IPs and domains defined, Rules of Engagement signed.</span></p>
       </div>
       <div class="process-step">
         <div class="num">2</div>
@@ -1204,20 +1491,18 @@
     <div class="dual-report reveal">
       <div class="report-card">
         <div class="label"><span class="pt">Documento 1</span><span class="en">Document 1</span></div>
-        <h4><span class="pt">Executive Risk Summary</span><span class="en">Executive Risk Summary</span></h4>
-        <div class="lang">Português · 4–6 <span class="pt">páginas</span><span class="en">pages</span></div>
+        <h4><span class="pt">Resumo Executivo de Risco</span><span class="en">Executive Risk Summary</span></h4>
         <p>
-          <span class="pt">Para o dono do negócio ou CFO. Zero jargão técnico. Quantifica o risco em BRL e responde duas perguntas: quanto isso pode custar, e o que fazer a seguir. Inclui análise de exposição LGPD.</span>
-          <span class="en">For the business owner or CFO. Zero technical jargon. Quantifies risk in BRL and answers two questions: what could this cost us, and what do we do next. Includes LGPD exposure analysis.</span>
+          <span class="pt">Zero jargão técnico. Quantifica o risco em BRL e responde a duas perguntas: quanto isso pode custar? E o que fazer a seguir? Inclui análise de exposição LGPD.</span>
+          <span class="en">Zero technical jargon. Quantifies risk in BRL and answers two questions: what could this cost us? And what do we do next? Includes LGPD exposure analysis.</span>
         </p>
       </div>
       <div class="report-card">
         <div class="label"><span class="pt">Documento 2</span><span class="en">Document 2</span></div>
-        <h4><span class="pt">Technical Remediation Roadmap</span><span class="en">Technical Remediation Roadmap</span></h4>
-        <div class="lang">Bilíngue · 15–40 <span class="pt">páginas</span><span class="en">pages</span></div>
+        <h4><span class="pt">Roadmap Técnico de Remediação</span><span class="en">Technical Remediation Roadmap</span></h4>
         <p>
-          <span class="pt">Para o seu time técnico ou MSP. CVEs, scores CVSS v3.1, caminhos de exploração, e passos específicos de remediação. Mapeado a OWASP Top 10, CIS Controls v8, e NIST SP 800-53.</span>
-          <span class="en">For your technical team or MSP. CVEs, CVSS v3.1 scores, exploit paths, and specific remediation steps. Mapped to OWASP Top 10, CIS Controls v8, and NIST SP 800-53.</span>
+          <span class="pt">CVEs, scores CVSS v3.1, caminhos de exploração, e passos específicos de remediação. Mapeado a OWASP Top 10, CIS Controls v8, e NIST SP 800-53.</span>
+          <span class="en">CVEs, CVSS v3.1 scores, exploit paths, and specific remediation steps. Mapped to OWASP Top 10, CIS Controls v8, and NIST SP 800-53.</span>
         </p>
       </div>
     </div>
@@ -1230,12 +1515,12 @@
     <div class="reveal">
       <div class="eyebrow"><span class="pt">Por que SavoirIntel</span><span class="en">Why SavoirIntel</span></div>
       <h2>
-        <span class="pt">Rigor de empresa grande. Preço que sua empresa consegue pagar.</span>
-        <span class="en">Enterprise-grade rigor. Pricing your company can actually afford.</span>
+        <span class="pt">Nossos clientes se recusam a ser vítimas. Eles prosperam conosco.</span>
+        <span class="en">Our clients refuse to be victims. They prosper with us.</span>
       </h2>
       <p class="lead">
-        <span class="pt">A maioria das grandes consultorias de segurança não atende SMBs brasileiras — e quando atendem, cobram preços de cliente Fortune 500. Nós fomos construídos especificamente para preencher essa lacuna, com quatro diferenciais que importam.</span>
-        <span class="en">Most large security consultancies don't serve Brazilian SMBs — and when they do, they charge Fortune 500 prices. We were built specifically to close that gap, with four differentiators that matter.</span>
+        <span class="pt">Os líderes que constroem para a próxima década confiam em nós para encontrar as falhas em sua segurança e implementar a infraestrutura que as fecha. Quatro diferenciais sustentam esse padrão — concretos, verificáveis, e impossíveis de replicar por uma firma genérica.</span>
+        <span class="en">The leaders building for the next decade rely on us to find the flaws in their security and implement the infrastructure that closes them. Four differentiators sustain that standard — concrete, verifiable, and impossible for a commodity firm to replicate.</span>
       </p>
     </div>
 
@@ -1243,40 +1528,40 @@
       <div class="diff-item">
         <div class="marker">01</div>
         <div>
-          <h4><span class="pt">Inteligência antes da pitch</span><span class="en">Intelligence before the pitch</span></h4>
+          <h4><span class="pt">Cada achado, quantificado em reais.</span><span class="en">Every finding, quantified in BRL.</span></h4>
           <p>
-            <span class="pt">Não vendemos auditoria genérica. Identificamos a sua exposição real antes do primeiro contato — usando Shodan, Censys, certificate transparency, e bases de breach públicas — e mostramos o que encontramos no Surface Risk Snapshot gratuito.</span>
-            <span class="en">We don't sell generic audits. We identify your real exposure before first contact — using Shodan, Censys, certificate transparency, and public breach databases — and show you what we found in a free Surface Risk Snapshot.</span>
+            <span class="pt">Vulnerabilidades viram exposição financeira — não apenas notas CVSS. Você recebe um número em reais, modelado contra padrões reais de aplicação da ANPD, e a sequência de remediação priorizada por impacto. É o que os líderes que protegem o futuro do seu negócio esperam receber.</span>
+            <span class="en">Vulnerabilities translate to financial exposure — not just CVSS scores. You get a number in BRL, modeled against actual ANPD enforcement patterns, with remediation sequenced by impact. It's what leaders who protect their business's future expect to receive.</span>
           </p>
         </div>
       </div>
       <div class="diff-item">
         <div class="marker">02</div>
         <div>
-          <h4><span class="pt">Sem tradutor entre nós.</span><span class="en">No translator between us.</span></h4>
+          <h4><span class="pt">Quem corrige nunca certifica o próprio trabalho.</span><span class="en">Whoever fixes never self-certifies.</span></h4>
           <p>
-            <span class="pt">Operamos em português do Brasil de ponta a ponta — proposta, discovery call, relatório executivo, suporte. Outras consultorias internacionais traduzem o relatório e param por aí. Nós conversamos com o seu CFO no idioma em que ele toma decisões.</span>
-            <span class="en">We operate in Brazilian Portuguese end to end — proposal, discovery call, executive report, support. Other international firms translate the report and stop there. We talk to your CFO in the language he actually makes decisions in.</span>
+            <span class="pt">QA Retest independente incluído. A equipe de remediação opera separada do pentester — separação de função embutida no engajamento, não vendida como upgrade. É assim que líderes sérios montam controle interno; é assim que entregamos.</span>
+            <span class="en">Independent QA Retest included. The remediation team operates separately from the pentester — separation of duty baked into the engagement, not sold as an upgrade. It's how serious leaders build internal control; it's how we deliver.</span>
           </p>
         </div>
       </div>
       <div class="diff-item">
         <div class="marker">03</div>
         <div>
-          <h4><span class="pt">Certificação técnica que importa</span><span class="en">Technical certification that matters</span></h4>
+          <h4><span class="pt">Operadores em campo — e num voo quando você precisa.</span><span class="en">Operators on the ground — and on a flight when you need them.</span></h4>
           <p>
-            <span class="pt">Nossos pentesters são OSCP-class ou equivalente — não consultores de TI vendendo segurança como complemento. Cada finding é validado manualmente. Nenhum relatório nosso é gerado por ferramenta automatizada.</span>
-            <span class="en">Our pentesters are OSCP-class or equivalent — not IT consultants selling security as a sideline. Every finding is manually validated. No report we deliver is auto-generated by tooling.</span>
+            <span class="pt">Operadores vetados posicionados por todo o Brasil. Não somos uma consultoria remota que envia PDFs e some — quando o engajamento exige operação interna, validação no local, ou uma conversa de mesa com o seu time, colocamos um operador de confiança num voo e garantimos alguém na sala com você.</span>
+            <span class="en">Vetted operators positioned across Brazil. We're not a remote-only consultancy emailing PDFs and disappearing — when an engagement calls for internal operation, on-site validation, or a desk-side conversation with your team, we put a trusted operator on a flight and get someone in the room with you.</span>
           </p>
         </div>
       </div>
       <div class="diff-item">
         <div class="marker">04</div>
         <div>
-          <h4><span class="pt">Pricing calibrado para SMB</span><span class="en">Pricing calibrated for SMB</span></h4>
+          <h4><span class="pt">Cada engajamento tem um nome — e esse nome responde pelo trabalho.</span><span class="en">Every engagement has a name — and that name is accountable for the work.</span></h4>
           <p>
-            <span class="pt">Firmas enterprise cobram R$150K+ por trabalho comparável. Entregamos o mesmo rigor metodológico na faixa de R$15K–R$75K — porque sabemos quem é o nosso cliente e construímos o modelo operacional ao redor disso.</span>
-            <span class="en">Enterprise firms charge R$150K+ for comparable work. We deliver the same methodological rigor in the R$15K–R$75K range — because we know who our client is and we built the operating model around that.</span>
+            <span class="pt">Cada projeto é atribuído a um operador nomeado, responsável pelo resultado do primeiro contato à entrega final — alinhado a PTES, OWASP Testing Guide, NIST SP 800-115 e CIS Controls v8. Os líderes que tratam segurança a sério exigem saber quem está executando; entregamos com nome, assinatura, e uma metodologia que você pode auditar.</span>
+            <span class="en">Every project is assigned to a named operator who's accountable for the outcome from first contact to final handoff — aligned to PTES, OWASP Testing Guide, NIST SP 800-115, and CIS Controls v8. The leaders who take security seriously expect to know who's executing; we deliver with a name, a signature, and a methodology you can audit.</span>
           </p>
         </div>
       </div>
@@ -1339,8 +1624,8 @@
           <span class="en">The data at risk doesn't fit in a spreadsheet. It's payroll, signed contracts, confidential casework, the trust your team puts in the fact that you're looking after what matters. No serious firm will promise to eliminate cyber risk — anyone making that promise is selling fiction. What SavoirIntel promises is more useful: <strong>find what's exposed before an adversary does, fix what's fixable, and leave your business significantly harder to breach than it is today.</strong> Together, we harden your defenses against cybercrime and shrink your exposure to the kind of attack that can stop your operation cold.</span>
         </p>
         <p class="founder-letter">
-          <span class="pt">Sou baseado na América do Norte, falo português fluente, e cada solicitação que chega pelo site cai diretamente na minha caixa de entrada. Sem departamento de vendas. Sem intermediário. Quando você assina com a SavoirIntel, o nome no contrato é o meu — e fica do seu lado do primeiro contato até a última recomendação entregue. <strong>O seu negócio é o que você construiu. O meu trabalho é fazer com que continue de pé.</strong></span>
-          <span class="en">I'm based in North America, I speak fluent Portuguese, and every request that comes through this site lands directly in my inbox. No sales department. No middleman. When you sign with SavoirIntel, the name on the contract is mine — and it stays alongside yours from first contact through final recommendation. <strong>Your business is what you built. My job is to make sure it stays standing.</strong></span>
+          <span class="pt">Sou baseado na América do Norte, opero sem fricção entre os dois mercados, e cada solicitação que chega pelo site cai diretamente na minha caixa de entrada. Quando você assina com a SavoirIntel, o nome no contrato é o meu — e fica do seu lado do primeiro contato até a última recomendação entregue. <strong>O seu negócio é o que você construiu. O meu trabalho é fazer com que continue de pé.</strong></span>
+          <span class="en">I'm based in North America, I operate seamlessly across both markets, and every request that comes through this site lands directly in my inbox. When you sign with SavoirIntel, the name on the contract is mine — and it stays alongside yours from first contact through final recommendation. <strong>Your business is what you built. My job is to make sure it stays standing.</strong></span>
         </p>
 
         <ul class="founder-commitments">
@@ -1501,8 +1786,8 @@
         <span class="en">Different roads. One mission.</span>
       </h2>
       <p class="team-intro">
-        <span class="pt">A nossa equipe não vem de uma única trilha de carreira. São pessoas que já viram o adversário sob ângulos radicalmente diferentes — e escolheram ficar deste lado da linha. De dentro de unidades de operações cibernéticas dos EUA. De ecossistemas ofensivos de língua russa dos quais se afastaram. De anos do lado errado da lei, antes de regularizarem o caminho. <strong>Caminhos diferentes. Uma missão: proteger o que você construiu — do conjunto mais amplo de perspectivas adversariais que conseguimos reunir em uma única sala.</strong></span>
-        <span class="en">Our team doesn't come from one career track. It's people who've seen the adversary from radically different angles — and chose to stand on this side of the line. From inside U.S. cyber operations units. From Russian-language offensive ecosystems they walked away from. From years on the wrong side of the law, before going legit. <strong>Different roads. One mission: protect what you've built — from the broadest range of adversarial perspectives we can put in a single room.</strong></span>
+        <span class="pt">A nossa equipe não vem de uma única trilha de carreira. São pessoas que já viram o adversário sob ângulos radicalmente diferentes — e escolheram ficar deste lado da linha. De dentro de unidades de operações cibernéticas dos EUA, tanto ofensivas quanto defensivas. De ecossistemas ofensivos de língua russa dos quais se afastaram. Das fileiras de profissionais de segurança certificados que passaram anos provando o seu valor em campo. Não somos feitos só para atacar — somos feitos para defender em todas as frentes. <strong>Caminhos diferentes. Uma missão: proteger o que você construiu — do conjunto mais amplo de perspectivas adversariais que conseguimos reunir em uma única sala.</strong></span>
+        <span class="en">Our team doesn't come from one career track. It's people who've seen the adversary from radically different angles — and chose to stand on this side of the line. From inside U.S. cyber operations units, on both the offensive and defensive sides. From Russian-language offensive ecosystems they walked away from. From the ranks of certified security professionals who've spent years proving it in the field. We're not built only to attack — we're built to defend on every front. <strong>Different roads. One mission: protect what you've built — from the broadest range of adversarial perspectives we can put in a single room.</strong></span>
       </p>
     </div>
 
@@ -1540,12 +1825,12 @@
           <span class="pt">Origem 03</span><span class="en">Origin 03</span>
         </span>
         <h3 class="team-archetype">
-          <span class="pt">Ex-black hats que regularizaram o caminho</span>
-          <span class="en">Former black hats who went legit</span>
+          <span class="pt">Profissionais de segurança certificados</span>
+          <span class="en">Certified security professionals</span>
         </h3>
         <p class="team-body">
-          <span class="pt">Aprenderam o ofício do lado errado da lei — e, em algum momento, decidiram que estavam cansados de olhar por cima do ombro. Anos afiando o instinto contra alvos ilegais hoje afiam as defesas dos nossos clientes. Nenhuma aula, nenhum laboratório, nenhuma certificação substitui uma década fazendo isso de verdade.</span>
-          <span class="en">They learned the craft on the wrong side of the law — and at some point decided they were tired of looking over their shoulder. Years of sharpening instinct against illegal targets now sharpens the defenses of our clients. No course, no lab, no certification replaces a decade of doing it for real.</span>
+          <span class="pt">Profissionais experientes que construíram a sua competência do jeito comprovado — anos de campo somados às certificações mais respeitadas do setor, como OSCP, OSCE e CISSP. O treinamento contínuo mantém as suas habilidades afiadas contra as ameaças que o seu negócio realmente enfrenta, e cada credencial é mais uma camada de garantia por trás do trabalho que entregamos.</span>
+          <span class="en">Seasoned practitioners who built their expertise the proven way — years in the field backed by the industry's most respected certifications, including OSCP, OSCE, and CISSP. Continuous training keeps their skills sharp against the threats your business actually faces, and every credential is one more layer of assurance behind the work we deliver.</span>
         </p>
       </article>
     </div>
@@ -1556,8 +1841,8 @@
         <span class="en">The shared mission</span>
       </div>
       <p class="team-mission-body">
-        <span class="pt">Proteger os sistemas que sustentam o seu negócio. Defender aquilo que você construiu. Garantir a estabilidade dos seus colaboradores, contratados e da operação. <em>Uma missão. Vários caminhos até ela.</em></span>
-        <span class="en">Protect the systems your business runs on. Defend what you've built. Safeguard the stability of your employees, contractors, and operation. <em>One mission. Several roads to it.</em></span>
+        <span class="pt">Proteger os sistemas que sustentam o seu negócio. Defender aquilo que você construiu. Garantir a estabilidade dos seus colaboradores, contratados e da operação. Metade dos profissionais que empregamos são brasileiros — este é o nosso lar, e o defendemos como tal. <em>Uma missão. Vários caminhos até ela.</em></span>
+        <span class="en">Protect the systems your business runs on. Defend what you've built. Safeguard the stability of your employees, contractors, and operation. Half of the people we employ are Brazilian — this is home, and we defend it as our own. <em>One mission. Several roads to it.</em></span>
       </p>
     </div>
   </div>
@@ -1570,10 +1855,10 @@
     <div class="contact-grid">
       <div class="contact-info reveal">
         <div class="eyebrow"><span class="pt">Próximo passo</span><span class="en">Next step</span></div>
-        <h2><span class="pt">Solicite seu Surface Risk Snapshot.</span><span class="en">Request your Surface Risk Snapshot.</span></h2>
+        <h2><span class="pt">Os líderes que tratam o negócio com seriedade começam por aqui.</span><span class="en">Leaders who take their business seriously start here.</span></h2>
         <p>
-          <span class="pt">Preencha o formulário ao lado e enviaremos seu Snapshot gratuito em até cinco dias úteis. Sem compromisso, sem cobrança. Apenas dados públicos sobre a sua exposição real — e uma conversa de 15 minutos para discutir o que encontramos.</span>
-          <span class="en">Fill out the form and we'll send your free Snapshot within five business days. No commitment, no charge. Just public data about your real exposure — and a 15-minute call to walk you through what we found.</span>
+          <span class="pt">Preencha o formulário ao lado e enviaremos seu Snapshot gratuito em 30–45 minutos. Sem compromisso, sem cobrança. Apenas dados públicos sobre a sua exposição real — e uma conversa de 15 minutos para discutir o que encontramos.</span>
+          <span class="en">Fill out the form and we'll send your free Snapshot within 30–45 minutes. No commitment, no charge. Just public data about your real exposure — and a 15-minute call to walk you through what we found.</span>
         </p>
 
         <div class="contact-channels">
@@ -1657,10 +1942,14 @@
             <label for="f-interest"><span class="pt">Interesse</span><span class="en">Interest</span></label>
             <select id="f-interest" name="interest">
               <option value="snapshot">Surface Risk Snapshot (Free)</option>
-              <option value="basic">Basic Web / App Test</option>
-              <option value="full">Full SMB Pentest</option>
-              <option value="lgpd">LGPD Compliance Audit</option>
+              <option value="basic">Teste Web/App Básico / Basic Web/App Test</option>
+              <option value="full">Pentest Completo para PMEs / Full SMB Pentest</option>
+              <option value="lgpd">Auditoria de Conformidade LGPD / LGPD Compliance Audit</option>
               <option value="retainer">PTaaS Retainer</option>
+              <option value="incident-response">Resposta a Incidentes / Incident Response</option>
+              <option value="ransomware-negotiation">Negociação de Ransomware / Ransomware Negotiation</option>
+              <option value="vciso">CISO Virtual / Virtual CISO (vCISO)</option>
+              <option value="awareness-training">Treinamento de Conscientização / Security Awareness Training</option>
               <option value="other">Outro / Other</option>
             </select>
           </div>
@@ -1711,8 +2000,8 @@
           <div class="brand-name">SAVOIR<span>INTEL</span></div>
         </div>
         <div class="tagline">
-          <span class="pt">Protegendo o comércio brasileiro — com a expertise que ele merece e o idioma que ele fala.</span>
-          <span class="en">Protecting Brazilian commerce — with the expertise it deserves and the language it speaks.</span>
+          <span class="pt">Protegendo o comércio brasileiro — com o rigor que ele merece e a presença local que ele exige.</span>
+          <span class="en">Protecting Brazilian commerce — with the rigor it deserves and the local presence it demands.</span>
         </div>
         <p>
           <span class="pt">SavoirIntel é uma consultoria de segurança ofensiva especializada no mercado brasileiro de SMBs. Operamos como LLC dos EUA com execução por contratados brasileiros vetados, sob acordos formais.</span>
@@ -1722,22 +2011,27 @@
       <div class="footer-col">
         <h5><span class="pt">Serviços</span><span class="en">Services</span></h5>
         <a href="#servicos">Surface Risk Snapshot</a>
-        <a href="#servicos">Basic Web / App Test</a>
-        <a href="#servicos">Full SMB Pentest</a>
-        <a href="#servicos">LGPD Compliance Audit</a>
+        <a href="#servicos"><span class="pt">Teste Web / App Básico</span><span class="en">Basic Web / App Test</span></a>
+        <a href="#servicos"><span class="pt">Pentest Completo para PMEs</span><span class="en">Full SMB Pentest</span></a>
+        <a href="#servicos"><span class="pt">Auditoria de Conformidade LGPD</span><span class="en">LGPD Compliance Audit</span></a>
         <a href="#servicos">PTaaS Retainer</a>
+        <a href="#servicos"><span class="pt">Resposta a Incidentes</span><span class="en">Incident Response</span></a>
+        <a href="#servicos"><span class="pt">Negociação de Ransomware</span><span class="en">Ransomware Negotiation</span></a>
+        <a href="#servicos"><span class="pt">CISO Virtual (vCISO)</span><span class="en">Virtual CISO (vCISO)</span></a>
+        <a href="#servicos"><span class="pt">Treinamento de Conscientização</span><span class="en">Security Awareness Training</span></a>
       </div>
       <div class="footer-col">
         <h5><span class="pt">Sobre</span><span class="en">About</span></h5>
         <a href="#processo"><span class="pt">Processo</span><span class="en">Process</span></a>
         <a href="#metodologia"><span class="pt">Metodologia</span><span class="en">Methodology</span></a>
         <a href="#porque"><span class="pt">Por que SavoirIntel</span><span class="en">Why us</span></a>
-        <a href="#contato"><span class="pt">Contato</span><span class="en">Contact</span></a>
+        <a href="careers.html"><span class="pt">Carreiras</span><span class="en">Careers</span></a>
+        <a href="careers.html#indicacao"><span class="pt">Programa de Indicação</span><span class="en">Referral Program</span></a>
       </div>
       <div class="footer-col">
         <h5><span class="pt">Contato</span><span class="en">Contact</span></h5>
         <a href="mailto:contato@savoirintel.com">contato@savoirintel.com</a>
-        <a href="https://calendly.com/smith-savoirintel/30min" onclick="if(window.Calendly){Calendly.initPopupWidget({url:'https://calendly.com/smith-savoirintel/30min'});return false;}" target="_blank" rel="noopener">Discovery call</a>
+        <a href="https://calendly.com/smith-savoirintel/30min" onclick="if(window.Calendly){Calendly.initPopupWidget({url:'https://calendly.com/smith-savoirintel/30min'});return false;}" target="_blank" rel="noopener"><span class="pt">Discovery call</span><span class="en">Discovery call</span></a>
         <a href="https://www.linkedin.com/in/tyler-smith-9293a3410" target="_blank" rel="noopener"><span class="pt">LinkedIn (Fundador)</span><span class="en">LinkedIn (Founder)</span></a>
       </div>
     </div>
@@ -1768,6 +2062,25 @@
     if (saved === 'en' || saved === 'pt') setLang(saved);
   } catch(e) {}
 
+  // ===== Theme toggle =====
+  const THEME_KEY = 'savoir-theme';
+  const themeToggle = document.getElementById('themeToggle');
+  function setTheme(theme) {
+    html.setAttribute('data-theme', theme);
+    try { localStorage.setItem(THEME_KEY, theme); } catch(e) {}
+    if (themeToggle) {
+      themeToggle.setAttribute('aria-label', theme === 'dark' ? 'Switch to light theme' : 'Switch to dark theme');
+    }
+  }
+  // sync aria-label on load with current theme
+  setTheme(html.getAttribute('data-theme') || 'dark');
+  if (themeToggle) {
+    themeToggle.addEventListener('click', () => {
+      const current = html.getAttribute('data-theme') === 'light' ? 'light' : 'dark';
+      setTheme(current === 'dark' ? 'light' : 'dark');
+    });
+  }
+
   // ===== Nav scroll style =====
   const nav = document.getElementById('nav');
   const onScroll = () => nav.classList.toggle('scrolled', window.scrollY > 20);
@@ -1787,12 +2100,11 @@
 
   // ===== Contact form =====
   // Form delivery handled by Web3Forms (https://web3forms.com). Submissions
-  // go to NOTIFY_EMAIL with CC_EMAIL on copy, with reply-to set to the
+  // go to NOTIFY_EMAIL, with reply-to set to the
   // sender so a quick reply lands directly with the prospect.
   const FORM_ENDPOINT = 'https://api.web3forms.com/submit';
   const FORM_ACCESS_KEY = '2287e605-459f-4913-851b-0b273c31735f';
-  const NOTIFY_EMAIL = 'contato@savoirintel.com';
-  const CC_EMAIL = 'smith@savoirintel.com';
+  const NOTIFY_EMAIL = 'smith@savoirintel.com';
 
   const form = document.getElementById('contactForm');
   const status = document.getElementById('formStatus');
@@ -1840,7 +2152,6 @@
       subject: 'SavoirIntel website — new request from ' + data.name + ' (' + data.company + ')',
       from_name: 'SavoirIntel Website',
       to: NOTIFY_EMAIL,
-      cc: CC_EMAIL,
       replyto: data.email,
       ...data
     };
@@ -1866,8 +2177,7 @@
     } else {
       // Fallback: open user's email client with the message pre-filled
       const mailto = 'mailto:' + NOTIFY_EMAIL +
-        '?cc=' + encodeURIComponent(CC_EMAIL) +
-        '&subject=' + encodeURIComponent('Snapshot request from ' + data.name + ' (' + data.company + ')') +
+        '?subject=' + encodeURIComponent('Snapshot request from ' + data.name + ' (' + data.company + ')') +
         '&body=' + encodeURIComponent(buildMessageText(data));
       window.location.href = mailto;
       status.className = 'form-status success';

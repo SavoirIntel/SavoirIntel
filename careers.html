@@ -1,0 +1,1399 @@
+<!DOCTYPE html>
+<html lang="pt-BR" data-lang="pt" data-theme="dark">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<script>
+  // Pre-paint theme init to avoid FOUC
+  (function(){
+    try {
+      var saved = localStorage.getItem('savoir-theme');
+      var prefersLight = window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches;
+      var theme = (saved === 'light' || saved === 'dark') ? saved : (prefersLight ? 'light' : 'dark');
+      document.documentElement.setAttribute('data-theme', theme);
+    } catch(e) {
+      document.documentElement.setAttribute('data-theme', 'dark');
+    }
+  })();
+</script>
+<meta name="description" content="SavoirIntel — Os clientes mais bem-sucedidos contam conosco para reduzir os riscos desnecessários que ameaçam tudo o que construíram. Protegemos o Brasil. Protegemos o seu futuro. Segurança ofensiva alinhada à LGPD, executada por operadores certificados com presença local." />
+<meta name="theme-color" content="#050505" />
+<meta property="og:title" content="SavoirIntel — Cybersecurity for Brazilian SMBs" />
+<meta property="og:description" content="Auditoria de segurança ofensiva. Identificamos vulnerabilidades reais antes que se tornem multas LGPD." />
+<meta property="og:type" content="website" />
+<title>SavoirIntel — Carreiras / Careers</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<link rel="icon" type="image/png" href="threat_intel_logo.png">
+<style>
+  :root,
+  [data-theme="dark"] {
+    --bg: #050505;
+    --bg-elevated: #0c0c0c;
+    --bg-card: #101010;
+    --border: #1c1c1c;
+    --border-strong: #2a2a2a;
+    --text: #f3eee5;
+    --text-muted: #8a8580;
+    --text-faint: #4d4a45;
+    --accent: #c9a96e;
+    --accent-bright: #d9bb7e;
+    --accent-dim: #6b5a3a;
+    --danger: #b56b6b;
+    --nav-bg: rgba(5,5,5,0.72);
+    --nav-bg-mobile: rgba(5,5,5,0.97);
+    --footer-bg: #020202;
+    --field-focus-bg: #080808;
+    --grid-line: rgba(201,169,110,0.04);
+    --hero-glow-color: rgba(201,169,110,0.16);
+    --serif: 'Cormorant Garamond', 'Georgia', serif;
+    --sans: 'Inter', system-ui, -apple-system, sans-serif;
+    --mono: 'JetBrains Mono', ui-monospace, monospace;
+    --maxw: 1240px;
+    --section-py: 120px;
+  }
+  [data-theme="light"] {
+    --bg: #f5f1ea;
+    --bg-elevated: #ebe5d8;
+    --bg-card: #ffffff;
+    --border: #d8d0c0;
+    --border-strong: #bcb09a;
+    --text: #1a1714;
+    --text-muted: #5a554c;
+    --text-faint: #9a9388;
+    --accent: #b08e4f;
+    --accent-bright: #c9a96e;
+    --accent-dim: #8a6f3a;
+    --danger: #9c4a4a;
+    --nav-bg: rgba(245,241,234,0.82);
+    --nav-bg-mobile: rgba(245,241,234,0.97);
+    --footer-bg: #ebe5d8;
+    --field-focus-bg: #fdfbf6;
+    --grid-line: rgba(176,142,79,0.07);
+    --hero-glow-color: rgba(176,142,79,0.10);
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--sans);
+    font-weight: 300;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    overflow-x: hidden;
+    transition: background-color 0.3s ease, color 0.3s ease;
+  }
+  .nav, .problem, .process, .standards, .founder, .team,
+  .service-card, .problem-card, .report-card, .channel,
+  .contact-form, .field input, .field select, .field textarea,
+  .standard, .team-card, footer, .remediation-callout,
+  .credentials-strip, .footer-bottom {
+    transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+  }
+  a { color: inherit; text-decoration: none; }
+  img { display: block; max-width: 100%; }
+  button { font: inherit; cursor: pointer; }
+
+  /* ---------- Layout ---------- */
+  .container { max-width: var(--maxw); margin: 0 auto; padding: 0 32px; }
+  section { padding: var(--section-py) 0; position: relative; }
+  .eyebrow {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 24px;
+    display: inline-block;
+  }
+  h1, h2, h3 { font-family: var(--serif); font-weight: 500; letter-spacing: -0.01em; }
+  h2 { font-size: clamp(34px, 4.5vw, 56px); line-height: 1.08; margin-bottom: 24px; }
+  h3 { font-size: 26px; line-height: 1.2; margin-bottom: 12px; }
+  p { color: var(--text-muted); font-size: 16px; }
+  .lead { font-size: 19px; line-height: 1.6; color: var(--text); max-width: 720px; font-weight: 300; }
+
+  /* ---------- Nav ---------- */
+  .nav {
+    position: fixed; top: 0; left: 0; right: 0;
+    z-index: 100;
+    padding: 18px 32px;
+    background: var(--nav-bg);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    border-bottom: 1px solid transparent;
+    transition: border-color 0.3s, padding 0.3s, background-color 0.3s ease;
+  }
+  .nav.scrolled { border-bottom-color: var(--border); padding: 12px 32px; }
+  .nav-inner {
+    max-width: var(--maxw); margin: 0 auto;
+    display: flex; align-items: center; justify-content: space-between;
+    position: relative;
+  }
+  .brand { display: flex; align-items: center; gap: 14px; }
+  .brand-mark {
+    width: 16px; height: 40px;
+    background: url('threat_intel_logo.png') center/contain no-repeat;
+    filter: brightness(1.05);
+  }
+  .brand-name {
+    font-family: var(--sans); font-weight: 500;
+    font-size: 13px; letter-spacing: 0.32em; text-transform: uppercase;
+    color: var(--text);
+  }
+  .brand-name span { color: var(--accent); }
+  .nav-links { display: flex; align-items: center; gap: 28px; }
+  .nav-links a {
+    font-size: 13px; letter-spacing: 0.04em; color: var(--text-muted);
+    transition: color 0.2s;
+    cursor: pointer;
+    padding: 10px 4px;
+    display: inline-flex;
+    align-items: center;
+    min-height: 36px;
+    -webkit-tap-highlight-color: rgba(201,169,110,0.18);
+    text-decoration: none;
+  }
+  .nav-links a:hover { color: var(--text); }
+  .nav-links a:active { color: var(--accent); }
+  .lang-toggle {
+    display: flex; gap: 0; background: var(--bg-elevated);
+    border: 1px solid var(--border-strong); border-radius: 2px;
+    overflow: hidden; font-family: var(--mono); font-size: 11px;
+  }
+  .lang-toggle button {
+    background: transparent; color: var(--text-muted); border: none;
+    padding: 6px 12px; letter-spacing: 0.1em; transition: all 0.2s;
+  }
+  .lang-toggle button.active { background: var(--accent); color: var(--bg); }
+  .theme-toggle {
+    display: inline-flex; align-items: center; justify-content: center;
+    width: 38px; height: 32px;
+    background: var(--bg-elevated);
+    border: 1px solid var(--border-strong);
+    color: var(--text-muted);
+    border-radius: 2px;
+    padding: 0; cursor: pointer;
+    transition: color 0.2s, border-color 0.2s, background-color 0.2s, box-shadow 0.2s;
+    -webkit-tap-highlight-color: transparent;
+    min-height: 32px;
+  }
+  .theme-toggle:hover { color: var(--accent); border-color: var(--accent-dim); }
+  .theme-toggle:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+  .theme-toggle svg { width: 16px; height: 16px; display: block; }
+  .theme-toggle .icon-sun { display: none; }
+  .theme-toggle .icon-moon { display: block; }
+  [data-theme="dark"] .theme-toggle .icon-sun { display: block; }
+  [data-theme="dark"] .theme-toggle .icon-moon { display: none; }
+  [data-theme="light"] .theme-toggle .icon-sun { display: none; }
+  [data-theme="light"] .theme-toggle .icon-moon { display: block; }
+  .nav-cta {
+    padding: 10px 20px; border: 1px solid var(--accent);
+    color: var(--accent); font-size: 13px; letter-spacing: 0.04em;
+    transition: all 0.2s; border-radius: 1px;
+  }
+  .nav-cta:hover { background: var(--accent); color: #000; }
+  .nav-burger { display: none; background: transparent; border: none; color: var(--text); font-size: 22px; cursor: pointer; padding: 4px 10px; min-height: 36px; min-width: 36px; -webkit-tap-highlight-color: transparent; }
+  .nav-right { display: flex; align-items: center; gap: 10px; }
+  .lang-toggle button { min-height: 32px; min-width: 38px; -webkit-tap-highlight-color: transparent; cursor: pointer; }
+
+  /* ---------- Hero ---------- */
+  .hero {
+    min-height: 100vh; display: flex; align-items: center;
+    position: relative; overflow: hidden; padding-top: 100px;
+  }
+  .hero-grid-bg {
+    position: absolute; inset: 0; pointer-events: none;
+    background-image:
+      linear-gradient(var(--grid-line) 1px, transparent 1px),
+      linear-gradient(90deg, var(--grid-line) 1px, transparent 1px);
+    background-size: 80px 80px;
+    mask-image: radial-gradient(ellipse at 70% 40%, black 0%, transparent 70%);
+    -webkit-mask-image: radial-gradient(ellipse at 70% 40%, black 0%, transparent 70%);
+  }
+  .hero-glow {
+    position: absolute; right: -10%; top: 30%;
+    width: 700px; height: 700px;
+    background: radial-gradient(circle, rgba(201,169,110,0.10) 0%, transparent 60%);
+    pointer-events: none;
+  }
+  .hero-inner {
+    display: grid; grid-template-columns: 1.4fr 1fr; gap: 80px;
+    align-items: center; position: relative; z-index: 2;
+  }
+  .hero h1 {
+    font-size: clamp(44px, 5.6vw, 76px);
+    line-height: 1.02;
+    letter-spacing: -0.022em;
+    margin-bottom: 28px;
+  }
+  .hero h1 .accent { color: var(--accent); font-style: italic; }
+  .hero .sub {
+    font-size: 19px; line-height: 1.6; color: var(--text-muted);
+    max-width: 580px; margin-bottom: 40px; font-weight: 300;
+  }
+  .hero-ctas { display: flex; gap: 16px; align-items: center; flex-wrap: wrap; }
+  .btn {
+    display: inline-flex; align-items: center; gap: 10px;
+    padding: 16px 28px; font-size: 14px; letter-spacing: 0.05em;
+    border-radius: 1px; transition: all 0.25s; cursor: pointer;
+    border: 1px solid transparent;
+  }
+  .btn-primary {
+    background: var(--accent); color: #000; border-color: var(--accent);
+    font-weight: 500;
+  }
+  .btn-primary:hover { background: var(--accent-bright); transform: translateY(-1px); }
+  .btn-ghost {
+    background: transparent; color: var(--text); border-color: var(--border-strong);
+  }
+  .btn-ghost:hover { border-color: var(--text); }
+  .btn .arrow { transition: transform 0.2s; }
+  .btn:hover .arrow { transform: translateX(3px); }
+
+  .hero-visual {
+    position: relative; display: flex; align-items: center; justify-content: center;
+    overflow: hidden;
+    min-height: 320px;
+    z-index: 1;
+  }
+  .hero-text { position: relative; z-index: 3; }
+  .hero-monolith {
+    width: 150px; height: 360px;
+    background: url('threat_intel_logo.png') center/contain no-repeat;
+    filter: brightness(1.05) contrast(1.05);
+    position: relative;
+  }
+  .hero-monolith::after {
+    content: ''; position: absolute; inset: -40px;
+    background: radial-gradient(circle, rgba(201,169,110,0.12) 0%, transparent 65%);
+    z-index: -1;
+  }
+
+  .credentials-strip {
+    margin-top: 80px; padding-top: 32px;
+    border-top: 1px solid var(--border);
+    display: flex; flex-wrap: wrap; gap: 36px;
+    font-family: var(--mono); font-size: 11px;
+    letter-spacing: 0.18em; text-transform: uppercase;
+    color: var(--text-faint);
+  }
+  .credentials-strip span {
+    position: relative;
+  }
+  .credentials-strip span::before {
+    content: '◆'; color: var(--accent); margin-right: 12px; font-size: 8px;
+    vertical-align: middle;
+  }
+
+  /* ---------- Micro-agreement strip ---------- */
+  .agreement-strip {
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+    background: var(--bg);
+    padding: 36px 0;
+    transition: background-color 0.3s ease, border-color 0.3s ease;
+  }
+  .agreement-grid {
+    display: grid; grid-template-columns: 1fr 1px 1fr; gap: 48px;
+    align-items: center;
+    max-width: 980px; margin: 0 auto;
+  }
+  .agreement-divider { background: var(--border-strong); height: 56px; align-self: center; }
+  .agreement-item { text-align: center; }
+  .agreement-item .authority {
+    font-family: var(--serif);
+    font-style: italic;
+    font-size: 17px;
+    line-height: 1.45;
+    color: var(--text);
+    margin-bottom: 8px;
+    letter-spacing: -0.005em;
+  }
+  .agreement-item .authority em { color: var(--accent); font-style: italic; }
+  .agreement-item .assertion {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+  }
+  @media (max-width: 760px) {
+    .agreement-grid { grid-template-columns: 1fr; gap: 28px; }
+    .agreement-divider { width: 56px; height: 1px; justify-self: center; }
+  }
+
+  /* ---------- Problem section ---------- */
+  .problem { background: var(--bg-elevated); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+  .problem-grid {
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px;
+    margin-top: 64px; background: var(--border);
+    border: 1px solid var(--border);
+  }
+  .problem-card {
+    background: var(--bg-elevated); padding: 48px 36px;
+    display: flex; flex-direction: column; gap: 16px;
+    transition: background 0.3s;
+  }
+  .problem-card:hover { background: var(--bg-card); }
+  .problem-stat {
+    font-family: var(--serif); font-size: 56px; line-height: 1;
+    color: var(--accent); font-weight: 500; letter-spacing: -0.02em;
+  }
+  .problem-stat .unit { font-size: 22px; color: var(--text-muted); margin-left: 4px; }
+  .problem-card h3 { font-family: var(--sans); font-size: 15px; font-weight: 500;
+    text-transform: uppercase; letter-spacing: 0.12em; color: var(--text); margin-bottom: 8px; }
+  .problem-card p { font-size: 15px; line-height: 1.6; }
+  .problem-cta {
+    margin-top: 4px; font-family: var(--sans); font-size: 13px; font-weight: 600;
+    text-transform: uppercase; letter-spacing: 0.1em; color: var(--accent);
+    text-decoration: none; display: inline-flex; align-items: center; gap: 6px;
+    transition: gap 0.25s, opacity 0.25s;
+  }
+  .problem-cta:hover { gap: 12px; opacity: 0.8; }
+  .problem-card-wide { grid-column: 1 / -1; border-top: 1px solid var(--accent-dim); }
+
+  /* ---------- Services ---------- */
+  .services-grid {
+    display: grid; grid-template-columns: repeat(2, 1fr); gap: 24px;
+    margin-top: 64px;
+  }
+  .service-card {
+    background: var(--bg-elevated); border: 1px solid var(--border);
+    padding: 40px 36px; position: relative; transition: all 0.3s;
+    display: flex; flex-direction: column;
+  }
+  .service-card:hover { border-color: var(--accent-dim); transform: translateY(-2px); }
+  .service-card.featured { border-color: var(--accent); background: linear-gradient(180deg, rgba(201,169,110,0.04) 0%, var(--bg-elevated) 60%); }
+  .service-tag {
+    font-family: var(--mono); font-size: 10px; letter-spacing: 0.18em;
+    text-transform: uppercase; color: var(--accent); margin-bottom: 16px;
+  }
+  .service-card h3 { font-size: 28px; margin-bottom: 12px; }
+  .service-card .who {
+    font-size: 13px; color: var(--text-faint); margin-bottom: 20px;
+    font-family: var(--mono); letter-spacing: 0.04em;
+  }
+  .service-card .desc { font-size: 15px; line-height: 1.65; margin-bottom: 24px; flex: 1; }
+  .service-card ul { list-style: none; margin-bottom: 24px; }
+  .service-card li {
+    font-size: 14px; color: var(--text-muted); padding: 6px 0 6px 22px;
+    position: relative; line-height: 1.5;
+  }
+  .service-card li::before {
+    content: ''; position: absolute; left: 0; top: 14px;
+    width: 10px; height: 1px; background: var(--accent);
+  }
+  .service-card .meta {
+    margin-top: auto; padding-top: 20px; border-top: 1px solid var(--border);
+    display: flex; justify-content: space-between; align-items: center;
+    font-family: var(--mono); font-size: 11px; letter-spacing: 0.1em;
+    text-transform: uppercase; color: var(--text-faint);
+  }
+  .service-card .meta strong { color: var(--accent); font-weight: 500; }
+
+  .remediation-callout {
+    margin-top: 32px; padding: 32px 36px;
+    border: 1px solid var(--border); background: var(--bg-elevated);
+    display: flex; align-items: center; gap: 32px;
+  }
+  .remediation-callout .icon {
+    width: 48px; height: 48px; flex-shrink: 0;
+    background: var(--accent); color: #000; display: flex;
+    align-items: center; justify-content: center; font-size: 22px;
+    font-family: var(--serif); font-weight: 600;
+  }
+  .remediation-callout h4 {
+    font-family: var(--serif); font-size: 22px; margin-bottom: 4px;
+    color: var(--text); font-weight: 500;
+  }
+  .remediation-callout p { font-size: 14px; }
+
+  .more-services { margin-top: 24px; }
+  .more-services > summary {
+    list-style: none; cursor: pointer;
+    display: flex; align-items: center; justify-content: center; gap: 12px;
+    padding: 22px 24px; border: 1px dashed var(--border); background: var(--bg-elevated);
+    font-family: var(--mono); font-size: 12px; letter-spacing: 0.18em;
+    text-transform: uppercase; color: var(--accent); transition: all 0.3s;
+  }
+  .more-services > summary::-webkit-details-marker { display: none; }
+  .more-services > summary:hover { border-color: var(--accent-dim); background: var(--bg-card); }
+  .more-services > summary .chev {
+    font-family: var(--serif); font-size: 20px; line-height: 1;
+    transition: transform 0.3s;
+  }
+  .more-services[open] > summary .chev { transform: rotate(45deg); }
+  .more-services[open] > summary { border-style: solid; border-color: var(--accent-dim); margin-bottom: 24px; }
+  .more-services .services-grid { margin-top: 0; }
+
+  .referral-card {
+    margin-top: 32px; padding: 28px;
+    border: 1px solid var(--accent-dim); background: var(--bg-elevated);
+  }
+  .referral-card h3 { font-family: var(--serif); font-size: 21px; font-weight: 500;
+    color: var(--text); margin-bottom: 10px; }
+  .referral-card p { font-size: 14px; color: var(--text-muted); line-height: 1.65; margin-bottom: 20px; }
+  .referral-card .btn { width: 100%; justify-content: center; }
+
+  /* ---------- Process ---------- */
+  .process { background: var(--bg-elevated); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+  .process-header { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: end; margin-bottom: 80px; }
+  .process-timeline {
+    display: grid; grid-template-columns: repeat(5, 1fr); gap: 0;
+    position: relative; margin-bottom: 80px;
+  }
+  .process-timeline::before {
+    content: ''; position: absolute; top: 24px; left: 8%; right: 8%;
+    height: 1px; background: var(--border-strong);
+    z-index: 0;
+  }
+  .process-step { text-align: left; position: relative; padding: 0 16px; z-index: 1; }
+  .process-step .num {
+    width: 48px; height: 48px; border-radius: 50%;
+    background: var(--bg-elevated); border: 1px solid var(--accent);
+    color: var(--accent); display: flex; align-items: center; justify-content: center;
+    font-family: var(--serif); font-size: 20px; margin-bottom: 18px;
+    position: relative; z-index: 2;
+  }
+  .process-step h4 {
+    font-size: 14px; font-weight: 500; letter-spacing: 0.04em;
+    color: var(--text); margin-bottom: 8px;
+  }
+  .process-step p { font-size: 13px; line-height: 1.55; color: var(--text-muted); }
+
+  .dual-report {
+    margin-top: 60px; display: grid; grid-template-columns: 1fr 1fr; gap: 32px;
+  }
+  .report-card {
+    border: 1px solid var(--border); padding: 36px;
+    background: var(--bg); position: relative;
+  }
+  .report-card .label {
+    font-family: var(--mono); font-size: 10px; letter-spacing: 0.2em;
+    text-transform: uppercase; color: var(--accent); margin-bottom: 16px;
+  }
+  .report-card h4 { font-family: var(--serif); font-size: 26px; margin-bottom: 14px; color: var(--text); }
+  .report-card .lang { font-family: var(--mono); font-size: 11px; color: var(--text-faint);
+    letter-spacing: 0.1em; margin-bottom: 18px; text-transform: uppercase; }
+  .report-card p { font-size: 14.5px; line-height: 1.6; }
+
+  /* ---------- Differentiators ---------- */
+  .diff-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 32px; margin-top: 64px; }
+  .diff-item { display: flex; gap: 24px; align-items: flex-start; }
+  .diff-item .marker {
+    width: 36px; height: 36px; flex-shrink: 0;
+    border: 1px solid var(--accent); color: var(--accent);
+    display: flex; align-items: center; justify-content: center;
+    font-family: var(--mono); font-size: 13px; font-weight: 500;
+    margin-top: 4px;
+  }
+  .diff-item h4 { font-family: var(--serif); font-size: 22px; margin-bottom: 8px;
+    color: var(--text); font-weight: 500; }
+  .diff-item p { font-size: 15px; line-height: 1.65; }
+
+  /* ---------- Standards ---------- */
+  .standards { background: var(--bg-elevated); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+  .standards-inner { text-align: center; }
+  .standards-grid {
+    display: grid; grid-template-columns: repeat(4, 1fr); gap: 1px;
+    margin-top: 56px; background: var(--border);
+    border: 1px solid var(--border);
+  }
+  .standard {
+    background: var(--bg-elevated); padding: 36px 24px;
+    text-align: center; transition: background 0.3s;
+  }
+  .standard:hover { background: var(--bg-card); }
+  .standard .name {
+    font-family: var(--mono); font-size: 13px;
+    letter-spacing: 0.12em; text-transform: uppercase;
+    color: var(--text); margin-bottom: 6px; font-weight: 500;
+  }
+  .standard .meta { font-size: 12px; color: var(--text-faint); }
+
+  /* ---------- Contact ---------- */
+  .contact-grid { display: grid; grid-template-columns: 1fr 1.2fr; gap: 64px; margin-top: 64px; }
+  .contact-info h3 { font-family: var(--serif); margin-bottom: 24px; }
+  .contact-info p { margin-bottom: 32px; font-size: 15.5px; line-height: 1.7; }
+  .contact-channels { display: flex; flex-direction: column; gap: 16px; margin-top: 32px; }
+  .channel {
+    display: flex; align-items: center; gap: 18px;
+    padding: 18px 22px; border: 1px solid var(--border);
+    background: var(--bg-elevated); transition: all 0.2s;
+    cursor: pointer;
+  }
+  .channel:hover { border-color: var(--accent-dim); background: var(--bg-card); }
+  .channel .ch-icon {
+    width: 40px; height: 40px; flex-shrink: 0;
+    border: 1px solid var(--border-strong);
+    display: flex; align-items: center; justify-content: center;
+    color: var(--accent); font-size: 18px;
+  }
+  .channel .ch-label {
+    font-family: var(--mono); font-size: 10px;
+    letter-spacing: 0.18em; text-transform: uppercase;
+    color: var(--text-faint); margin-bottom: 4px;
+  }
+  .channel .ch-value { font-size: 14.5px; color: var(--text); }
+
+  .contact-form {
+    background: var(--bg-elevated); border: 1px solid var(--border);
+    padding: 40px;
+  }
+  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 16px; }
+  .form-row.single { grid-template-columns: 1fr; }
+  .field { display: flex; flex-direction: column; }
+  .field label {
+    font-family: var(--mono); font-size: 10px;
+    letter-spacing: 0.16em; text-transform: uppercase;
+    color: var(--text-muted); margin-bottom: 8px;
+  }
+  .field label .req { color: var(--accent); }
+  .field input, .field select, .field textarea {
+    background: var(--bg); border: 1px solid var(--border-strong);
+    color: var(--text); padding: 12px 14px; font: inherit;
+    font-size: 14px; border-radius: 1px; transition: border-color 0.2s;
+    font-family: var(--sans); font-weight: 300;
+  }
+  .field input:focus, .field select:focus, .field textarea:focus {
+    outline: none; border-color: var(--accent);
+  }
+  .field textarea { resize: vertical; min-height: 110px; }
+  .form-actions { display: flex; justify-content: space-between; align-items: center;
+    margin-top: 24px; gap: 16px; flex-wrap: wrap; }
+  .form-actions .privacy { font-size: 12px; color: var(--text-faint); flex: 1; min-width: 200px; line-height: 1.5; }
+  .form-status {
+    margin-top: 16px; padding: 14px 18px; font-size: 14px;
+    border-radius: 1px; display: none;
+  }
+  .form-status.success { display: block; background: rgba(201,169,110,0.1); border: 1px solid var(--accent); color: var(--accent-bright); }
+  .form-status.error { display: block; background: rgba(181,107,107,0.1); border: 1px solid var(--danger); color: var(--danger); }
+
+  /* ---------- Footer ---------- */
+  footer {
+    background: var(--footer-bg); border-top: 1px solid var(--border);
+    padding: 64px 0 32px;
+  }
+  .footer-inner { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 48px; margin-bottom: 48px; }
+  .footer-brand { max-width: 380px; }
+  .footer-brand .tagline {
+    font-family: var(--serif); font-style: italic; font-size: 19px;
+    line-height: 1.5; color: var(--text); margin: 20px 0 24px; font-weight: 400;
+  }
+  .footer-brand p { font-size: 13px; color: var(--text-faint); line-height: 1.6; }
+  .footer-col h5 {
+    font-family: var(--mono); font-size: 10px; letter-spacing: 0.2em;
+    text-transform: uppercase; color: var(--text-muted); margin-bottom: 20px;
+    font-weight: 500;
+  }
+  .footer-col a, .footer-col span {
+    display: block; font-size: 13px; color: var(--text-muted);
+    line-height: 2; transition: color 0.2s;
+  }
+  .footer-col a:hover { color: var(--accent); }
+  .footer-bottom {
+    border-top: 1px solid var(--border); padding-top: 24px;
+    display: flex; justify-content: space-between; align-items: center;
+    font-size: 12px; color: var(--text-faint); flex-wrap: wrap; gap: 12px;
+  }
+  .footer-bottom .legal { font-family: var(--mono); letter-spacing: 0.08em; }
+
+  /* ---------- Animations ---------- */
+  .reveal { opacity: 0; transform: translateY(24px); transition: opacity 0.7s ease, transform 0.7s ease; }
+  .reveal.visible { opacity: 1; transform: translateY(0); }
+
+  /* ---------- Language switcher behavior ---------- */
+  [data-lang="pt"] .en, [data-lang="en"] .pt { display: none; }
+
+  /* =========================================================
+     POLISH LAYER — overrides and refinements applied last
+     ========================================================= */
+
+  /* Body grain — premium tactile feel */
+  body::before {
+    content: ''; position: fixed; inset: 0;
+    pointer-events: none; z-index: 1;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0.78  0 0 0 0 0.66  0 0 0 0 0.43  0 0 0 0.10 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+    opacity: 0.5; mix-blend-mode: overlay;
+  }
+  [data-theme="light"] body::before {
+    opacity: 0.25; mix-blend-mode: multiply;
+  }
+  [data-theme="light"] .brand-mark { filter: brightness(0.55) contrast(1.1); }
+  [data-theme="light"] .hero-monolith { filter: brightness(0.6) contrast(1.1) drop-shadow(0 14px 32px rgba(0,0,0,0.18)); }
+  [data-theme="light"] footer::before { opacity: 0.06; filter: brightness(0.5); }
+  [data-theme="light"] .service-card.featured { background: linear-gradient(180deg, rgba(176,142,79,0.05) 0%, var(--bg-elevated) 60%); }
+  [data-theme="light"] .lang-toggle button.active { color: #fff; }
+  /* Keep content above grain — but DON'T touch .nav (it must stay position:fixed from line 71) */
+  section, footer { position: relative; z-index: 2; }
+
+  /* Smoother reveal */
+  .reveal { transition: opacity 0.9s cubic-bezier(.2,.7,.2,1), transform 0.9s cubic-bezier(.2,.7,.2,1); }
+
+  /* ---------- Hero: more drama ---------- */
+  .hero h1 { font-size: clamp(48px, 6.2vw, 88px); }
+  .hero .sub { font-size: 20px; max-width: 600px; }
+
+  .hero-glow {
+    width: 800px; height: 800px;
+    background: radial-gradient(circle, var(--hero-glow-color) 0%, transparent 62%);
+    animation: heroGlow 9s ease-in-out infinite;
+  }
+  @keyframes heroGlow {
+    0%, 100% { opacity: 0.7; transform: scale(1); }
+    50% { opacity: 1; transform: scale(1.08); }
+  }
+
+  .hero-monolith {
+    width: 150px; height: 360px;
+    filter: brightness(1.08) contrast(1.05) drop-shadow(0 14px 32px rgba(0,0,0,0.55));
+  }
+  /* Glow contained inside the visual column; no float animation so text never gets covered */
+  .hero-monolith::after {
+    inset: -10px;
+    background: radial-gradient(circle, rgba(201,169,110,0.16) 0%, transparent 62%);
+    z-index: -1;
+  }
+
+  /* Live indicator next to the primary CTA */
+  .cta-meta {
+    display: inline-flex; align-items: center; gap: 10px;
+    margin-left: 18px; font-family: var(--mono); font-size: 11px;
+    letter-spacing: 0.14em; text-transform: uppercase; color: var(--text-muted);
+  }
+  .cta-meta .dot {
+    width: 8px; height: 8px; border-radius: 50%; background: var(--accent);
+    box-shadow: 0 0 0 0 rgba(201,169,110,0.8); animation: pulse 2.4s infinite;
+  }
+  @keyframes pulse {
+    0% { box-shadow: 0 0 0 0 rgba(201,169,110,0.6); }
+    70% { box-shadow: 0 0 0 14px rgba(201,169,110,0); }
+    100% { box-shadow: 0 0 0 0 rgba(201,169,110,0); }
+  }
+
+  /* Refined credentials strip with diamond separator */
+  .credentials-strip { gap: 28px; align-items: center; }
+  .credentials-strip span::before { color: var(--accent); }
+
+  /* Scroll cue */
+  .scroll-cue {
+    position: absolute; bottom: 36px; left: 50%; transform: translateX(-50%);
+    font-family: var(--mono); font-size: 10px; letter-spacing: 0.3em;
+    color: var(--text-faint); text-transform: uppercase;
+    display: flex; flex-direction: column; align-items: center; gap: 14px;
+    z-index: 3;
+  }
+  .scroll-cue .line {
+    width: 1px; height: 48px; background: linear-gradient(180deg, var(--accent), transparent);
+    animation: scrollLine 2.2s ease-in-out infinite;
+  }
+  @keyframes scrollLine {
+    0%, 100% { transform: scaleY(0.6); opacity: 0.6; transform-origin: top; }
+    50% { transform: scaleY(1); opacity: 1; transform-origin: top; }
+  }
+
+  /* Primary CTA inner glow */
+  .btn-primary { box-shadow: 0 0 0 0 rgba(201,169,110,0.4); transition: all 0.3s; }
+  .btn-primary:hover { box-shadow: 0 14px 40px -10px rgba(201,169,110,0.5), 0 0 0 1px var(--accent-bright); }
+
+  /* ---------- Section ornaments ---------- */
+  section + section::before {
+    content: '◆';
+    position: absolute; top: -10px; left: 50%; transform: translateX(-50%);
+    background: var(--bg); color: var(--accent); font-size: 11px;
+    padding: 4px 16px; z-index: 4;
+  }
+  .problem + section::before, .process + section::before, .standards + section::before {
+    background: var(--bg);
+  }
+  section.problem::before, section.process::before, section.standards::before {
+    background: var(--bg-elevated);
+  }
+
+  /* ---------- Problem cards: refined ---------- */
+  .problem-stat {
+    background: linear-gradient(180deg, var(--accent-bright) 0%, var(--accent) 60%, var(--accent-dim) 100%);
+    -webkit-background-clip: text; background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-size: 72px;
+  }
+  .problem-card { transition: background 0.4s, transform 0.4s; }
+  .problem-card:hover { transform: translateY(-2px); }
+
+  /* ---------- Services: featured corner ribbon ---------- */
+  .service-card.featured { overflow: hidden; }
+  .service-card.featured::before {
+    content: 'GRÁTIS / FREE';
+    position: absolute; top: 18px; right: -42px;
+    background: var(--accent); color: #000;
+    font-family: var(--mono); font-size: 10px; font-weight: 600;
+    letter-spacing: 0.18em; padding: 5px 50px;
+    transform: rotate(40deg);
+    box-shadow: 0 4px 14px rgba(201,169,110,0.3);
+  }
+  .service-card.featured::after {
+    content: ''; position: absolute; inset: 0;
+    background: radial-gradient(ellipse at top right, rgba(201,169,110,0.06), transparent 60%);
+    pointer-events: none;
+  }
+  .service-card { transition: all 0.3s cubic-bezier(.2,.7,.2,1); }
+  .service-card:hover {
+    box-shadow: 0 24px 50px -20px rgba(0,0,0,0.6);
+    border-color: var(--accent-dim);
+  }
+  .service-card::after {
+    content: ''; position: absolute; left: 0; top: 0; width: 0; height: 1px;
+    background: var(--accent); transition: width 0.5s cubic-bezier(.2,.7,.2,1);
+  }
+  .service-card:not(.featured):hover::after { width: 100%; }
+
+  /* ---------- Process timeline: gradient line + node pulse ---------- */
+  .process-timeline::before {
+    background: linear-gradient(90deg, transparent, var(--accent-dim) 20%, var(--accent) 50%, var(--accent-dim) 80%, transparent);
+    opacity: 0.5;
+  }
+  .process-step .num {
+    transition: all 0.4s; background: var(--bg-elevated);
+  }
+  .process-step:hover .num {
+    background: var(--accent); color: #000; border-color: var(--accent);
+    transform: scale(1.08);
+    box-shadow: 0 0 0 6px rgba(201,169,110,0.12);
+  }
+
+  /* ---------- Differentiators: bigger markers ---------- */
+  .diff-item .marker {
+    width: 56px; height: 56px;
+    font-family: var(--serif); font-size: 22px; font-weight: 500;
+    background: linear-gradient(135deg, transparent 0%, rgba(201,169,110,0.08) 100%);
+    transition: all 0.3s;
+  }
+  .diff-item:hover .marker {
+    background: var(--accent); color: #000;
+    transform: rotate(-3deg) scale(1.05);
+  }
+  .diff-item h4 { font-size: 24px; }
+
+  /* ---------- Standards: hover refinement ---------- */
+  .standard { position: relative; transition: all 0.3s; }
+  .standard::before {
+    content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
+    background: var(--accent); transform: scaleX(0); transition: transform 0.4s cubic-bezier(.2,.7,.2,1);
+    transform-origin: left;
+  }
+  .standard:hover::before { transform: scaleX(1); }
+  .standard:hover .name { color: var(--accent); }
+  .standard .name { transition: color 0.3s; }
+
+  /* ---------- Contact form: focused field + accent strip ---------- */
+  .contact-form { position: relative; overflow: hidden; }
+  .contact-form::before {
+    content: ''; position: absolute; top: 0; left: 0; width: 3px; height: 80px;
+    background: linear-gradient(180deg, var(--accent), transparent);
+  }
+  .field input, .field select, .field textarea {
+    transition: border-color 0.25s, box-shadow 0.25s, background 0.25s;
+  }
+  .field input:focus, .field select:focus, .field textarea:focus {
+    box-shadow: 0 0 0 3px rgba(201,169,110,0.10);
+    background: var(--field-focus-bg);
+  }
+  .channel { transition: all 0.25s cubic-bezier(.2,.7,.2,1); }
+  .channel:hover { transform: translateX(4px); border-color: var(--accent); }
+  .channel:hover .ch-icon { background: var(--accent); color: #000; border-color: var(--accent); }
+  .channel .ch-icon { transition: all 0.25s; }
+
+  /* ---------- Footer: ghost watermark ---------- */
+  footer { position: relative; overflow: hidden; }
+  footer::before {
+    content: ''; position: absolute; right: -80px; top: 40px;
+    width: 200px; height: 280px;
+    background: url('threat_intel_logo.png') center/contain no-repeat;
+    opacity: 0.04; filter: brightness(2);
+    pointer-events: none;
+  }
+  .footer-col a { position: relative; transition: color 0.2s, padding 0.2s; }
+  .footer-col a:hover { color: var(--accent); padding-left: 8px; }
+
+  /* ---------- Nav lang toggle refinement ---------- */
+  .lang-toggle { box-shadow: inset 0 0 0 1px transparent; transition: box-shadow 0.2s; }
+  .lang-toggle:hover { box-shadow: inset 0 0 0 1px var(--accent-dim); }
+  .lang-toggle button { transition: all 0.2s; }
+  .lang-toggle button:not(.active):hover { color: var(--text); background: rgba(201,169,110,0.08); }
+
+  /* ---------- Smooth selection ---------- */
+  ::selection { background: var(--accent); color: #000; }
+
+  /* ---------- Founder section ---------- */
+  .founder {
+    background: var(--bg-elevated);
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+  }
+  .founder-grid {
+    display: grid;
+    grid-template-columns: 5fr 7fr;
+    gap: 72px;
+    align-items: center;
+    margin-top: 64px;
+  }
+  .founder-photo {
+    position: relative;
+  }
+  .founder-photo img {
+    width: 100%; height: auto; display: block;
+    filter: contrast(1.04) brightness(1.02);
+    background: var(--bg);
+  }
+  .founder-photo::before,
+  .founder-photo::after {
+    content: ''; position: absolute;
+    width: 84px; height: 84px;
+    pointer-events: none;
+    transition: all 0.4s cubic-bezier(.2,.7,.2,1);
+  }
+  .founder-photo::before {
+    top: -18px; left: -18px;
+    border-top: 2px solid var(--accent);
+    border-left: 2px solid var(--accent);
+  }
+  .founder-photo::after {
+    bottom: -18px; right: -18px;
+    border-bottom: 2px solid var(--accent);
+    border-right: 2px solid var(--accent);
+  }
+  .founder-photo:hover::before,
+  .founder-photo:hover::after {
+    width: 100px; height: 100px;
+  }
+  .founder-name {
+    font-family: var(--serif);
+    font-size: 44px; font-weight: 500;
+    color: var(--text);
+    letter-spacing: -0.018em;
+    line-height: 1.1;
+    margin-bottom: 6px;
+  }
+  .founder-title {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 36px;
+  }
+  .founder-letter {
+    font-size: 17px;
+    line-height: 1.72;
+    color: var(--text);
+    margin-bottom: 24px;
+    font-weight: 300;
+  }
+  .founder-letter:last-of-type { margin-bottom: 0; }
+  .founder-commitments {
+    list-style: none;
+    margin: 36px 0;
+    padding: 28px 0;
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+  }
+  .founder-commitments li {
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+    font-size: 14.5px;
+    line-height: 1.55;
+    color: var(--text-muted);
+    padding: 7px 0;
+  }
+  .founder-commitments li::before {
+    content: '◆';
+    color: var(--accent);
+    font-size: 9px;
+    flex-shrink: 0;
+    margin-top: 8px;
+  }
+  .founder-sign {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    flex-wrap: wrap;
+  }
+  .founder-sign .sign-label {
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--text-faint);
+    margin-bottom: 4px;
+  }
+  .founder-sign .sign-value {
+    font-family: var(--serif);
+    font-style: italic;
+    font-size: 19px;
+    color: var(--text);
+    font-weight: 400;
+  }
+  .founder-linkedin {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    margin-left: auto;
+    font-size: 12.5px;
+    letter-spacing: 0.04em;
+    color: var(--accent);
+    border: 1px solid var(--accent);
+    padding: 10px 18px;
+    border-radius: 1px;
+    transition: all 0.2s;
+  }
+  .founder-linkedin > span:first-child {
+    font-family: var(--serif);
+    font-weight: 600;
+    font-style: italic;
+    font-size: 14px;
+    line-height: 1;
+  }
+  .founder-linkedin:hover {
+    background: var(--accent); color: #000;
+    transform: translateY(-1px);
+  }
+
+  /* ---------- Responsive ---------- */
+  @media (max-width: 980px) {
+    :root { --section-py: 80px; }
+    .hero-inner { grid-template-columns: 1fr; gap: 36px; text-align: left; }
+    .hero-visual { order: -1; min-height: 220px; }
+    .hero-monolith { width: 92px; height: 220px; }
+    .hero-monolith::after { inset: -4px; opacity: 0.55; }
+    .nav-links { display: none; }
+    .nav-links.nav-mobile-open {
+      display: flex;
+      flex-direction: column;
+      position: absolute;
+      top: calc(100% + 1px);
+      left: 0;
+      right: 0;
+      background: var(--nav-bg-mobile);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border-bottom: 1px solid var(--border);
+      padding: 10px 24px 18px;
+      gap: 0;
+      align-items: stretch;
+      z-index: 100;
+    }
+    .nav-links.nav-mobile-open a {
+      padding: 14px 6px;
+      min-height: 48px;
+      font-size: 14px;
+      letter-spacing: 0.08em;
+      border-bottom: 1px solid var(--border);
+      color: var(--text);
+      width: 100%;
+    }
+    .nav-links.nav-mobile-open a:last-child { border-bottom: none; }
+    .nav-links.nav-mobile-open .nav-cta {
+      margin-top: 12px;
+      justify-content: center;
+      border: 1px solid var(--accent);
+      color: var(--accent);
+      border-radius: 1px;
+    }
+    .nav-burger { display: block; }
+    .problem-grid, .services-grid, .diff-grid, .standards-grid,
+    .contact-grid, .dual-report, .founder-grid { grid-template-columns: 1fr; }
+    .founder-grid { gap: 56px; }
+    .founder-photo { max-width: 380px; margin: 0 auto; }
+    .founder-name { font-size: 32px; }
+    .founder-sign { gap: 18px; }
+    .founder-linkedin { margin-left: 0; }
+    .process-timeline { grid-template-columns: 1fr; gap: 32px; }
+    .process-timeline::before { display: none; }
+    .process-header { grid-template-columns: 1fr; gap: 24px; }
+    .footer-inner { grid-template-columns: 1fr 1fr; }
+    .form-row { grid-template-columns: 1fr; }
+    .credentials-strip { gap: 18px; font-size: 10px; }
+  }
+  @media (max-width: 540px) {
+    .container { padding: 0 20px; }
+    .nav { padding: 14px 20px; }
+    .footer-inner { grid-template-columns: 1fr; }
+    .remediation-callout { flex-direction: column; align-items: flex-start; gap: 16px; }
+    .form-actions { flex-direction: column; align-items: stretch; }
+    .form-actions .btn { width: 100%; justify-content: center; }
+  }
+
+  /* ===== Calendly popup launcher styling ===== */
+  .calendly-launch {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 14px 22px;
+    background: transparent;
+    color: var(--text);
+    border: 1px solid var(--accent);
+    border-radius: 1px;
+    font-family: var(--sans);
+    font-size: 14px;
+    font-weight: 500;
+    letter-spacing: 0.04em;
+    cursor: pointer;
+    transition: all 0.2s;
+    text-decoration: none;
+    -webkit-tap-highlight-color: transparent;
+    min-height: 44px;
+  }
+  .calendly-launch:hover { background: var(--accent); color: #000; transform: translateY(-1px); }
+  .calendly-launch .arrow { transition: transform 0.2s; }
+  .calendly-launch:hover .arrow { transform: translateX(3px); }
+  .form-or-divider {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin: 18px 0;
+    font-family: var(--mono);
+    font-size: 0.66rem;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--text-faint);
+  }
+  .form-or-divider::before, .form-or-divider::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--border-strong);
+  }
+</style>
+<link rel="stylesheet" href="https://assets.calendly.com/assets/external/widget.css">
+<script src="https://assets.calendly.com/assets/external/widget.js" async></script>
+</head>
+<body>
+
+<!-- ========== NAV ========== -->
+<nav class="nav" id="nav">
+  <div class="nav-inner">
+    <a href="index.html#top" class="brand">
+      <div class="brand-mark" aria-hidden="true"></div>
+      <div class="brand-name">SAVOIR<span>INTEL</span></div>
+    </a>
+    <div class="nav-links">
+      <a href="index.html#servicos"><span class="pt">Serviços</span><span class="en">Services</span></a>
+      <a href="index.html#processo"><span class="pt">Processo</span><span class="en">Process</span></a>
+      <a href="index.html#metodologia"><span class="pt">Metodologia</span><span class="en">Methodology</span></a>
+      <a href="index.html#porque"><span class="pt">Por que SavoirIntel</span><span class="en">Why us</span></a>
+      <a href="index.html#equipe"><span class="pt">Equipe</span><span class="en">Team</span></a>
+      <a href="careers.html"><span class="pt">Carreiras</span><span class="en">Careers</span></a>
+      <a href="threat-intel.html"><span class="pt">Inteligência</span><span class="en">Threat Intel</span></a>
+      <a href="index.html#contato" class="nav-cta"><span class="pt">Snapshot Gratuito</span><span class="en">Free Snapshot</span></a>
+    </div>
+    <div class="nav-right">
+      <div class="lang-toggle" role="group" aria-label="Language">
+        <button type="button" data-set-lang="pt" class="active">PT</button>
+        <button type="button" data-set-lang="en">EN</button>
+      </div>
+      <button type="button" class="theme-toggle" id="themeToggle" aria-label="Toggle theme" title="Toggle theme">
+        <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <circle cx="12" cy="12" r="4"/>
+          <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/>
+        </svg>
+        <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+        </svg>
+      </button>
+      <button class="nav-burger" id="navBurger" aria-label="Menu">≡</button>
+    </div>
+  </div>
+</nav>
+
+<!-- ========== CAREERS ========== -->
+<section id="carreiras" class="careers">
+  <div class="container">
+    <div class="contact-grid">
+      <div class="contact-info reveal">
+        <div class="eyebrow"><span class="pt">Carreiras</span><span class="en">Careers</span></div>
+        <h2><span class="pt">Caminhos diferentes. Uma missão. Talvez a sua.</span><span class="en">Different roads. One mission. Maybe yours.</span></h2>
+        <p>
+          <span class="pt">Estamos sempre conhecendo gente boa — em segurança ofensiva e defensiva, vendas, operações e gestão de clientes. Preencha o formulário e conte a sua história. Se houver encaixe, falamos com você.</span>
+          <span class="en">We're always meeting strong people — across offensive and defensive security, sales, operations, and client management. Fill out the form and tell us your story. If there's a fit, we'll be in touch.</span>
+        </p>
+      </div>
+
+      <form class="contact-form reveal" id="careersForm" novalidate>
+        <div class="form-row">
+          <div class="field">
+            <label for="c-name"><span class="pt">Nome</span><span class="en">Name</span> <span class="req">*</span></label>
+            <input type="text" id="c-name" name="name" required />
+          </div>
+          <div class="field">
+            <label for="c-email">Email <span class="req">*</span></label>
+            <input type="email" id="c-email" name="email" required />
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="field">
+            <label for="c-phone"><span class="pt">WhatsApp / Telefone</span><span class="en">WhatsApp / Phone</span></label>
+            <input type="tel" id="c-phone" name="phone" placeholder="+55 ..." />
+          </div>
+          <div class="field">
+            <label for="c-link"><span class="pt">LinkedIn / Portfólio</span><span class="en">LinkedIn / Portfolio</span></label>
+            <input type="url" id="c-link" name="link" placeholder="https://" />
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="field">
+            <label for="c-role"><span class="pt">Função desejada</span><span class="en">Role you're looking for</span> <span class="req">*</span></label>
+            <select id="c-role" name="role" required>
+              <option value="">— Selecione / Select —</option>
+              <option value="sales">Sales / Vendas</option>
+              <option value="offensive">Offensive Security / Segurança Ofensiva</option>
+              <option value="defensive">Defensive Security / Segurança Defensiva</option>
+              <option value="operations">Operations / Operações</option>
+              <option value="client-management">Client Management / Gestão de Clientes</option>
+              <option value="other">Outro / Other</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="c-location"><span class="pt">Localização</span><span class="en">Location</span></label>
+            <input type="text" id="c-location" name="location" />
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="field">
+            <label for="c-experience"><span class="pt">Anos de experiência</span><span class="en">Years of experience</span></label>
+            <input type="text" id="c-experience" name="experience" />
+          </div>
+          <div class="field">
+            <label for="c-certs"><span class="pt">Certificações relevantes</span><span class="en">Relevant certifications</span></label>
+            <input type="text" id="c-certs" name="certifications" placeholder="OSCP, CISSP, ..." />
+          </div>
+        </div>
+        <div class="form-row single">
+          <div class="field">
+            <label for="c-about"><span class="pt">Fale sobre você e a sua experiência</span><span class="en">Tell us about yourself and your background</span></label>
+            <textarea id="c-about" name="about"></textarea>
+          </div>
+        </div>
+        <div class="form-row single">
+          <div class="field">
+            <label for="c-why"><span class="pt">Por que a SavoirIntel?</span><span class="en">Why SavoirIntel?</span></label>
+            <textarea id="c-why" name="why"></textarea>
+          </div>
+        </div>
+        <div class="form-row single">
+          <div class="field">
+            <label for="c-challenge"><span class="pt">Descreva um desafio ou conquista relevante que você resolveu</span><span class="en">Describe a relevant challenge or accomplishment you delivered</span></label>
+            <textarea id="c-challenge" name="challenge"></textarea>
+          </div>
+        </div>
+        <div class="form-row single">
+          <div class="field">
+            <label for="c-availability"><span class="pt">Disponibilidade / início desejado</span><span class="en">Availability / desired start</span></label>
+            <input type="text" id="c-availability" name="availability" />
+          </div>
+        </div>
+
+        <div class="form-actions">
+          <div class="privacy">
+            <span class="pt">Seus dados são tratados em conformidade com a LGPD e usados apenas para recrutamento.</span>
+            <span class="en">Your data is handled in compliance with LGPD and used only for recruitment.</span>
+          </div>
+          <button type="submit" class="btn btn-primary" id="careersSubmitBtn">
+            <span class="pt">Enviar candidatura</span>
+            <span class="en">Submit application</span>
+            <span class="arrow">→</span>
+          </button>
+        </div>
+        <div class="form-status" id="careersStatus"></div>
+      </form>
+    </div>
+  </div>
+</section>
+
+<!-- ========== REFERRAL PROGRAM ========== -->
+<section id="indicacao" class="referral-section" style="border-top: 1px solid var(--border);">
+  <div class="container">
+    <div class="reveal" style="max-width: 660px; margin: 0 auto; text-align: center;">
+      <div class="eyebrow" style="justify-content: center;"><span class="pt">Programa de Indicação</span><span class="en">Referral Program</span></div>
+      <h2><span class="pt">Indique. Eles prosperam. Você ganha.</span><span class="en">Refer. They prosper. You earn.</span></h2>
+      <p class="lead" style="margin: 20px auto 36px;">
+        <span class="pt">Conhece uma empresa que precisa de segurança? Indique-a para nós. Quando uma indicação vira cliente, você recebe uma porcentagem da receita gerada. Clique abaixo e envie os detalhes por email — cuidamos do resto.</span>
+        <span class="en">Know a business that needs security? Send them our way. When a referral becomes a client, you earn a percentage of the revenue it generates. Click below and email us the details — we'll take it from there.</span>
+      </p>
+      <a class="btn btn-primary"
+         href="mailto:smith@savoirintel.com?subject=Referral%20Program&body=I'd%20like%20to%20refer%20a%20potential%20client%20to%20SavoirIntel.%0A%0AReferral%20name%20%2F%20company%3A%0AHow%20to%20reach%20them%3A%0AWhy%20they%20need%20security%20help%3A%0A%0AMy%20name%20%26%20best%20contact%20for%20the%20referral%20payout%3A">
+        <span class="pt">Indicar um cliente</span>
+        <span class="en">Refer a client</span>
+        <span class="arrow">→</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ========== FOOTER ========== -->
+<footer>
+  <div class="container">
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <div class="brand">
+          <div class="brand-mark" aria-hidden="true"></div>
+          <div class="brand-name">SAVOIR<span>INTEL</span></div>
+        </div>
+        <div class="tagline">
+          <span class="pt">Protegendo o comércio brasileiro — com o rigor que ele merece e a presença local que ele exige.</span>
+          <span class="en">Protecting Brazilian commerce — with the rigor it deserves and the local presence it demands.</span>
+        </div>
+        <p>
+          <span class="pt">SavoirIntel é uma consultoria de segurança ofensiva especializada no mercado brasileiro de SMBs. Operamos como LLC dos EUA com execução por contratados brasileiros vetados, sob acordos formais.</span>
+          <span class="en">SavoirIntel is an offensive security consultancy serving the Brazilian SMB market. We operate as a US LLC with execution by vetted Brazilian contractors under formal agreements.</span>
+        </p>
+      </div>
+      <div class="footer-col">
+        <h5><span class="pt">Serviços</span><span class="en">Services</span></h5>
+        <a href="index.html#servicos">Surface Risk Snapshot</a>
+        <a href="index.html#servicos"><span class="pt">Teste Web / App Básico</span><span class="en">Basic Web / App Test</span></a>
+        <a href="index.html#servicos"><span class="pt">Pentest Completo para PMEs</span><span class="en">Full SMB Pentest</span></a>
+        <a href="index.html#servicos"><span class="pt">Auditoria de Conformidade LGPD</span><span class="en">LGPD Compliance Audit</span></a>
+        <a href="index.html#servicos">PTaaS Retainer</a>
+        <a href="index.html#servicos"><span class="pt">Resposta a Incidentes</span><span class="en">Incident Response</span></a>
+        <a href="index.html#servicos"><span class="pt">Negociação de Ransomware</span><span class="en">Ransomware Negotiation</span></a>
+        <a href="index.html#servicos"><span class="pt">CISO Virtual (vCISO)</span><span class="en">Virtual CISO (vCISO)</span></a>
+        <a href="index.html#servicos"><span class="pt">Treinamento de Conscientização</span><span class="en">Security Awareness Training</span></a>
+      </div>
+      <div class="footer-col">
+        <h5><span class="pt">Sobre</span><span class="en">About</span></h5>
+        <a href="index.html#processo"><span class="pt">Processo</span><span class="en">Process</span></a>
+        <a href="index.html#metodologia"><span class="pt">Metodologia</span><span class="en">Methodology</span></a>
+        <a href="index.html#porque"><span class="pt">Por que SavoirIntel</span><span class="en">Why us</span></a>
+        <a href="careers.html"><span class="pt">Carreiras</span><span class="en">Careers</span></a>
+        <a href="#indicacao"><span class="pt">Programa de Indicação</span><span class="en">Referral Program</span></a>
+      </div>
+      <div class="footer-col">
+        <h5><span class="pt">Contato</span><span class="en">Contact</span></h5>
+        <a href="mailto:contato@savoirintel.com">contato@savoirintel.com</a>
+        <a href="https://calendly.com/smith-savoirintel/30min" onclick="if(window.Calendly){Calendly.initPopupWidget({url:'https://calendly.com/smith-savoirintel/30min'});return false;}" target="_blank" rel="noopener"><span class="pt">Discovery call</span><span class="en">Discovery call</span></a>
+        <a href="https://www.linkedin.com/in/tyler-smith-9293a3410" target="_blank" rel="noopener"><span class="pt">LinkedIn (Fundador)</span><span class="en">LinkedIn (Founder)</span></a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 SavoirIntel. <span class="pt">Todos os direitos reservados.</span><span class="en">All rights reserved.</span></span>
+      <span class="legal">LGPD · LEI 13.709/2018 · CNPJ <span class="pt">em registro</span><span class="en">pending</span></span>
+    </div>
+  </div>
+</footer>
+
+<script>
+  const html = document.documentElement;
+  const STORE_KEY = 'savoir-lang';
+  function setLang(lang){
+    html.setAttribute('data-lang', lang);
+    html.setAttribute('lang', lang === 'pt' ? 'pt-BR' : 'en');
+    document.querySelectorAll('[data-set-lang]').forEach(btn => btn.classList.toggle('active', btn.dataset.setLang === lang));
+    try { localStorage.setItem(STORE_KEY, lang); } catch(e) {}
+  }
+  document.querySelectorAll('[data-set-lang]').forEach(btn => btn.addEventListener('click', () => setLang(btn.dataset.setLang)));
+  try { const saved = localStorage.getItem(STORE_KEY); if (saved === 'en' || saved === 'pt') setLang(saved); } catch(e) {}
+
+  const THEME_KEY = 'savoir-theme';
+  const themeToggle = document.getElementById('themeToggle');
+  function setTheme(theme){
+    html.setAttribute('data-theme', theme);
+    try { localStorage.setItem(THEME_KEY, theme); } catch(e) {}
+    if (themeToggle) themeToggle.setAttribute('aria-label', theme === 'dark' ? 'Switch to light theme' : 'Switch to dark theme');
+  }
+  setTheme(html.getAttribute('data-theme') || 'dark');
+  if (themeToggle) themeToggle.addEventListener('click', () => {
+    const current = html.getAttribute('data-theme') === 'light' ? 'light' : 'dark';
+    setTheme(current === 'dark' ? 'light' : 'dark');
+  });
+
+  const nav = document.getElementById('nav');
+  const onScroll = () => nav.classList.toggle('scrolled', window.scrollY > 20);
+  window.addEventListener('scroll', onScroll, { passive: true });
+  onScroll();
+
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); io.unobserve(e.target); } });
+  }, { threshold: 0.12, rootMargin: '0px 0px -60px 0px' });
+  document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+
+  // ===== Careers form ===== delivered to CAREERS_EMAIL via Web3Forms, mailto fallback.
+  const FORM_ENDPOINT = 'https://api.web3forms.com/submit';
+  const FORM_ACCESS_KEY = '2287e605-459f-4913-851b-0b273c31735f';
+  const CAREERS_EMAIL = 'smith@savoirintel.com';
+  const careersForm = document.getElementById('careersForm');
+  const careersStatus = document.getElementById('careersStatus');
+  const careersSubmitBtn = document.getElementById('careersSubmitBtn');
+
+  function buildCareersText(data){
+    return [
+      'Nova candidatura pelo site SavoirIntel / New SavoirIntel job application:','',
+      'Nome / Name: ' + (data.name || ''),
+      'Email: ' + (data.email || ''),
+      'WhatsApp / Phone: ' + (data.phone || ''),
+      'LinkedIn / Portfolio: ' + (data.link || ''),
+      'Funcao / Role: ' + (data.role || ''),
+      'Localizacao / Location: ' + (data.location || ''),
+      'Experiencia / Experience: ' + (data.experience || ''),
+      'Certificacoes / Certifications: ' + (data.certifications || ''),'',
+      'Sobre / About:', (data.about || '(none)'),'',
+      'Por que SavoirIntel / Why SavoirIntel:', (data.why || '(none)'),'',
+      'Desafio / Challenge:', (data.challenge || '(none)'),'',
+      'Disponibilidade / Availability: ' + (data.availability || '')
+    ].join('\n');
+  }
+
+  if (careersForm){
+    careersForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const lang = html.getAttribute('data-lang');
+      const data = Object.fromEntries(new FormData(careersForm).entries());
+      if (!data.name || !data.email || !data.role){
+        careersStatus.className = 'form-status error';
+        careersStatus.textContent = lang === 'pt' ? 'Por favor, preencha nome, email e a funcao desejada.' : 'Please fill in name, email, and the role you want.';
+        return;
+      }
+      careersSubmitBtn.disabled = true; careersSubmitBtn.style.opacity = '0.6';
+      careersStatus.className = 'form-status'; careersStatus.textContent = '';
+      const payload = {
+        access_key: FORM_ACCESS_KEY,
+        subject: 'SavoirIntel careers — application from ' + data.name + ' (' + (data.role || 'role n/a') + ')',
+        from_name: 'SavoirIntel Careers',
+        to: CAREERS_EMAIL,
+        replyto: data.email,
+        ...data
+      };
+      let delivered = false;
+      if (FORM_ACCESS_KEY && FORM_ACCESS_KEY.indexOf('REPLACE_WITH') === -1){
+        try {
+          const res = await fetch(FORM_ENDPOINT, { method:'POST', headers:{'Content-Type':'application/json','Accept':'application/json'}, body: JSON.stringify(payload) });
+          delivered = res.ok;
+        } catch(err){ delivered = false; }
+      }
+      if (delivered){
+        careersStatus.className = 'form-status success';
+        careersStatus.textContent = lang === 'pt' ? 'Candidatura recebida. Entraremos em contato se houver encaixe.' : 'Application received. We will reach out if there is a fit.';
+        careersForm.reset();
+      } else {
+        const mailto = 'mailto:' + CAREERS_EMAIL + '?subject=' + encodeURIComponent('Career application from ' + data.name + ' (' + (data.role || 'role n/a') + ')') + '&body=' + encodeURIComponent(buildCareersText(data));
+        window.location.href = mailto;
+        careersStatus.className = 'form-status success';
+        careersStatus.textContent = lang === 'pt' ? 'Abrimos o seu cliente de email com a candidatura preenchida. Confirme o envio para concluir.' : 'Opened your email client with the application pre-filled. Confirm the send to complete.';
+      }
+      careersSubmitBtn.disabled = false; careersSubmitBtn.style.opacity = '1';
+    });
+  }
+
+  const burger = document.getElementById('navBurger');
+  const navLinks = document.querySelector('.nav-links');
+  function closeMobileMenu(){ navLinks.classList.remove('nav-mobile-open'); burger.setAttribute('aria-expanded','false'); }
+  function openMobileMenu(){ navLinks.classList.add('nav-mobile-open'); burger.setAttribute('aria-expanded','true'); }
+  burger.addEventListener('click', (e) => { e.stopPropagation(); if (navLinks.classList.contains('nav-mobile-open')) closeMobileMenu(); else openMobileMenu(); });
+  navLinks.querySelectorAll('a').forEach(a => a.addEventListener('click', () => closeMobileMenu()));
+  document.addEventListener('click', (e) => { if (!navLinks.contains(e.target) && !burger.contains(e.target)) closeMobileMenu(); });
+</script>
+</body>
+</html>
